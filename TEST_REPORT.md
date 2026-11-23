@@ -1,0 +1,62 @@
+# Cargo Commander — Test Report
+
+## Environment
+
+Testing on 22–23 November 2026 used the local version 0.1.0 on Windows, a Chromium-based in-app browser, Node.js 24.22.3 and pnpm 11.25.0. Separate test profiles were used for saved progression, first-time onboarding and Reset Progress. Desktop checks covered 1366×768, 1440×900 and 1920×1080 plus the browser's regular viewport. Tablet and phone checks used browser viewport emulation. No physical mobile device or independent Safari run was available.
+
+## Automated tests
+
+The local commands were `pnpm --config.store-dir=.pnpm-store test` and `pnpm --config.store-dir=.pnpm-store build`. The workflow runs the equivalent `pnpm test` and `pnpm build` after a frozen-lockfile install.
+
+**38 tests passed, 0 failed.** Coverage includes the weighted CG formula, inclusive safety boundaries, boundary-sensitive display precision, cargo manipulation and constraints, all six worked solutions, flight response and acceleration, switched modes, campaign rewards and saved progress, confirmation-reset storage behaviour, timed hints, audio and spotlight geometry. The production build completed successfully.
+
+## Six-mission solvability
+
+The pre-fix browser campaign was flown from a fresh profile using normal game controls and Cruise mode. Every mission also has an automated solvability test on the release candidate. The complete arrangements below count legal placements of all required crates that satisfied the delivery checks. The table does not disclose their positions.
+
+| Mission | Valid complete arrangements | Constraints satisfied | Browser Cruise delivery | Active time |
+| --- | ---: | --- | --- | ---: |
+| 01 · Island Supply Run | 20 | Yes | Passed | 30 s |
+| 02 · Coastal Resupply | 15 | Yes | Passed | 30 s |
+| 03 · Inter-Island Relay | 6 | Yes | Passed | 30 s |
+| 04 · Emergency Medical Delivery | 10 | Yes | Passed | 30 s |
+| 05 · Flight Through the Gusts | 18 | Yes | Passed | 32 s |
+| 06 · Operation Windward | 2 | Yes | Passed | 34 s |
+
+The six browser completions each recorded 100% corridor time. The post-fix browser regression repeated a Mission 01 delivery with 100% corridor time in 30 seconds.
+
+## Gameplay regression
+
+- **Mission centre and loading.** Verified mission briefing, Back and Resume, placing, dragging, swapping, unloading, Undo and Reset. Observed rejection of closed and incorrect slots and the over-limit optional battery.
+- **Safety and scientific display.** In Mission 03, placing just the Radio Instruments in slot 3 produced 4.417 m against a 4.42–4.65 m range. The reading, accessible label and checklist agreed that the CG was too far forward. The calibration and safety thresholds retain full precision.
+- **Flight and reports.** Tested pitch controls, Pause and Resume, mode switching and unsuccessful and successful attempts. A post-fix comparison showed the previous Cruise flight at 30.0 s and the current Rush flight at 15.0 s, with the same displayed CG and differing corridor time. The report names pitch inputs and flight mode as factors.
+- **Delivery and persistence.** Verified promotions, badges, island discovery and established routes through all six missions. Completed progress survived reload, and a replay did not duplicate the reward. In the post-fix build, cancelling Reset Progress kept one completed mission. Confirming returned to first-time onboarding and the Trainee rank, with sound muted and the changed music volume still saved after reload.
+
+## Educational support
+
+Tested both first-run paths, highlight placement, interaction restrictions, automatic scroll, correct-action progression, exit and return from training. The 320-pixel recheck advanced from the highlighted crate to the corresponding enlarged cargo slot and then to the CG explanation. Training, Practice and demonstrations did not award career progression. A successful official delivery after using learning support still granted the corresponding rewards.
+
+Observed the first autonomous hint at approximately 45 seconds of active loading time in Mission 01. Tested paused timing under overlays, legal contextual suggestions and the separate invitation to view a solution. Automated tests cover each mission's exact schedule. Opened the worked solutions for all six missions and verified stepping, replay, return to the original load, optional maths and trying with an empty hold. Verified practice failure, instructor feedback, demonstration and retry.
+
+## Audio
+
+Verified background music playback after a trusted input, engine ambience during flight, pause or transition cleanup, separate volume settings, mute and persistence. Automated tests also exercise synthesized sound cues for cargo, warnings, success, failure, first awards and replays. Tests measured Web Audio behaviour and cue sequencing. Subjective listening quality and physical device audio were outside this test session.
+
+## Responsive compatibility
+
+| Method | Viewports or test scope | Observed result |
+| --- | --- | --- |
+| Desktop browser | 1366×768, 1440×900, 1920×1080 | Loading, flight, progression and dialogs were usable. |
+| Tablet-sized browser viewport | 768×1024, 1024×768 | Mission Centre, overlays and career panel fit the view. |
+| Mobile-sized browser viewport | 320×568, 360×800, 390×844, 414×896, 844×390 | Rechecked title wrapping, page width and header separation. At 390 pixels all four header controls opened their intended views. Cargo placement and the flight controls were exercised with browser inputs at mobile sizes. |
+| Header transition and desktop regression | 650×800, 1280×712 | The narrow-screen grid fitted its controls. The desktop title remained on one line. |
+
+The narrow loading buttons were 44 CSS pixels high in the tested phone layouts, with distinct horizontal hit areas. At 390 CSS pixels the tests used mouse and keyboard actions in an emulated viewport. Physical touch hardware, additional browser families and fully validated screen-reader usage remain unverified.
+
+## Production deployment verification
+
+The Vite build emits JavaScript and CSS URLs under `/IDAT7220FinalGame/assets/` and writes the static site to `dist/`. On the local production preview at that subpath, the home screen, new-player flow, in-game About and a live CG update rendered without browser console errors. Refresh reopened the game. The intended public URL is [Cargo Commander on GitHub Pages](https://bruce666-ppp.github.io/IDAT7220FinalGame/). Public deployment and verification are pending.
+
+## Known limitations
+
+Progress is specific to the browser and origin. The longitudinal model, flight response, gusts and acceleration modes are educational simplifications. User testing was technical and functional. It did not measure learner engagement, conceptual mastery or learning gains.
