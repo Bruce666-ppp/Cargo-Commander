@@ -70,7 +70,7 @@ Progress is specific to the browser and origin. The longitudinal model, flight r
 
 ## Phase 7.1–7.2 educational alignment regression
 
-The 23 November 2026 candidate passed **39 automated tests** and the Vite production build. The new test checks that the four learning outcome titles, categories, complete statements and ABCD elements match across the game, README and design document. The existing campaign, loading, flight, audio, saved-progress and teaching-support tests passed again.
+The 23 November 2026 candidate passed **39 automated tests** and the Vite production build. The new test checks that the four titles, categories and complete statements match across the game, README and design document. It also checks the exact ABCD elements in the design document against the game. The existing campaign, loading, flight, audio, saved-progress and teaching-support tests passed again.
 
 | Check | Observed result |
 | --- | --- |
@@ -79,5 +79,13 @@ The 23 November 2026 candidate passed **39 automated tests** and the Vite produc
 | Access during gameplay | Opened the updated About Game from both Mission Centre and active Cargo Loading. The game returned to the current screen on close, with the cargo layout retained. |
 | Existing gameplay and persistence | Advanced the spotlight to the balance explanation, opened a hint and stepped through a worked solution. Completed Mission 01 in Cruise with 100% corridor time in 30.0 s, receiving Junior Loadmaster, Balance Basics and the Harbor Base–Pinehaven route. Reload preserved the award, unlock and changed music volume. Automated tests covered all six missions. |
 | Screenshot evidence | Captures came from the running application. See [Home](docs/screenshots/home.jpg), [Learning Outcomes](docs/screenshots/learning-outcomes.jpg), [ABCD breakdown](docs/screenshots/abcd-breakdown.jpg) and [Pedagogical Frameworks](docs/screenshots/pedagogical-frameworks.jpg). |
+
+### Public deployment verification for Phase 7.1–7.2
+
+On 23 November 2026, the [GitHub Actions build and deploy jobs](https://github.com/Bruce666-ppp/IDAT7220FinalGame/actions/runs/45126697092) succeeded for commit [`e8c5e94`](https://github.com/Bruce666-ppp/IDAT7220FinalGame/commit/e8c5e942c92a0329624ba7f3b560fa7fd6560740). The [game URL](https://bruce666-ppp.github.io/IDAT7220FinalGame/), its JavaScript and CSS returned HTTP 200 without authentication. The asset paths matched the local production build.
+
+- Opened the game using the URL in the published README and verified a direct refresh. The Home card listed all four summaries. About Game displayed all four complete statements with the detailed ABCD and Pedagogical Frameworks sections closed by default. Each ABCD disclosure toggled successfully. The three frameworks and the five 5E stages appeared on expansion. No game console errors were observed in those checks.
+- The same public URL had no horizontal overflow in the game page or About dialog at 320×568 and 390×844. At 390×844, opening About during Coastal Resupply and closing it returned to Cargo Loading with the 12 kg Air Filters still in slot 3.
+- The published README rendered its ten inline gameplay screenshots and linked to the expanded Pedagogical Frameworks screenshot. The published design document displayed the constructive alignment table and both optional teacher questions.
 
 These checks verify functionality and content consistency. They do not measure learner understanding or learning gains. The optional teacher questions are documented assessment opportunities and have not been administered. Independent subject-matter review, physical mobile devices, Safari and full screen-reader testing remain open.
