@@ -28,8 +28,8 @@ function lockOutside(root: HTMLElement, target: HTMLElement | null) {
 
 const viewportSize = () => ({ width: document.documentElement.clientWidth, height: window.innerHeight })
 
-export function TutorialSpotlight({ step, guide, confirming, onConfirm, onStay, onExit }: {
-  step: number; guide: TutorialGuide; confirming: boolean; onConfirm: () => void; onStay: () => void; onExit: () => void
+export function TutorialSpotlight({ step, stageLabel, guide, confirming, onConfirm, onStay, onExit }: {
+  step: number; stageLabel?: string; guide: TutorialGuide; confirming: boolean; onConfirm: () => void; onStay: () => void; onExit: () => void
 }) {
   const card = useRef<HTMLElement>(null)
   const exit = useRef<HTMLButtonElement>(null)
@@ -164,7 +164,7 @@ export function TutorialSpotlight({ step, guide, confirming, onConfirm, onStay, 
       <div className="lesson-navigation"><button ref={stay} className="secondary-button" onClick={onStay}>Continue Training</button><button className="start-button" onClick={onExit}>Exit Tutorial</button></div>
     </section> : <section ref={card} className="tutorial-card" tabIndex={-1} aria-label="Training guidance" style={{ left: layout.card.left, top: layout.card.top, '--arrow-offset': `${layout.arrow}px` } as CSSProperties}>
       {layout.hole && <span className={`tutorial-pointer pointer-${layout.side}`} aria-hidden="true" />}
-      <p className="tutorial-stage">Training · Step {step} of 7</p>
+      <p className="tutorial-stage">{stageLabel ?? `Training · Step ${step} of 8`}</p>
       <div aria-live="polite"><h2>{guide.title}</h2><p>{guide.message}</p></div>
       {guide.detail}
       {guide.action && <button className="start-button tutorial-action" onClick={guide.action.run}>{guide.action.label}</button>}

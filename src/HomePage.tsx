@@ -11,7 +11,7 @@ const steps = [
   { icon: 'rank', title: 'Earn Certification', description: 'Earn skill badges, advance your career, and establish new routes.' },
 ] as const
 
-const overview = ['Arrange cargo.', 'Monitor aircraft balance.', 'Test flight stability.', 'Complete deliveries.']
+const overview = ['Arrange cargo.', 'Monitor aircraft balance.', 'Test flight stability.', 'Complete deliveries.', 'Design and share original challenges.']
 type HomePageProps = { headingRef: Ref<HTMLHeadingElement>; onStart: () => void; onAbout: () => void }
 
 export function HomePage({ headingRef, onStart, onAbout }: HomePageProps) {

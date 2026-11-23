@@ -19,7 +19,7 @@ export function Insignia({ icon = 'rank', className = '' }: { icon?: ComponentPr
   )
 }
 
-export function CareerProfile({ progress, dialogRef, onClose, onReset }: { progress: CareerProgress; dialogRef: Ref<HTMLDialogElement>; onClose: () => void; onReset: () => boolean }) {
+export function CareerProfile({ progress, architect, dialogRef, onClose, onReset }: { progress: CareerProgress; architect: boolean; dialogRef: Ref<HTMLDialogElement>; onClose: () => void; onReset: () => boolean }) {
   const routes = establishedRoutes(progress)
   const [selected, setSelected] = useState(0)
   const confirmation = useRef<HTMLDialogElement>(null)
@@ -49,6 +49,12 @@ export function CareerProfile({ progress, dialogRef, onClose, onReset }: { progr
           </div>
           <p className="cert-disclaimer">These badges recognise in-game achievements. They confer no real-world aviation qualifications.</p>
         </section>
+        <section className="about-section diy-badge" data-badge="mission-architect">
+          <Insignia icon="puzzle" className={architect ? 'architect-earned' : ''} />
+          <div><h3>Mission Architect</h3><p><strong>Creative STEM Certification · {architect ? 'Earned' : 'Locked'}</strong></p>
+            <p>Design an original mission with a loading constraint, save your reference solution, review the explanation, pass the test flight and save the mission.</p>
+            <p>Bloom’s Taxonomy · Create</p></div>
+        </section>
         <section className="about-section"><h3><Icon name="rank" />Career Milestones</h3>
           <ol className="rank-milestones">{ranks.map((rank, index) => <li key={rank} className={index === progress.rankMilestone ? 'current-rank' : ''}>
             <Icon name={index > progress.rankMilestone ? 'lock' : index === progress.rankMilestone ? 'rank' : 'check'} /><span>{rank}</span><small>{index > progress.rankMilestone ? 'Locked' : index === progress.rankMilestone ? 'Current' : 'Reached'}</small>
@@ -69,7 +75,7 @@ export function CareerProfile({ progress, dialogRef, onClose, onReset }: { progr
     <dialog ref={confirmation} className="about-dialog reset-progress-dialog" role="alertdialog" aria-labelledby="reset-progress-title" aria-describedby="reset-progress-description">
       <header className="about-header"><h2 id="reset-progress-title">Reset your campaign progress?</h2></header>
       <div className="about-body">
-        <p id="reset-progress-description">This will remove completed missions, earned certifications, established routes, and career progression. Your audio settings will be kept.</p>
+        <p id="reset-progress-description">This will reset official deliveries, mission records, career ranks, route unlocks and the six campaign badges. Your DIY drafts, created and received missions, Mission Architect badge and audio settings will be kept. Complete Mission 03 again to create a new DIY mission.</p>
         {resetFailed && <p className="practice-warning" role="alert">Progress could not be reset. Check that your browser allows local storage and try again.</p>}
       </div>
       <footer className="about-footer">

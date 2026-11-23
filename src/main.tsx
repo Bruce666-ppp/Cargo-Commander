@@ -6,6 +6,9 @@ import { CargoLoading } from './CargoLoading'
 import { HomePage } from './HomePage'
 import { MissionBrief } from './MissionDialogs'
 import { CareerProfile } from './CareerProfile'
+import { DiyStudio, diyUnlockMessage, sharedToken } from './DiyStudio'
+import type { UpdateDiyStore } from './DiyStudio'
+import { readDiyStore, saveDiyStore } from './diy'
 import { FlightScreen } from './FlightScreen'
 import { Arrival, CampaignComplete, DiscoveryNotice, FlightReview, MissionAccomplished } from './FlightResults'
 import { SoundSettings } from './SoundSettings'
@@ -16,7 +19,8 @@ import type { FlightReport } from './flight'
 import { ExperienceDialog, FlightDemonstration } from './LearningSupport'
 import { newHintClock, readExperience, saveExperience } from './learning'
 import type { Experience } from './learning'
-import { TrainingSession } from './TrainingSession'
+import { TrainingCentre, TrainingSession } from './TrainingSession'
+import type { TrainingModule } from './TrainingSession'
 import { campaign, emptyLoadingState, flightConfigurationAllowed, islandSupplyRun } from './mission'
 import type { FlightConfiguration, FlightMode, Mission } from './mission'
 import './style.css'
@@ -27,6 +31,7 @@ import './sound-settings.css'
 import './campaign.css'
 import './learning.css'
 import './spotlight.css'
+import './diy.css'
 
 function focusHeading(heading: HTMLHeadingElement | null) {
   if (!heading) return
@@ -34,9 +39,9 @@ function focusHeading(heading: HTMLHeadingElement | null) {
   heading.focus({ preventScroll: true })
 }
 
-function MissionCentre({ progress, discovery, replaying, onStart, onWall, onTraining, onResume, training }: {
+function MissionCentre({ progress, discovery, replaying, onStart, onWall, onTraining, onDiy, onResume, training }: {
   progress: CareerProgress; discovery: MapDiscovery | null; replaying: boolean
-  onStart: (mission: Mission) => void; onWall?: () => void; onTraining?: () => void; onResume?: () => void; training?: boolean
+  onStart: (mission: Mission) => void; onWall?: () => void; onTraining?: () => void; onDiy?: () => void; onResume?: () => void; training?: boolean
 }) {
   const available = nextAvailableMission(progress)
   const network = networkSummary(progress)
@@ -52,6 +57,12 @@ function MissionCentre({ progress, discovery, replaying, onStart, onWall, onTrai
           <button className="secondary-button" aria-haspopup="dialog" onClick={onWall}><Icon name="rank" />Achievement Wall</button>
         </div>}
       </div>
+      {onDiy && <section className="panel diy-centre">
+        <span className="panel-icon"><Icon name="puzzle" /></span>
+        <div><h2>DIY Mission Studio</h2><p>{progress.completedMissionIds.includes(campaign[2].id)
+          ? 'Design, solve and test your own cargo mission.' : diyUnlockMessage}</p></div>
+        <button className="start-button" onClick={onDiy}>Open DIY Mission Studio</button>
+      </section>}
       <div className="game-layout">
         <section className="panel map-panel" aria-labelledby="map-heading">
           <div className="panel-heading"><span className="panel-icon"><Icon name="pin" /></span><h2 id="map-heading">The Windward Isles</h2></div>
@@ -101,13 +112,18 @@ function GameHeader({ rank, onHome, onAbout, onCareer, onSettings }: { rank: str
   )
 }
 
-type Screen = 'home' | 'mission' | 'loading' | 'flight' | 'review' | 'arrival' | 'accomplished' | 'campaign' | 'training'
+type Screen = 'home' | 'mission' | 'loading' | 'flight' | 'review' | 'arrival' | 'accomplished' | 'campaign' | 'training' | 'training-centre' | 'diy'
 const trainingProgress = emptyProgress()
 
 function App({ onReset }: { onReset: () => boolean }) {
   const [mission, setMission] = useState(islandSupplyRun)
   const [briefingMission, setBriefingMission] = useState<Mission | null>(null)
-  const [screen, setScreen] = useState<Screen>('home')
+  const [token, setToken] = useState(() => sharedToken(window.location.hash))
+  const [screen, setScreen] = useState<Screen>(token === null ? 'home' : 'diy')
+  const [diy, setDiy] = useState(readDiyStore)
+  const [trainingModule, setTrainingModule] = useState<TrainingModule>('complete')
+  const [trainingReturn, setTrainingReturn] = useState<'mission' | 'diy'>('mission')
+  const [fromTrainingCentre, setFromTrainingCentre] = useState(false)
   const [experience, setExperience] = useState(readExperience)
   const [welcome, setWelcome] = useState(false)
   const about = useRef<HTMLDialogElement>(null)
@@ -132,6 +148,21 @@ function App({ onReset }: { onReset: () => boolean }) {
   const [saveFailed, setSaveFailed] = useState(false)
   const [failedAttempts, setFailedAttempts] = useState<Record<string, number>>({})
   const [demo, setDemo] = useState<FlightConfiguration | null>(null)
+
+  useEffect(() => {
+    function openSharedLink() {
+      const current = sharedToken(window.location.hash)
+      setToken(current)
+      if (current !== null) setScreen('diy')
+    }
+    function syncDiyStore() { setDiy(readDiyStore()) }
+    window.addEventListener('hashchange', openSharedLink)
+    window.addEventListener('storage', syncDiyStore)
+    return () => {
+      window.removeEventListener('hashchange', openSharedLink)
+      window.removeEventListener('storage', syncDiyStore)
+    }
+  }, [])
 
   useEffect(() => {
     function unlock(event: Event) { if (event.isTrusted) gameAudio.unlock() }
@@ -253,6 +284,34 @@ function App({ onReset }: { onReset: () => boolean }) {
   const replayMissions = () => { setReplaying(true); setScreen('mission') }
   const viewReport = () => { setReportFromCompletion(true); setScreen('review') }
   const next = campaign.find(entry => entry.id === mission.career.nextMissionId)
+  const unlocked = progress.completedMissionIds.includes(campaign[2].id)
+
+  const updateDiyStore: UpdateDiyStore = update => {
+    const saved = readDiyStore()
+    if (saved.error) return saved.error
+    const store = update(saved.store)
+    const error = saveDiyStore(store)
+    if (!error) setDiy({ store, error: '' })
+    return error
+  }
+
+  function clearSharedLink() {
+    if (token === null) return
+    window.history.replaceState(null, '', window.location.pathname + window.location.search)
+    setToken(null)
+  }
+
+  function leaveDiy() {
+    clearSharedLink()
+    toMissionCentre()
+  }
+
+  function openTraining(returnTo: 'mission' | 'diy', module?: TrainingModule) {
+    setTrainingReturn(returnTo)
+    setFromTrainingCentre(true)
+    if (module) setTrainingModule(module)
+    setScreen(module ? 'training' : 'training-centre')
+  }
 
   function startGame() {
     if (experience || progress.completedMissionIds.length) toMissionCentre()
@@ -263,7 +322,12 @@ function App({ onReset }: { onReset: () => boolean }) {
     saveExperience(value)
     setExperience(value)
     setWelcome(false)
-    if (value === 'beginner') setScreen('training')
+    if (value === 'beginner') {
+      setTrainingModule('complete')
+      setTrainingReturn('mission')
+      setFromTrainingCentre(false)
+      setScreen('training')
+    }
     else toMissionCentre()
   }
 
@@ -275,11 +339,23 @@ function App({ onReset }: { onReset: () => boolean }) {
         <HomePage headingRef={focusHeading} onStart={startGame} onAbout={() => openDialog(about.current)} />
       ) : (
         <>
-          <GameHeader rank={ranks[progress.rankMilestone]} onHome={() => { setSettingsOpen(false); setScreen('home') }} onAbout={() => openDialog(about.current)} onCareer={() => openDialog(career.current)} onSettings={setSettingsOpen} />
+          <GameHeader rank={ranks[progress.rankMilestone]} onHome={() => { clearSharedLink(); setSettingsOpen(false); setScreen('home') }} onAbout={() => openDialog(about.current)} onCareer={() => openDialog(career.current)} onSettings={setSettingsOpen} />
           <main className={`game-shell${screen === 'loading' ? ' loading-shell' : ''}`} key={screen}>
-            {screen === 'mission' && <MissionCentre progress={progress} discovery={discovery} replaying={replaying} onStart={showBrief} onWall={() => openDialog(career.current)} onTraining={() => setScreen('training')} onResume={draft ? returnToLoading : undefined} />}
-            {screen === 'training' && <TrainingSession headingRef={focusHeading} blocked={overlayOpen || settingsOpen} onExit={toMissionCentre} onFirstMission={() => { toMissionCentre(); showBrief(islandSupplyRun) }}
-              missionCentre={start => <MissionCentre progress={trainingProgress} discovery={null} replaying={false} onStart={start} training />} />}
+            {screen === 'mission' && <MissionCentre progress={progress} discovery={discovery} replaying={replaying} onStart={showBrief} onWall={() => openDialog(career.current)}
+              onTraining={() => openTraining('mission')} onDiy={() => setScreen('diy')} onResume={draft ? returnToLoading : undefined} />}
+            {screen === 'training-centre' && <TrainingCentre headingRef={focusHeading} onSelect={module => { setTrainingModule(module); setScreen('training') }}
+              onExit={() => setScreen(trainingReturn)} />}
+            {screen === 'training' && <TrainingSession module={trainingModule} headingRef={focusHeading} blocked={overlayOpen || settingsOpen}
+              onExit={() => setScreen(fromTrainingCentre ? 'training-centre' : trainingReturn)}
+              onFirstMission={() => { toMissionCentre(); showBrief(islandSupplyRun) }}
+              missionCentre={start => <MissionCentre progress={trainingProgress} discovery={null} replaying={false} onStart={start} training />}
+              diyTraining={finish => <DiyStudio headingRef={focusHeading} blocked={overlayOpen || settingsOpen} store={diy.store} storageError=""
+                onStoreChange={() => ''} unlocked={false} onCompleteTraining={finish}
+                trainingStage={trainingModule === 'complete' ? 'Training · Step 8 of 8' : undefined}
+                onExit={() => setScreen(fromTrainingCentre ? 'training-centre' : trainingReturn)} />} />}
+            {screen === 'diy' && <DiyStudio key={token ?? 'studio'} headingRef={focusHeading} blocked={overlayOpen || settingsOpen} unlocked={unlocked}
+              initialToken={token} store={diy.store} storageError={diy.error} onStoreChange={updateDiyStore}
+              onExit={leaveDiy} onTraining={() => openTraining('diy', token === null ? 'diy' : undefined)} />}
             {screen === 'loading' && <CargoLoading mission={mission} loading={loading} setLoading={setLoading} hintClock={hintClock.current} blocked={overlayOpen || settingsOpen} headingRef={focusHeading} onBack={toMissionCentre} onBrief={() => openDialog(brief.current)} onFlight={launchFlight} />}
             {screen === 'flight' && launch && <FlightScreen mission={mission} {...launch} blocked={overlayOpen} headingRef={focusHeading} onReturn={returnToLoading} onFinish={finishFlight} onDemonstration={() => showDemonstration(launch.configuration)} />}
             {screen === 'arrival' && <Arrival mission={mission} headingRef={focusHeading} blocked={overlayOpen} onFinish={finishArrival} />}
@@ -296,7 +372,7 @@ function App({ onReset }: { onReset: () => boolean }) {
         </>
       )}
       <AboutGame dialogRef={about} onClose={() => setOverlayOpen(false)} />
-      <CareerProfile dialogRef={career} progress={progress} onClose={() => setOverlayOpen(false)} onReset={onReset} />
+      <CareerProfile dialogRef={career} progress={progress} architect={diy.store.architect} onClose={() => setOverlayOpen(false)} onReset={onReset} />
       <MissionBrief mission={briefingMission ?? mission} dialogRef={brief} onAccept={briefingMission ? acceptMission : undefined} onClose={() => { setBriefingMission(null); setOverlayOpen(false) }} />
       {welcome && <ExperienceDialog onChoose={chooseExperience} onClose={() => setWelcome(false)} />}
       {demo && <FlightDemonstration mission={mission} configuration={demo} onClose={() => { setDemo(null); setOverlayOpen(false) }} />}

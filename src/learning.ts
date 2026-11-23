@@ -128,9 +128,9 @@ export function describeMove(mission: Mission, hold: Hold, move: SuggestedMove) 
   return displaced ? `Swap ${name} with ${displaced.name} in slot ${destination + 1}.` : `Place ${name} in slot ${destination + 1}.`
 }
 
-export function workedSolution(mission: Mission) {
-  const answer = verifiedSolution(mission)
-  if (!answer) return null
+export function workedSolution(mission: Mission, reference?: Hold) {
+  const answer = reference ?? verifiedSolution(mission)
+  if (!answer || !inspectLoading(mission, answer).ready) return null
   let hold = emptyLoadingState(mission).hold
   const steps: { hold: Hold; before: Hold; cargo: string | null; slot: number | null }[] = [{ hold, before: hold, cargo: null, slot: null }]
   for (const [slot, id] of answer.entries()) {

@@ -89,3 +89,18 @@ On 23 November 2026, the [GitHub Actions build and deploy jobs](https://github.c
 - The published README rendered its ten inline gameplay screenshots and linked to the expanded Pedagogical Frameworks screenshot. The published design document displayed the constructive alignment table and both optional teacher questions.
 
 These checks verify functionality and content consistency. They do not measure learner understanding or learning gains. The optional teacher questions are documented assessment opportunities and have not been administered. Independent subject-matter review, physical mobile devices, Safari and full screen-reader testing remain open.
+
+## Phase 7.3 creative workflow and campaign regression
+
+The local release candidate passed **49 automated tests** and the Vite production build. Ten new tests cover configuration bounds, loading feasibility, reference calculations, invalidation after edits, the manual flight result gate, transfer encoding, malformed and tampered payloads, Mission Architect criteria, and versioned local storage. Existing tests continue to cover all six official missions, loading and flight mechanics, teaching support and audio. The reset regression verifies the approved campaign-only reset.
+
+| Browser check | Observed result |
+| --- | --- |
+| Creation and scientific explanation | In a test profile prepared with Mission 03 progress, the editor rejected an out-of-range mass. A custom 20 kg challenge used blocked slot 6 and a 4.45–4.55 m target. The learner loaded two 10 kg crates either side of the empty-aircraft CG. The saved diagram and optional maths traced a 4.50 m balance using the 100 kg empty aircraft. |
+| Flight and reward | The creator's manual Cruise test completed in 30.0 s with 100% corridor time. Saving the validated design earned Mission Architect. The isolated campaign reset restored Trainee Loadmaster, retained the validated design and badge, and locked the Create Mission action while leaving the saved mission actions available. |
+| Local peer challenge | A generated share link opened in a separate test session at Trainee Loadmaster. The receiver saved it, opened the creator's worked example from Cargo Loading, and finished the challenge with the two crates in the opposite order. The official rank was unchanged. |
+| Training | The full beginner replay progressed from initial loading and the heavy/light comparison through safety checks, pitch controls, flight modes and pause. It then showed campaign progression and reached the temporary DIY exercise as step 8 of 8. The DIY exercise also ran independently and finished a short flight without creating a saved mission, granting the badge or unlocking creation. |
+| About Game | The Home card listed five summaries. The About panel displayed five complete statements, and keyboard input toggled each of the five ABCD breakdowns. |
+| Responsive | Chromium desktop and emulated phone or tablet viewports were checked. In the mobile interface the blocked state was operated from the aircraft diagram. See the [mobile capture](docs/screenshots/mobile-diy.jpg). |
+
+The receiver can verify structure and recompute loading and CG from the link. The link does not authenticate its author or independently prove flight completion. Custom missions and audio settings are local to the browser. Link payloads, names, notes and the saved mission library have bounded sizes. The flight and loading models are educational simplifications. No independent subject-matter expert review, physical-device testing, cross-browser compatibility study or student learning assessment was conducted for this revision.

@@ -218,7 +218,7 @@ export function FlightScreen({ mission, configuration, mode, blocked, headingRef
   return (
     <>
       <div className="page-heading flight-heading">
-        <div><p className={`flight-mode mode-${mode}`}>{modeLabel(mode)}</p><h1 ref={headingRef} tabIndex={-1}>{mission.title}</h1><p>Destination · {mission.destination}</p></div>
+        <div><p className={`flight-mode mode-${mode}`}>{mission.id === 'diy-mission' ? 'Custom Mission Test Flight' : modeLabel(mode)}</p><h1 ref={headingRef} tabIndex={-1}>{mission.title}</h1><p>Destination · {mission.destination}</p></div>
         <button className="secondary-button" onClick={onReturn}>Return to Cargo Loading</button>
       </div>
 

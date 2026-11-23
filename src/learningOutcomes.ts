@@ -42,4 +42,14 @@ export const learningOutcomes = [
     condition: 'Given mission-specific cargo restrictions and flight-test feedback.',
     degree: 'Satisfy all mission requirements and achieve a successful delivery.',
   },
+  {
+    id: 'LO5',
+    category: 'Creative Application',
+    title: 'Design Your Own Cargo Mission',
+    summary: 'Design and validate your own cargo mission.',
+    statement: 'Design and validate an original cargo delivery mission using the DIY Mission Studio, producing a valid loading solution that satisfies all selected constraints and achieves a successful test flight.',
+    behaviour: 'Design and validate an original cargo delivery mission.',
+    condition: 'Using the DIY Mission Studio and the existing educational cargo-loading and flight-simulation tools.',
+    degree: 'Produce a valid loading solution that satisfies all selected mission constraints and achieve a successful test flight.',
+  },
 ] as const

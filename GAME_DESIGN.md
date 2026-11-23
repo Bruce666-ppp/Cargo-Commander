@@ -16,6 +16,7 @@ By the end of the game, beginner STEM learners aged 10–14 will be able to:
 | **LO2 · Understand How Cargo Affects Balance.** By comparing equal-distance movements of heavy and light cargo while keeping the total loaded mass unchanged, correctly explain the direction of CG movement and why heavier cargo produces a greater change. | Conceptual Learning | Beginner STEM learners aged 10–14. | Explain the direction and relative magnitude of centre-of-gravity changes. | Comparing equal-distance movements of heavy and light cargo while keeping the total loaded mass unchanged. | Correctly explain the direction of CG movement and why heavier cargo produces a greater change. |
 | **LO3 · Load and Balance an Aircraft.** Using the cargo-loading interface and real-time CG feedback, arrange all required cargo within the specified CG range while satisfying all loading safety requirements. | Procedural Learning | Beginner STEM learners aged 10–14. | Arrange all required cargo. | Using the cargo-loading interface and real-time CG feedback. | Achieve the specified CG range and satisfy all loading safety requirements. |
 | **LO4 · Complete a Cargo Delivery Challenge.** Given mission-specific cargo restrictions and flight-test feedback, develop and refine a cargo-loading and flight-control strategy that satisfies all mission requirements and achieves a successful delivery. | Problem-solving Learning | Beginner STEM learners aged 10–14. | Develop and refine a cargo-loading and flight-control strategy. | Given mission-specific cargo restrictions and flight-test feedback. | Satisfy all mission requirements and achieve a successful delivery. |
+| **LO5 · Design Your Own Cargo Mission.** Design and validate an original cargo delivery mission using the DIY Mission Studio, producing a valid loading solution that satisfies all selected constraints and achieves a successful test flight. | Creative Application | Beginner STEM learners aged 10–14. | Design and validate an original cargo delivery mission. | Using the DIY Mission Studio and the existing educational cargo-loading and flight-simulation tools. | Produce a valid loading solution that satisfies all selected mission constraints and achieve a successful test flight. |
 
 In the IDAT7220 ABCD framework the Condition describes the tools and circumstances. The Degree describes the standard. The controlled comparison in LO2 fixes distance and total loaded mass so that learners can explain the difference in CG movement. In LO3 and LO4, the existing mission requirements supply the performance standard. Cruise remains a valid mode for all six deliveries.
 
@@ -27,6 +28,7 @@ In the IDAT7220 ABCD framework the Condition describes the tools and circumstanc
 | LO2 · Conceptual Learning | Centre of Gravity and Mass Distribution | Move the 30 kg and 10 kg crates by one slot each with both crates aboard. Compare direction and magnitude, then try different placements. | Training Centre, missions 01–02, hints and worked solutions | Before-and-after CG readings, arrows and immediate feedback. | The app observes the moves and the resulting CG changes. At fixed total mass, the heavier crate moves the CG three times as far in this example. | Viewing the comparison or repeating the move does not demonstrate an independent explanation or transfer. |
 | LO3 · Procedural Learning | Centre of Gravity and Mass Distribution | Select, place, move or unload cargo until all required items satisfy the slot, payload and CG constraints. | All six missions, especially 03–04 and 06 | The checklist reports individual checks and readiness. | The official departure gate verifies the cargo list, allowed slots, payload and inclusive CG range. | A valid load demonstrates task performance. The record does not distinguish independent planning from a worked solution. |
 | LO4 · Problem-solving Learning | Both STEM topics | Test a load and controls, examine the flight report, adjust the setup or control inputs and retry the route. | Practice Flight, Flight Review and official deliveries, especially 05–06 | Altitude trace, corridor time, modes, duration and instructor guidance. | The game verifies official completion. Comparisons can show changed CG or performance, and an observer can notice revisions when the learner retries. | A successful delivery alone does not establish how the strategy was developed, why it changed or which variable caused a performance difference. |
+| LO5 · Creative Application | Both STEM topics | Design a mission, choose its constraints, build a reference solution, review the scientific explanation, test and save. | DIY Mission Studio | Configuration feasibility, live balance, safety checks, worked steps and flight review tell learners what they can refine. | The saved design contains selected constraints and the learner's reference arrangement after successful loading and flight tests. | The automated explanation does not show that the learner can explain the science independently. Comparing peer solutions and asking the designer to justify a choice can provide further evidence. |
 
 ## Educational Frameworks
 
@@ -53,9 +55,11 @@ Factual information gives players something concrete to read. Conceptual knowled
 | Apply | Arrange the manifest and satisfy the loading checklist. |
 | Analyse | Compare before-and-after readings and examine where a flight left its altitude corridor. |
 | Evaluate | Weigh alternative legal configurations against the mission constraints and compare flight attempts under similar modes and inputs. |
-| Create | Assemble a valid load of one's own and combine it with a flight-control strategy. |
+| Create | Design, validate and test an original mission with selected constraints. Save the design and optionally share it for peer review. |
 
 Players can also follow a given solution. These activities provide opportunities for higher-order thinking. The game records neither a learner's justification of a particular decision nor whether the strategy was independently created.
+
+LO5 extends procedural and problem-solving knowledge into creative application. The four knowledge categories remain factual, conceptual, procedural and problem-solving. The saved mission provides direct evidence of a completed creative task. Individual reasoning and transfer still require observation or assessment.
 
 ### 5E and Scenario-Based Learning
 
@@ -91,6 +95,22 @@ Ask for a prediction before the Training Centre moves, then ask for an explanati
 
 When used in a learning activity, these prompts give a teacher a way to observe individual understanding. They are optional discussion prompts and have yet to be administered to learners.
 
+### LO5 · Creative Application
+
+Ask the designer to show the saved mission, explain why they added one constraint and trace how the chosen reference arrangement satisfies it. Offer a peer an opportunity to try a different feasible arrangement. The mission data and flight result show task performance. The discussion can reveal reasoning that the automatic explanation cannot assess.
+
+## DIY Mission Studio and peer challenges
+
+After Mission 03, learners can apply the same balance principles to a problem they design. They choose cargo types and masses, blocked positions, a target CG range and one of three simulated wind conditions. The studio uses Mission 01's empty aircraft, six positions and 60 kg payload limit. Targets stay within 4.40–4.60 m, the envelope for this educational exercise. A medical case reuses the existing requirement to occupy powered slot 3 or 4.
+
+**Create** verifies the configuration and uses the existing bounded loading search. At most six required crates are placed one per permitted slot. This check establishes that there is some valid load. **Solve** requires the designer to place the crates in Cargo Loading and submit their own valid arrangement. **Explain** builds a diagram, placement steps and optional moment calculation using that exact reference load, including the empty aircraft mass and original CG. The placement order is a worked example. **Test & Save** requires a successful manual flight with that same load. A change to cargo, slots, CG or wind requires a fresh reference and flight.
+
+Mission Architect recognises a complete saved design with a blocked slot, narrower CG target or powered cargo constraint. The original six certifications and career progression remain tied to official deliveries. Reset Progress clears the official career record while retaining the creative archive, its badge and sound settings. Formal creation unlocks again after the third official delivery.
+
+The share link stores only the small, versioned mission definition, reference slots and optional note. A receiver can replay the challenge with a different arrangement, request hints or open the creator's worked example. The receiver checks the schema and recalculates what can be reproduced locally. A portable link does not authenticate the author or certify that a flight was flown. My Missions stores designs on the current browser, and shared links provide an opportunity to compare designs with peers.
+
+The Training Centre supports self-paced replay of the whole beginner sequence and separate loading, CG, inspection, flight, career and DIY modules. The temporary DIY exercise integrates a changed cargo mass, a blocked slot, a manual reference load and a short actual test flight. Training stays separate from the official career and the saved creative archive.
+
 ## Learning strategies
 
 - **Guided practice.** The spotlight highlights the relevant control, guides actual cargo and flight actions and advances after the required action. Learners can skip, exit or revisit training.
@@ -103,13 +123,15 @@ When used in a learning activity, these prompts give a teacher a way to observe 
 
 The **goal** is to deliver the correct cargo safely and establish a functioning transport network. The **rules** require the manifest, payload, permitted positions and CG to pass inspection. A delivery flight must reach the destination with sufficient time in the altitude corridor and a controlled arrival. The **rewards** show how the delivery changed the world and the player's career. The **challenges** increase through uneven masses, slot restrictions, tighter loading decisions and stronger simulated gusts.
 
+The studio adds an optional goal of designing and validating an original mission. The designer chooses constraints within the loading rules, earns Mission Architect for a complete eligible design and can challenge peers to solve it.
+
 ## MDA framework
 
 | Layer | How it appears in play |
 | --- | --- |
-| Mechanics | One crate per slot, a weighted balance calculation, mission-specific payload limits, pitch controls, flight modes, safety gates and delivery milestones. |
-| Dynamics | Experiment with mass and distance, plan around restricted slots, make and release short pitch inputs, compare traces, rethink the load and try again. |
-| Aesthetics | Challenge comes from the constraints and flight. Discovery comes from the clouds clearing over new destinations. Achievement comes from visible routes, badges and progression towards Cargo Commander. |
+| Mechanics | Cargo placement, weighted CG, payload and slot limits, pitch controls, flight modes, delivery milestones, mission configuration, submitted reference solutions, validation and share links. |
+| Dynamics | Experiment with mass and distance, plan around restrictions, compare flights, revise an original design and challenge a peer to find another solution. |
+| Aesthetics | Challenge from constraints and flight, discovery through cloud clearance, achievement through the campaign and ownership of a mission you built. |
 
 ## Six-mission campaign
 
@@ -128,7 +150,7 @@ The **goal** is to deliver the correct cargo safely and establish a functioning 
 
 ## Learning support design
 
-The first-run choice offers either beginner training or entry to the Mission Centre. Training shows one action at a time, including loading, comparing mass effects and practising pitch and flight-mode controls. The tutorial can pause the simulated flight while the learner reads.
+The first-run choice offers either beginner training or entry to the Mission Centre. Training shows one action at a time, including loading, comparing mass effects and practising pitch and flight-mode controls. It then introduces campaign progression and a short DIY exercise. The tutorial can pause the simulated flight while the learner reads, and the Training Centre offers each topic independently.
 
 Automatic help uses active time in the loading screen. The first reminder arrives after 45–75 seconds across the six missions, with a bounded delay for productive moves. Subsequent cues offer a strategy, a specific legal move and an optional solution invitation. The worked solution explains each placement, shows the balance point before and after and lets the player return to the original hold or start with an empty one. Its optional calculation table introduces the formula without interrupting the cargo task. After a flight, the instructor connects recorded events to a next action and can demonstrate flying the route.
 
