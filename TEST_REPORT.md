@@ -55,7 +55,14 @@ The narrow loading buttons were 44 CSS pixels high in the tested phone layouts, 
 
 ## Production deployment verification
 
-The Vite build emits JavaScript and CSS URLs under `/IDAT7220FinalGame/assets/` and writes the static site to `dist/`. On the local production preview at that subpath, the home screen, new-player flow, in-game About and a live CG update rendered without browser console errors. Refresh reopened the game. The intended public URL is [Cargo Commander on GitHub Pages](https://bruce666-ppp.github.io/IDAT7220FinalGame/). Public deployment and verification are pending.
+The Vite build emits JavaScript and CSS URLs under `/IDAT7220FinalGame/assets/` and writes the static site to `dist/`. Local production preview verified the home screen, new-player flow, in-game About, a live CG update and refresh.
+
+On 23 November 2026, the [GitHub Actions build and deploy jobs](https://github.com/Bruce666-ppp/IDAT7220FinalGame/actions/runs/45089725305) succeeded for commit `5f25bab`, including dependency installation, automated tests and the build. The public [Cargo Commander site](https://bruce666-ppp.github.io/IDAT7220FinalGame/) returned HTTP 200 without authentication. Its bundled JavaScript and CSS both returned HTTP 200 under the repository subpath with their expected media types.
+
+- The README's PLAY CARGO COMMANDER link opened the correct public URL. Direct refresh reopened the game. A fresh visit displayed both onboarding paths.
+- In an isolated Chromium view of the published game, About Game showed the four learning objectives. Mission 01 cleared inspection and completed in Cruise with 100% corridor time over 30.0 s. The delivery awarded Junior Loadmaster, Balance Basics and the Harbor Base–Pinehaven route.
+- At 390×844, the public build displayed the full wrapped title, opened About Game and accepted cargo into an aircraft slot. At 320×568, the header controls remained separate and all six slot hit areas were 44 CSS pixels high. Both emulated widths showed no horizontal page overflow.
+- No critical game console errors were observed in those checks. Physical phones were outside the test scope.
 
 ## Known limitations
 
