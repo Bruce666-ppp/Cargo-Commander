@@ -1,0 +1,71 @@
+.campaign-heading { align-items: end; }
+.campaign-heading > button { flex: none; }
+.mission-list > h2:focus { outline-offset: 3px; }
+.mission-number { color: #527084; font-variant-numeric: tabular-nums; margin-right: 3px; }
+.completed-mission { background: #f0f5eb; }
+.completed-mission .lock-icon { background: #def0d9; color: #366943; }
+.completed-mission .replay-button { min-height: 34px; padding: 5px 10px; font-size: .84rem; }
+.map-legend .airport-key svg { width: 16px; color: #3e8059; }
+.cloud-parting { pointer-events: none; animation: cloud-parting 1.9s ease-in-out both; }
+.island-reveal { animation: route-discovery 1.1s .25s both; }
+.route-discovery { animation: route-discovery .7s .42s both; }
+@keyframes cloud-parting { from { opacity: 1; transform: translate(0, 0) scale(1); } to { opacity: 0; transform: translate(105px, -29px) scale(1.14); } }
+@keyframes route-discovery { from { opacity: 0; } to { opacity: 1; } }
+
+.discovery-notice { display: flex; align-items: center; gap: 11px; padding: 11px 14px; background: #e8f4ee; color: #254e46; }
+.discovery-notice p { margin: 2px 0 0; font-size: .88rem; }
+.map-panel .discovery-notice { border-top: 1px solid #cadfd3; }
+.completion-discovery { display: flex; justify-content: space-between; align-items: stretch; overflow: hidden; margin-top: 15px; }
+.completion-discovery .discovery-notice { flex: 1; }
+.completion-discovery .flight-map { width: clamp(145px, 30%, 300px); border: 0; align-self: center; }
+.campaign-actions { justify-content: flex-start; }
+
+.certification-grid .certification-card { align-items: center; text-align: left; min-height: 56px; }
+.certification-card strong, .certification-card small { display: block; }
+.certification-card small { margin-top: 3px; }
+.certification-card small svg { display: inline-block; width: 11px; margin-right: 4px; vertical-align: -.05em; }
+.certification-card[aria-pressed='true'] { box-shadow: inset 0 0 0 1px #3b7085; border-color: #3b7085; }
+.certification-card:hover { border-color: #6b9ba2; }
+.cert-detail { margin-top: 10px; padding: 10px 12px; border-radius: 9px; background: #eef5f1; }
+.cert-detail dl { display: grid; gap: 6px; margin: 7px 0 0; font-size: .88rem; }
+.cert-detail dl div { display: grid; grid-template-columns: 110px 1fr; gap: 8px; }
+.cert-detail dt { font-weight: 700; }
+.cert-detail dd { margin: 0; }
+[data-badge='balance-basics'] { --badge-ink: #3c7556; --badge-surface: #d7eecd; }
+[data-badge='mass-master'] { --badge-ink: #346b8a; --badge-surface: #cee9f5; }
+[data-badge='cargo-strategist'] { --badge-ink: #655c91; --badge-surface: #e6def1; }
+[data-badge='safety-specialist'] { --badge-ink: #9a533e; --badge-surface: #f4ded0; }
+[data-badge='flight-controller'] { --badge-ink: #267579; --badge-surface: #cbeee7; }
+[data-badge='cargo-commander'] { --badge-ink: #94661e; --badge-surface: #fae4a6; }
+.certified[data-badge] .aviation-insignia { color: var(--badge-ink); }
+.certified[data-badge] .insignia-shield { fill: var(--badge-surface); }
+
+.campaign-banner { position: relative; isolation: isolate; overflow: hidden; }
+.campaign-banner .campaign-emblem { width: clamp(116px, 17vw, 175px); color: #f5d887; }
+.campaign-emblem .insignia-shield { fill: #70603c; }
+.campaign-celebrate .campaign-emblem { animation: reward-lift .8s ease-out both; }
+.campaign-celebrate::after { position: absolute; z-index: -1; inset: 0; content: ''; pointer-events: none;
+  background: radial-gradient(circle at 17% 29%, #f6d585 0 2px, transparent 3px), radial-gradient(circle at 27% 58%, #add6c3 0 3px, transparent 4px), radial-gradient(circle at 76% 21%, #f6d585 0 3px, transparent 4px), radial-gradient(circle at 84% 54%, #add6c3 0 2px, transparent 3px), radial-gradient(circle at 68% 37%, #f6d585 0 2px, transparent 3px);
+  animation: campaign-sparkle 1.8s ease-out both; }
+@keyframes campaign-sparkle { 0%, 100% { opacity: 0; transform: translateY(10px); } 38% { opacity: 1; transform: translateY(0); } }
+.campaign-summary { margin-top: 18px; }
+.campaign-totals { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 13px; text-align: center; }
+.campaign-totals dt { color: var(--muted); font-size: .84rem; }
+.campaign-totals dd { margin: 4px 0 0; color: #315d4c; font-size: 1.45rem; font-weight: 800; }
+.campaign-learning h3 { margin-top: 1rem; font-size: .98rem; }
+
+.career-footer { justify-content: space-between; flex-wrap: wrap; }
+.reset-progress-dialog { width: min(440px, calc(100% - 24px)); }
+.about-footer .reset-progress-button { background: #f7e8df; border-color: #dcbca9; color: #713d2c; }
+.about-footer .reset-progress-button:hover { background: #f0d9cc; }
+
+@media (max-width: 560px) {
+  .campaign-heading { flex-wrap: wrap; }
+  .campaign-heading > button { min-height: 35px; }
+  .campaign-totals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cloud-parting { display: none; }
+  .island-reveal, .route-discovery, .campaign-celebrate .campaign-emblem, .campaign-celebrate::after { animation: none; }
+  .campaign-celebrate::after { display: none; }
+}

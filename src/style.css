@@ -1,0 +1,166 @@
+:root {
+  font-family: 'Aptos', 'Segoe UI', system-ui, sans-serif;
+  color: #193650;
+  background: #f5f5ed;
+  font-synthesis: none;
+  --navy: #172f48;
+  --muted: #51697b;
+  --border: #dbe2da;
+  --paper: #fffef8;
+  --mint: #d7efac;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; }
+h1, h2, h3, p { margin: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:disabled { cursor: default; }
+button:focus-visible { outline: 3px solid #28689d; outline-offset: 3px; }
+button svg { flex: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.top-bar { color: #fffdf1; background: var(--navy); border-bottom: 3px solid #80b9cd; }
+.top-bar-inner, .game-shell { width: min(1264px, calc(100% - 88px)); margin-inline: auto; }
+.top-bar-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.wordmark { display: flex; align-items: center; gap: 12px; font-size: 1.38rem; font-weight: 800; letter-spacing: -.035em; white-space: nowrap; }
+.brand-icon, .player-rank, .panel-icon, .mission-icon, .lock-icon { display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.brand-icon { width: 39px; height: 39px; color: #193f57; background: #a7d8e8; border-radius: 11px; border: 1px solid #c1e6ec; }
+.brand-icon svg { width: 23px; transform: rotate(38deg); }
+.player-rank { gap: 8px; padding: 8px 12px; border: 1px solid #436075; border-radius: 9px; background: #203b53; color: #f4f4e7; font-size: .88rem; font-weight: 650; }
+.player-rank svg { width: 18px; color: #cde5a8; }
+
+.game-shell { padding-block: 38px 36px; }
+.page-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 26px; }
+.page-heading h1 { color: var(--navy); font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.04; letter-spacing: -.06em; font-weight: 820; outline: none; }
+.page-heading p { margin-top: 9px; color: var(--muted); font-size: 1.03rem; }
+.game-layout { display: grid; grid-template-columns: minmax(0, 2.24fr) minmax(300px, 1fr); gap: 24px; align-items: start; }
+.panel { background: var(--paper); border: 1px solid var(--border); border-radius: 17px; box-shadow: 0 3px 0 #19365008; }
+.panel-heading { min-height: 60px; padding: 12px 18px; display: flex; align-items: center; gap: 10px; }
+.panel h2, .mission-list > h2 { font-size: 1.13rem; letter-spacing: -.025em; }
+.panel-icon { width: 33px; height: 33px; color: #295c76; background: #e0eff0; border-radius: 9px; }
+.panel-icon svg { width: 19px; }
+
+.map-panel { overflow: hidden; }
+.flight-map { display: block; width: 100%; height: auto; border-block: 1px solid #a7cbd5; }
+.airport-label { font: 750 16px 'Aptos', 'Segoe UI', system-ui, sans-serif; }
+.map-plane-still { display: none; }
+.map-legend { display: flex; align-items: center; flex-wrap: wrap; min-height: 47px; padding: 9px 18px; gap: 20px; color: var(--muted); font-size: .875rem; }
+.map-legend span { display: flex; align-items: center; gap: 8px; }
+.map-legend i { width: 26px; border-top: 3px dotted #255d7a; }
+.map-legend span + span i { border-color: #7d98a9; }
+
+.mission-list { display: grid; gap: 11px; }
+.mission-list > h2 { min-height: 47px; display: flex; align-items: center; padding-inline: 2px; }
+.active-mission { position: relative; isolation: isolate; overflow: hidden; padding: 20px; border: 1px solid #28455f; border-radius: 17px; background: linear-gradient(138deg, #244965, #172f48 72%); color: #fffdf1; box-shadow: 0 4px 0 #1936500d; }
+.active-mission::before { content: ''; position: absolute; z-index: -1; width: 240px; height: 240px; border: 1px solid #9bddff1e; border-radius: 50%; right: -99px; top: -112px; box-shadow: 0 0 0 15px #9bddff0d, 0 0 0 35px #9bddff0a; }
+.mission-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 17px; }
+.mission-icon { width: 47px; height: 47px; border: 1px solid #95c1cf; border-radius: 12px; background: #c1e4e8; color: #27526a; }
+.mission-icon svg { width: 26px; }
+.available { display: inline-flex; align-items: center; gap: 7px; border: 1px solid #8dc7af55; border-radius: 999px; background: #d1f3cb16; color: #d7efb6; font-size: .84rem; font-weight: 700; padding: 5px 10px; }
+.available i { width: 6px; height: 6px; border-radius: 50%; background: #bee4a0; }
+.active-mission h3 { font-size: 1.58rem; line-height: 1.07; letter-spacing: -.04em; }
+.route { margin-top: 7px; color: #b7ddeb; font-size: .92rem; font-weight: 650; }
+.route span[aria-hidden] { padding-inline: 3px; }
+.mission-description { max-width: 29ch; margin-block: 14px 19px; color: #e0e8e8; line-height: 1.45; }
+.start-button { min-height: 46px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 9px; padding: 10px; border: 1px solid #e7f7ca; border-radius: 9px; background: var(--mint); color: #233d38; box-shadow: 0 3px 0 #8ba76b; font-weight: 800; transition: background .16s, transform .16s; }
+.start-button svg { width: 18px; transform: rotate(40deg); }
+.start-button:hover { background: #e5f7c1; transform: translateY(-1px); }
+.start-button:active { transform: translateY(2px); }
+.start-button:focus-visible { outline-color: #c3e5f3; }
+.locked-mission { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 11px; padding: 13px; min-height: 73px; border: 1px solid #d7e0d9; border-radius: 13px; background: #edf0e9; }
+.lock-icon { align-self: center; width: 36px; height: 36px; border: 1px solid #d7e1dc; border-radius: 8px; background: #e5ebe5; color: #536a75; }
+.lock-icon svg { width: 17px; }
+.locked-mission h3 { font-size: .98rem; letter-spacing: -.02em; }
+.locked-mission p { color: var(--muted); font-size: .82rem; margin-top: 3px; }
+.locked-label { color: #4d6473; font-size: .8rem; font-weight: 650; }
+
+.secondary-button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 38px; padding: 7px 16px; border: 1px solid #c4d4d8; border-radius: 9px; background: var(--paper); font-weight: 700; transition: background .16s; }
+.secondary-button:hover { background: #e7f1ee; }
+.secondary-button svg { width: 17px; }
+.heading-meta { margin-left: auto; font-size: .875rem; font-weight: 650; color: var(--muted); }
+.hangar-floor { position: relative; border-block: 1px solid #bbd4db; background-color: #d9edf0; background-image: linear-gradient(90deg, #fff8 1px, transparent 1px), linear-gradient(#fff8 1px, transparent 1px), radial-gradient(ellipse at center, #edf7f5, #c9e3ea); background-size: 24px 24px, 24px 24px, 100% 100%; }
+.orientation { position: absolute; top: 14px; left: 18px; right: 18px; display: flex; justify-content: space-between; pointer-events: none; color: #466a81; font-size: .75rem; font-weight: 800; letter-spacing: .14em; }
+.aircraft-board { position: relative; width: 100%; }
+.aircraft { display: block; width: 100%; height: auto; }
+
+
+
+
+
+.hangar { overflow: hidden; }
+.hangar-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 17px; }
+.hangar-footer p { color: var(--muted); font-size: .88rem; line-height: 1.4; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.cargo-tray { transition: border-color .16s, background .16s; }
+.cargo-tray.receiving { border-color: #80a9ae; background: #f3f9f1; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tray-return { margin-top: 10px; padding: 4px 0; border: 0; background: transparent; color: #285c75; font-size: .85rem; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.tray-return:disabled { color: #607482; text-decoration: none; }
+.drag-preview { position: fixed; z-index: 2; transform: translate(-50%, -50%) rotate(-5deg); display: flex; align-items: center; gap: 5px; padding: 8px; border-radius: 7px; box-shadow: 0 4px 8px #19365036; pointer-events: none; font-size: .85rem; font-weight: 750; }
+.drag-preview svg { width: 17px; }
+.ready { display: flex; align-items: center; gap: 10px; margin-top: 12px; padding: 11px 12px; border: 1px solid #b8d199; border-radius: 12px; color: #2d553a; background: #e3f1d4; animation: ready-in .35s ease-out both; }
+.ready > span { display: grid; place-items: center; width: 35px; height: 35px; flex: none; border-radius: 50%; background: #c5dfa9; }
+.ready svg { width: 21px; }
+.ready p { margin-top: 2px; font-size: .86rem; }
+@keyframes ready-in { from { opacity: 0; transform: translateY(6px) scale(.98); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 900px) {
+  .top-bar-inner, .game-shell { width: calc(100% - 40px); }
+  .game-layout { gap: 16px; }
+}
+
+@media (max-width: 740px) {
+  .game-layout { grid-template-columns: 1fr; }
+  .mission-list > h2 { min-height: auto; padding-top: 7px; }
+  .game-shell { padding-top: 26px; }
+  .airport-label { font-size: 18px; }
+
+}
+
+@media (max-width: 520px) {
+  .top-bar-inner { min-height: 62px; }
+  .wordmark { font-size: 1.08rem; gap: 8px; }
+  .brand-icon { width: 32px; height: 32px; border-radius: 8px; }
+  .brand-icon svg { width: 18px; }
+  .player-rank { font-size: .75rem; padding: 6px; gap: 5px; }
+  .player-rank svg { width: 15px; }
+}
+
+@media (max-width: 420px) {
+  .top-bar-inner, .game-shell { width: calc(100% - 26px); }
+
+  .orientation { top: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .map-plane-moving { display: none; }
+  .map-plane-still { display: block; }
+}
