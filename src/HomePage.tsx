@@ -2,6 +2,7 @@ import type { Ref } from 'react'
 import { AboutButton } from './AboutGame'
 import { SoundSettings } from './SoundSettings'
 import { CargoAircraft, HomeFlightScene, Icon } from './art'
+import { learningOutcomes } from './learningOutcomes'
 
 const steps = [
   { icon: 'crate', title: 'Load Cargo', description: 'Arrange cargo inside the aircraft.' },
@@ -11,13 +12,6 @@ const steps = [
 ] as const
 
 const overview = ['Arrange cargo.', 'Monitor aircraft balance.', 'Test flight stability.', 'Complete deliveries.']
-const objectives = [
-  'Explain centre-of-gravity changes.',
-  'Apply cargo-balancing principles.',
-  'Analyse aircraft stability.',
-  'Solve cargo-loading problems.',
-]
-
 type HomePageProps = { headingRef: Ref<HTMLHeadingElement>; onStart: () => void; onAbout: () => void }
 
 export function HomePage({ headingRef, onStart, onAbout }: HomePageProps) {
@@ -91,11 +85,11 @@ export function HomePage({ headingRef, onStart, onAbout }: HomePageProps) {
             </ul>
           </div>
         </article>
-        <article className="panel education-card education-objectives">
-          <h2><Icon name="target" />Learning Objectives</h2>
+        <article className="panel education-card education-outcomes">
+          <h2><Icon name="target" />Learning Outcomes</h2>
           <div className="education-body">
-            <ul className="education-checklist objectives-checklist">
-              {objectives.map(item => <li key={item}><span><Icon name="check" /></span>{item}</li>)}
+            <ul className="education-checklist outcomes-checklist">
+              {learningOutcomes.map(outcome => <li key={outcome.id}><span><Icon name="check" /></span>{outcome.summary}</li>)}
             </ul>
           </div>
         </article>
