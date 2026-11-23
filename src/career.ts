@@ -1,6 +1,5 @@
 import { inside, passedFlightChallenge } from './flight.ts'
 import type { FlightReport } from './flight.ts'
-import { experienceKey, mechanicNoteKey } from './learning.ts'
 import { campaign, flightConfigurationAllowed } from './mission.ts'
 import type { Mission } from './mission.ts'
 
@@ -42,8 +41,6 @@ export function resetSavedProgress(storage?: Pick<Storage, 'removeItem'>) {
   try {
     const records = storage ?? window.localStorage
     records.removeItem(progressKey)
-    records.removeItem(experienceKey)
-    campaign.forEach(mission => records.removeItem(mechanicNoteKey(mission)))
     return true
   } catch {
     return false

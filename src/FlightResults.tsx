@@ -46,21 +46,23 @@ type ReviewProps = Heading & {
   previous: FlightReport | null
   onRetry: () => void
   onReturn: () => void
-  onPractice: () => void
+  onPractice?: () => void
   onBackToCompletion?: () => void
   campaignComplete?: boolean
   failedAttempts: number
-  onDemonstration: () => void
+  onDemonstration?: () => void
+  custom?: boolean
 }
 
-export function FlightReview({ mission, report, previous, headingRef, onRetry, onReturn, onPractice, onBackToCompletion, campaignComplete, failedAttempts, onDemonstration }: ReviewProps) {
+export function FlightReview({ mission, report, previous, headingRef, onRetry, onReturn, onPractice, onBackToCompletion, campaignComplete, failedAttempts, onDemonstration, custom }: ReviewProps) {
   const assessment = instructorAssessment(report, mission.flight)
   const { configuration } = report
   const practice = report.mode === 'practice'
-  const conclusion = practice ? report.passed ? 'Practice challenge met' : 'Practice flight reviewed' : report.passed ? 'Delivery completed' : 'Delivery challenge not met'
+  const conclusion = custom ? report.passed ? 'Custom challenge completed' : 'Test flight challenge not met'
+    : practice ? report.passed ? 'Practice challenge met' : 'Practice flight reviewed' : report.passed ? 'Delivery completed' : 'Delivery challenge not met'
   return (
     <>
-      <div className="page-heading flight-heading"><div><p className={`flight-mode mode-${report.mode}`}>{practice ? 'Practice Flight · Educational Simulation' : 'Delivery Flight'}</p><h1 ref={headingRef} tabIndex={-1}>Flight Review</h1><p>{mission.title} · {mission.destination}</p></div></div>
+      <div className="page-heading flight-heading"><div><p className={`flight-mode mode-${report.mode}`}>{custom ? 'Custom Mission Test Flight' : practice ? 'Practice Flight · Educational Simulation' : 'Delivery Flight'}</p><h1 ref={headingRef} tabIndex={-1}>Flight Review</h1><p>{mission.title} · {mission.destination}</p></div></div>
       <div className="review-layout">
         <section className="panel report-chart"><h2>Altitude Record</h2><AltitudeGraph mission={mission} report={report} /></section>
         <section className="panel review-summary" aria-label="Flight measurements">
@@ -83,16 +85,16 @@ export function FlightReview({ mission, report, previous, headingRef, onRetry, o
             <p>Flight mode and pitch inputs also affect performance. Use the same mode and similar inputs to compare how balance affects the aircraft.</p>
           </section>}
           {!report.passed && <div className="retry-guidance"><strong>{failedAttempts > 1 ? 'What to try on your next flight' : 'One thing to try'}</strong><p>{retryFlightTip(report, mission, failedAttempts)}</p>
-            {failedAttempts >= 3 && <p>Watch the instructor fly this route, then try it yourself.</p>}
+            {failedAttempts >= 3 && onDemonstration && <p>Watch the instructor fly this route, then try it yourself.</p>}
           </div>}
-          <button className={`secondary-button${!report.passed && failedAttempts >= 3 ? ' lesson-hint-button' : ''}`} aria-haspopup="dialog" onClick={onDemonstration}>Show Flight Demonstration</button>
+          {onDemonstration && <button className={`secondary-button${!report.passed && failedAttempts >= 3 ? ' lesson-hint-button' : ''}`} aria-haspopup="dialog" onClick={onDemonstration}>Show Flight Demonstration</button>}
         </section>
       </div>
       <div className="flight-page-actions">
         {onBackToCompletion ? <button className="start-button flight-primary" onClick={onBackToCompletion}>{campaignComplete ? 'Back to Campaign Completion' : 'Back to Mission Accomplished'}</button> : <>
           <button className="start-button flight-primary" onClick={onRetry}>{practice ? 'Retry Practice Flight' : 'Retry Flight'}</button>
-          <button className="secondary-button" onClick={onReturn}>Return to Cargo Loading</button>
-          {!practice && <button className="secondary-button" onClick={onPractice}>Practice Flight</button>}
+          <button className="secondary-button" onClick={onReturn}>{custom ? 'Return to Mission' : 'Return to Cargo Loading'}</button>
+          {!practice && onPractice && <button className="secondary-button" onClick={onPractice}>Practice Flight</button>}
         </>}
       </div>
     </>

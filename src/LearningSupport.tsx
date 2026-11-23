@@ -97,37 +97,41 @@ export function useCargoSuggestion(mission: Mission, hold: Hold, enabled: boolea
   return useMemo(() => enabled ? nextCargoMove(mission, hold) : null, [mission, hold, enabled])
 }
 
-export function WorkedSolution({ mission, onClose, onRetry, onSkip }: { mission: Mission; onClose: () => void; onRetry: () => void; onSkip?: () => void }) {
-  const steps = useMemo(() => workedSolution(mission), [mission])
+export function WorkedHold({ mission, hold, before, activeSlot, step }: { mission: Mission; hold: Hold; before?: number; activeSlot?: number | null; step?: number }) {
+  const position = (arm: number) => aircraftPercent(mission, arm)
+  return <div className="demo-hangar hangar-floor">
+    <div className="orientation" aria-hidden="true"><span>NOSE</span><span>TAIL</span></div>
+    <div className="aircraft-board">
+      <CargoAircraft />
+      <div className="slot-bay" aria-hidden="true" style={{ left: `${position(mission.slots[0] - .5)}%`, width: `${position(mission.slots.at(-1)! + .5) - position(mission.slots[0] - .5)}%` }} />
+      {mission.slots.map((arm, slot) => {
+        const cargo = getCargo(mission, hold[slot])
+        const closed = mission.loadingConstraints.blockedSlots?.includes(slot + 1)
+        const highlighted = activeSlot === slot
+        return <span key={highlighted ? `${slot}-${step}` : slot} className={`demo-slot${cargo ? ` cargo-${cargo.colour} filled` : ''}${highlighted ? ' lesson-focus demo-placement' : ''}${closed ? ' closed' : ''}`}
+          style={{ left: `${position(arm)}%`, width: `${position(.91) - position(0)}%` }} role="img" aria-label={`Slot ${slot + 1}${cargo ? `, ${cargo.name}, ${cargo.mass} kilograms` : closed ? ', closed for maintenance' : ', empty'}`}>
+          {cargo ? <><Icon name={cargo.icon} /><span>{cargo.mass} kg</span></> : closed ? <Icon name="lock" /> : slot + 1}
+        </span>
+      })}
+    </div>
+    <AircraftCg mission={mission} inspection={inspectLoading(mission, hold)} before={before} />
+  </div>
+}
+
+export function WorkedSolution({ mission, reference, note, onClose, onRetry, onSkip }: { mission: Mission; reference?: Hold; note?: string; onClose: () => void; onRetry?: () => void; onSkip?: () => void }) {
+  const steps = useMemo(() => workedSolution(mission, reference), [mission, reference])
   const [index, setIndex] = useState(0)
   const step = steps?.[index]
   const crate = getCargo(mission, step?.cargo ?? null)
   const final = steps && index === steps.length - 1
   const current = step && inspectLoading(mission, step.hold)
   const earlier = step && inspectLoading(mission, step.before)
-  const position = (arm: number) => aircraftPercent(mission, arm)
   const status = current?.balance === 'balanced' ? 'Inside the green zone' : current?.balance === 'aft' ? 'Too close to the tail' : 'Too close to the nose'
   return <LearningDialog id="worked-solution-title" title="One way to balance the aircraft" label={mission.title} onClose={onClose}
-    actions={<><Close />{onSkip && <button className="secondary-button" onClick={onSkip}>Skip Tutorial</button>}{steps && <button className="start-button deck-primary" onClick={onRetry}>Try It Yourself</button>}</>}>
+    actions={<><Close />{onSkip && <button className="secondary-button" onClick={onSkip}>Skip Tutorial</button>}{steps && onRetry && <button className="start-button deck-primary" onClick={onRetry}>Try It Yourself</button>}</>}>
     {!step || !current || !earlier || !steps ? <p>A checked loading example is unavailable for this mission.</p> : <>
       <div className="lesson-step"><strong>Step {index + 1} of {steps.length}</strong><progress max={steps.length} value={index + 1} aria-label="Worked solution progress" /></div>
-      <div className="demo-hangar hangar-floor">
-        <div className="orientation" aria-hidden="true"><span>NOSE</span><span>TAIL</span></div>
-        <div className="aircraft-board">
-          <CargoAircraft />
-          <div className="slot-bay" aria-hidden="true" style={{ left: `${position(mission.slots[0] - .5)}%`, width: `${position(mission.slots.at(-1)! + .5) - position(mission.slots[0] - .5)}%` }} />
-          {mission.slots.map((arm, slot) => {
-            const cargo = getCargo(mission, step.hold[slot])
-            const closed = mission.loadingConstraints.blockedSlots?.includes(slot + 1)
-            const highlighted = step.slot === slot
-            return <span key={highlighted ? `${slot}-${index}` : slot} className={`demo-slot${cargo ? ` cargo-${cargo.colour} filled` : ''}${highlighted ? ' lesson-focus demo-placement' : ''}${closed ? ' closed' : ''}`}
-              style={{ left: `${position(arm)}%`, width: `${position(.91) - position(0)}%` }} role="img" aria-label={`Slot ${slot + 1}${cargo ? `, ${cargo.name}, ${cargo.mass} kilograms` : closed ? ', closed for maintenance' : ', empty'}`}>
-              {cargo ? <><Icon name={cargo.icon} /><span>{cargo.mass} kg</span></> : closed ? <Icon name="lock" /> : slot + 1}
-            </span>
-          })}
-        </div>
-        <AircraftCg mission={mission} inspection={current} before={earlier.cg} />
-      </div>
+      <WorkedHold mission={mission} hold={step.hold} before={earlier.cg} activeSlot={step.slot} step={index} />
       <div className="lesson-example" aria-live="polite">
         <div className="lesson-example-values"><span>Before <strong>{formatCg(mission, earlier.cg)} m</strong></span><span aria-hidden="true">→</span><span>After <strong>{formatCg(mission, current.cg)} m</strong></span><strong className={current.balance === 'balanced' ? 'good-balance' : 'check-balance'}>{status}</strong></div>
         {crate && step.slot !== null ? <p><span className={`cargo-symbol cargo-${crate.colour}`}><Icon name={crate.icon} /></span><span><strong>{crate.name} · {crate.mass} kg · Slot {step.slot + 1}</strong><br />{Math.abs(current.cg - earlier.cg) < .005 ? 'The balance point stays almost in the same place.' : `The balance point moves towards the ${current.cg < earlier.cg ? 'nose' : 'tail'}.`} {placementRule(mission, crate.id)}</span></p>
@@ -142,7 +146,8 @@ export function WorkedSolution({ mission, onClose, onRetry, onSkip }: { mission:
         <h3>Now Try It Yourself!</h3><p>You've seen one way to solve this challenge. Try arranging the cargo yourself. There may be other correct solutions too.</p>
       </div>}
       <ExploreMaths mission={mission} hold={step.hold} />
-      <p className="solution-exit-note">Close keeps your cargo where it was. Try It Yourself starts with an empty hold.</p>
+      {final && note && <div className="diy-note"><h3>Creator's Note</h3><p>{note}</p></div>}
+      {onRetry && <p className="solution-exit-note">Close keeps your cargo where it was. Try It Yourself starts with an empty hold.</p>}
     </>}
   </LearningDialog>
 }

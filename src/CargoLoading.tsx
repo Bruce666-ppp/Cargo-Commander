@@ -16,6 +16,7 @@ type LoadingProps = {
   headingRef: Ref<HTMLHeadingElement>; onBack: () => void; onBrief: () => void
   onFlight: (mode: FlightMode, configuration: FlightConfiguration) => void
   hintClock: HintClock; blocked?: boolean
+  custom?: { reference?: Hold; note?: string; onSaveReference?: (hold: Hold) => void }
   training?: { step: 2 | 3 | 4 | 5; move: SuggestedMove | null; beforeCg?: number; onSelect: (id: string | null) => void; onPlace: (before: Hold, after: Hold, id: string) => void }
 }
 type Destination = number | null | undefined
@@ -26,7 +27,7 @@ function dropDestination(event: PointerEvent): Destination {
   return target.dataset.cargoSlot === undefined ? null : Number(target.dataset.cargoSlot)
 }
 
-export function CargoLoading({ mission, loading, setLoading, headingRef, onBack, onBrief, onFlight, hintClock, blocked, training }: LoadingProps) {
+export function CargoLoading({ mission, loading, setLoading, headingRef, onBack, onBrief, onFlight, hintClock, blocked, training, custom }: LoadingProps) {
   const [selected, setSelected] = useState<string | null>(null)
   const [dragging, setDragging] = useState<{ id: string; x: number; y: number; destination: Destination } | null>(null)
   const dragStart = useRef<{ id: string; x: number; y: number; moved: boolean } | null>(null)
@@ -35,8 +36,9 @@ export function CargoLoading({ mission, loading, setLoading, headingRef, onBack,
   const [flight, setFlight] = useState<FlightConfiguration | null>(null)
   const [solutionOpen, setSolutionOpen] = useState(false)
   const { hold } = loading
+  const authoring = Boolean(custom?.onSaveReference)
   const inspection = inspectLoading(mission, hold)
-  const help = useLoadingHelp(hintClock, mission.hintTimes, !training && !blocked && !flight && !solutionOpen && !inspection.ready)
+  const help = useLoadingHelp(hintClock, mission.hintTimes, !authoring && !training && !blocked && !flight && !solutionOpen && !inspection.ready)
   const suggestion = useCargoSuggestion(mission, hold, help.level === 3 && !solutionOpen)
   const targetMove = training ? null : suggestion
   const activeCargo = dragging?.id ?? selected
@@ -161,8 +163,8 @@ export function CargoLoading({ mission, loading, setLoading, headingRef, onBack,
         </div>
         <div className="loading-help-actions brief-button">
           <button className="secondary-button" aria-haspopup="dialog" onClick={onBrief}><Icon name="book" />Mission Brief</button>
-          <button className={`secondary-button${help.level || help.offer ? ' lesson-hint-button' : ''}`} aria-controls="cargo-hints" onClick={help.next}><Icon name="info" />Hint</button>
-          <button className="secondary-button" aria-haspopup="dialog" onClick={showSolution}>Show Solution</button>
+          {!authoring && <><button className={`secondary-button${help.level || help.offer ? ' lesson-hint-button' : ''}`} aria-controls="cargo-hints" onClick={help.next}><Icon name="info" />Hint</button>
+          <button className="secondary-button" aria-haspopup="dialog" onClick={showSolution}>Show Solution</button></>}
         </div>
       </section>
 
@@ -253,7 +255,10 @@ export function CargoLoading({ mission, loading, setLoading, headingRef, onBack,
           </div>
         </section>
 
-        <SafetyChecklist mission={mission} inspection={inspection} onTestFlight={training ? undefined : testFlight} onPractice={!training || training.step === 5 ? practiceFlight : undefined} training={training?.step === 5} />
+        <SafetyChecklist mission={mission} inspection={inspection} onTestFlight={training || authoring ? undefined : testFlight}
+          onPractice={!custom && (!training || training.step === 5) ? practiceFlight : undefined}
+          onSaveReference={custom?.onSaveReference ? () => custom.onSaveReference?.(hold) : undefined}
+          custom={Boolean(custom)} training={training?.step === 5} />
 
         <div className="learning-panel">
           <InstructorFeedback inspection={inspection} notice={loading.notice} />
@@ -262,12 +267,13 @@ export function CargoLoading({ mission, loading, setLoading, headingRef, onBack,
 
         {dragging && draggedCrate && <div className={`named-crate cargo-${draggedCrate.colour} drag-preview`} aria-hidden="true" style={{ left: dragging.x, top: dragging.y }}><Icon name={draggedCrate.icon} />{draggedCrate.mass} kg</div>}
       </div>
-      {!training && <TakeoffClearance mission={mission} configuration={flight} dialogRef={flightDialog} onClose={() => setFlight(null)} onBegin={() => {
+      {!training && !authoring && <TakeoffClearance mission={mission} configuration={flight} dialogRef={flightDialog} onClose={() => setFlight(null)} onBegin={() => {
         if (!flight) return
         flightDialog.current?.close()
         onFlight('delivery', flight)
       }} />}
-      {solutionOpen && <WorkedSolution mission={mission} onClose={() => setSolutionOpen(false)} onRetry={() => { reset(); setSolutionOpen(false) }} onSkip={training ? onBack : undefined} />}
+      {solutionOpen && <WorkedSolution mission={mission} reference={custom?.reference} note={custom?.note}
+        onClose={() => setSolutionOpen(false)} onRetry={() => { reset(); setSolutionOpen(false) }} onSkip={training ? onBack : undefined} />}
     </>
   )
 }

@@ -34,8 +34,8 @@ export function AircraftCg({ mission, inspection, before }: { mission: Mission; 
   )
 }
 
-export function SafetyChecklist({ mission, inspection, onTestFlight, onPractice, training, id = 'safety-heading' }: {
-  mission: Mission; inspection: Inspection; onTestFlight?: () => void; onPractice?: () => void; training?: boolean; id?: string
+export function SafetyChecklist({ mission, inspection, onTestFlight, onPractice, onSaveReference, custom, training, id = 'safety-heading' }: {
+  mission: Mission; inspection: Inspection; onTestFlight?: () => void; onPractice?: () => void; onSaveReference?: () => void; custom?: boolean; training?: boolean; id?: string
 }) {
   const { requiredCargoOk, requiredLoaded, requiredTotal, payloadOk, cargoMass, cg, balance, positionsOk, ready } = inspection
   const checks = [
@@ -65,14 +65,15 @@ export function SafetyChecklist({ mission, inspection, onTestFlight, onPractice,
           <div><strong>{check.title}</strong><span className="sr-only">{check.state === 'passed' ? 'Passed' : check.state === 'pending' ? 'Incomplete' : 'Requires adjustment'}</span><p>{check.detail}</p></div>
         </li>)}
       </ol>
-      {(onTestFlight || onPractice) && <div className="flight-actions">
+      {(onTestFlight || onPractice || onSaveReference) && <div className="flight-actions">
         <div role="status">
           {ready ? <div className="ready flight-status-ready"><span><Icon name="check" /></span><strong>Mission Ready</strong></div> : <p id="flight-outstanding">{outstanding}</p>}
         </div>
         {onTestFlight && <button type="button" className="start-button test-flight-button" data-audio-custom="" aria-describedby={ready ? undefined : 'flight-outstanding'} disabled={!ready} onClick={onTestFlight}><Icon name="plane" />Test Flight</button>}
-        {onTestFlight && <p className="flight-mode-explanation">Test Flight leads to the official delivery. Practice Flight lets you compare how loads respond, including CG outside the official range.</p>}
+        {onTestFlight && <p className="flight-mode-explanation">{custom ? 'Test Flight checks whether you can complete this custom challenge with the current load.' : 'Test Flight leads to the official delivery. Practice Flight lets you compare how loads respond, including CG outside the official range.'}</p>}
+        {onSaveReference && <button type="button" className="start-button test-flight-button" data-tutorial="save-reference" disabled={!ready} onClick={onSaveReference}><Icon name="check" />Save Reference Solution</button>}
         {onPractice && <button type="button" data-tutorial="practice-flight" className={training ? 'start-button test-flight-button' : 'secondary-button practice-launch'} disabled={training ? !ready : !inspection.practiceReady} onClick={onPractice}>Practice Flight</button>}
-        {!training && !inspection.practiceReady && <p className="practice-requires">Practice requires all supplies, a valid payload and permitted slots.</p>}
+        {onPractice && !training && !inspection.practiceReady && <p className="practice-requires">Practice requires all supplies, a valid payload and permitted slots.</p>}
       </div>}
     </section>
   )
@@ -117,7 +118,7 @@ export function ExploreMaths({ mission, hold }: { mission: Mission; hold: Hold }
   return (
     <details className="science-details">
       <summary>Explore the Maths — Optional</summary>
-      <p>When two crates travel the same distance and the total load stays the same, moving a 30 kg crate shifts the balance point three times as far as moving a 10 kg crate.</p>
+      {mission.id !== 'diy-mission' && <p>When two crates travel the same distance and the total load stays the same, moving a 30 kg crate shifts the balance point three times as far as moving a 10 kg crate.</p>}
       <ol><li>Multiply each mass by its distance from the nose reference point. Include the empty aircraft.</li><li>Add those results together.</li><li>Divide by the total mass of the aircraft and cargo.</li></ol>
       <div className="math-table"><table><caption>Using the load shown above</caption>
         <thead><tr><th scope="col">Item</th><th scope="col">Mass (kg)</th><th scope="col">Distance (m)</th><th scope="col">Mass × distance</th></tr></thead>
