@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 320" role="img" aria-labelledby="title description">
+  <title id="title">Cargo Commander — The Balance Mission</title>
+  <desc id="description">An aircraft above the Windward Isles. HKU IDAT7220 individual STEM educational game.</desc>
+  <defs>
+    <linearGradient id="ocean"><stop stop-color="#172f48"/><stop offset="1" stop-color="#22536b"/></linearGradient>
+    <linearGradient id="airframe" x2="0" y2="1"><stop stop-color="#fffdf4"/><stop offset="1" stop-color="#b9d4db"/></linearGradient>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0v24" fill="none" stroke="#bbdfe8" stroke-opacity=".15"/></pattern>
+    <clipPath id="airspace"><circle cx="820" cy="161" r="138"/></clipPath>
+    <g id="island">
+      <path d="M9 44Q-4 25 23 14l23-5Q67-7 97 1l14 9q22 2 30 16 9 20-23 30l-27 1-14 9q-20 8-40-4L17 58Z" fill="#9fbe99" stroke="#d6e3bf" stroke-width="3"/>
+      <path d="M17 35q7-12 32-13m42 20q14 4 29-5" fill="none" stroke="#729d84" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="m31 28 4-7 4 7Zm8 2 5-9 5 9Zm55-13 4-7 5 7Z" fill="#5d896f"/>
+      <g transform="translate(70 39) rotate(-13)"><rect x="-31" y="-5" width="62" height="10" rx="2" fill="#345766" stroke="#e6ecd4"/><path d="M-24 0h48" stroke="#e6ecd4" stroke-dasharray="4 4"/></g>
+    </g>
+  </defs>
+  <rect width="1120" height="320" rx="24" fill="url(#ocean)"/>
+  <circle cx="820" cy="161" r="138" fill="#49849d" fill-opacity=".42" stroke="#9ed1dd" stroke-opacity=".36"/>
+  <path d="M680 20h280v282H680z" fill="url(#grid)" clip-path="url(#airspace)"/>
+  <g fill="none" stroke="#9ed1dd" stroke-opacity=".45">
+    <circle cx="820" cy="161" r="103"/><circle cx="820" cy="161" r="65"/>
+    <path d="M820 24v274M681 161h278M688 243q200 102 323-122" stroke-dasharray="3 9" stroke-linecap="round"/>
+  </g>
+  <use href="#island" transform="translate(615 218) rotate(-7) scale(.92)"/>
+  <use href="#island" transform="translate(996 103) rotate(10) scale(.65)"/>
+  <g transform="translate(616 29) scale(.53) rotate(14 385 208)" stroke="#466d85" stroke-width="3" stroke-linejoin="round">
+    <path d="m260 177 73-130q7-12 20-12h30l-4 147Zm0 62 73 130q7 12 20 12h30l-4-147ZM555 185l53-83q5-7 12-7h20l-15 98Zm0 46 53 83q5 7 12 7h20l-15-98Z" fill="url(#airframe)"/>
+    <path d="M347 37q2-2 8-2h28l-1 17h-45ZM347 379q2 2 8 2h28l-1-17h-45Z" fill="#73a7bb"/>
+    <path d="M269 91h58l24 11v16l-24 10h-58q-16 0-16-18t16-19Zm0 197h58l24 10v16l-24 11h-58q-16 0-16-18t16-19Z" fill="#d9e9e7"/>
+    <path d="M62 208c13-23 43-43 80-43h409q46 0 97 23l49 20-49 20q-51 23-97 23H142c-37 0-67-20-80-43Z" fill="url(#airframe)"/>
+    <path d="M107 181q16-7 43-7h393q37 0 80 16m-516 45q16 7 43 7h393q37 0 80-16" fill="none" stroke="#71a5b6"/>
+    <path d="M97 191q13-9 24-10l-5 16-14 7Zm0 34q13 9 24 10l-5-16-14-7Zm7-18 12-5v12l-12-5Z" fill="#244d6b" stroke="none"/>
+  </g>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect x="52" y="37" width="142" height="31" rx="8" fill="#d7efac"/>
+    <text x="123" y="58" text-anchor="middle" fill="#172f48" font-size="15" font-weight="750">HKU · IDAT7220</text>
+    <text x="49" y="134" fill="#fffef8" font-size="67" font-weight="800" letter-spacing="-3">Cargo</text>
+    <text x="49" y="202" fill="#fffef8" font-size="67" font-weight="800" letter-spacing="-3">Commander</text>
+    <text x="53" y="245" fill="#c1e6ec" font-size="29" font-weight="700">The Balance Mission</text>
+    <text x="54" y="281" fill="#e0eee9" font-size="18">Individual STEM Educational Game</text>
+  </g>
+</svg>
