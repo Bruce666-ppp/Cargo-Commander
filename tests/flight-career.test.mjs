@@ -4,17 +4,24 @@ import { flightConfigurationAllowed, islandSupplyRun as mission, prepareFlightCo
 import { advanceFlight, aircraftResponse, flightReport, flightStep, instructorAssessment, newFlight, passedFlightChallenge, remainingFlightTime } from '../src/flight.ts'
 import { emptyProgress, networkSummary, readProgress, recordDelivery, resetSavedProgress, writeProgress } from '../src/career.ts'
 
-test('campaign reset clears career and onboarding data while preserving audio settings', () => {
+test('campaign reset clears the official career record and preserves other game data', () => {
   const audio = JSON.stringify({ muted: true, music: 0.4 })
   const records = new Map([
     ['cargo-commander.career', JSON.stringify(emptyProgress())],
     ['cargo-commander.experience', 'experienced'],
     [`cargo-commander.mechanic.${mission.id}`, 'seen'],
     ['cargo-commander.audio', audio],
+    ['cargo-commander.diy', '{"version":1,"architect":true,"missions":[]}'],
     ['another-game', 'saved'],
   ])
   assert.equal(resetSavedProgress({ removeItem: key => records.delete(key) }), true)
-  assert.deepEqual([...records], [['cargo-commander.audio', audio], ['another-game', 'saved']])
+  assert.deepEqual([...records], [
+    ['cargo-commander.experience', 'experienced'],
+    [`cargo-commander.mechanic.${mission.id}`, 'seen'],
+    ['cargo-commander.audio', audio],
+    ['cargo-commander.diy', '{"version":1,"architect":true,"missions":[]}'],
+    ['another-game', 'saved'],
+  ])
   assert.equal(resetSavedProgress({ removeItem: () => { throw new Error('storage unavailable') } }), false)
 })
 

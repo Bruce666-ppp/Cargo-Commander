@@ -3,10 +3,10 @@ import { readFileSync } from 'node:fs'
 import { test } from 'node:test'
 import { learningAudience, learningOutcomeIntro, learningOutcomes } from '../src/learningOutcomes.ts'
 
-test('the public documentation repeats the four in-game learning outcomes', () => {
+test('the public documentation repeats the five in-game learning outcomes', () => {
   const readme = readFileSync(new URL('../README.md', import.meta.url), 'utf8')
   const design = readFileSync(new URL('../GAME_DESIGN.md', import.meta.url), 'utf8')
-  assert.deepEqual(learningOutcomes.map(({ id }) => id), ['LO1', 'LO2', 'LO3', 'LO4'])
+  assert.deepEqual(learningOutcomes.map(({ id }) => id), ['LO1', 'LO2', 'LO3', 'LO4', 'LO5'])
   for (const document of [readme, design]) {
     assert.ok(document.includes(learningOutcomeIntro))
     for (const { category, title, statement } of learningOutcomes) {
