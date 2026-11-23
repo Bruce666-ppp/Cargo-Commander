@@ -16,12 +16,25 @@ Cargo Commander is an interactive STEM aviation game for learners new to physics
 | Centre of Gravity and Mass Distribution | **Science — Physics.** Observe how each crate's mass and distance from the nose change the balance point. |
 | Aircraft Stability and Flight Control | **Engineering — Aerospace Engineering.** Investigate how cargo distribution affects simulated response to pitch inputs and gusts. |
 
-### Learning objectives
+### Learning Outcomes (ABCD Model)
 
-1. **Explain how cargo mass and position influence an aircraft's centre of gravity.** Compare the CG shift when moving two different masses by the same distance.
-2. **Arrange cargo to achieve a specified centre-of-gravity range.** Use the hold, manifest and live safety checklist to prepare a delivery.
-3. **Analyse how different centre-of-gravity configurations affect aircraft stability and controllability.** Fly comparable loads in Practice and inspect the altitude traces, mode, elapsed time and corridor performance.
-4. **Apply flight-test feedback to solve cargo-loading problems under given constraints.** Return to the hold after reviewing a flight, revise the load and test the result.
+By the end of the game, beginner STEM learners aged 10–14 will be able to:
+
+1. **LO1 · Factual Learning — Identify Aircraft Balance Information.** Using the cargo inventory and aircraft balance indicators, correctly identify the cargo masses, current centre of gravity, and permitted CG range.
+2. **LO2 · Conceptual Learning — Understand How Cargo Affects Balance.** By comparing equal-distance movements of heavy and light cargo while keeping the total loaded mass unchanged, correctly explain the direction of CG movement and why heavier cargo produces a greater change.
+3. **LO3 · Procedural Learning — Load and Balance an Aircraft.** Using the cargo-loading interface and real-time CG feedback, arrange all required cargo within the specified CG range while satisfying all loading safety requirements.
+4. **LO4 · Problem-solving Learning — Complete a Cargo Delivery Challenge.** Given mission-specific cargo restrictions and flight-test feedback, develop and refine a cargo-loading and flight-control strategy that satisfies all mission requirements and achieves a successful delivery.
+
+The shared audience above is **A** for each outcome. The game links the observable behaviour (**B**), its conditions (**C**) and the performance standard (**D**) to hands-on activities:
+
+| Outcome | B · Behaviour | C · Condition | D · Degree | In the game |
+| --- | --- | --- | --- | --- |
+| LO1 | Identify cargo masses, current CG and permitted range. | Cargo inventory and balance indicators. | Identify all three types of information correctly. | Cargo labels, live CG and Safety Checklist. |
+| LO2 | Explain the direction and relative size of CG changes. | Equal-distance moves with total loaded mass fixed. | Correctly explain the direction and why heavier cargo has the greater effect. | The Training Centre compares moving 30 kg and 10 kg crates by one slot each. |
+| LO3 | Arrange all required cargo. | Loading interface and live CG feedback. | Achieve the target CG and pass the loading safety checks. | The Safety Checklist gates official departure. |
+| LO4 | Develop and refine a loading and flight strategy. | Mission restrictions and flight-test feedback. | Meet the mission requirements and deliver successfully. | Practice Flight, Flight Review and official deliveries. |
+
+About Game presents all four outcomes with expandable ABCD breakdowns. [See the constructive alignment and assessment limits.](GAME_DESIGN.md#constructive-alignment)
 
 ## From manifest to delivery
 
@@ -58,6 +71,8 @@ The **goal** is to deliver supplies safely. The **rules** enforce the manifest, 
 
 In the **MDA framework**, the loading and flight **mechanics** encourage the **dynamics** of planning, experimentation and correction. The illustrated islands, cloud reveals, simulated flight and delivery feedback support the intended **aesthetics** of discovery, challenge and achievement. [Read the educational and game design rationale.](GAME_DESIGN.md)
 
+The [educational design notes](GAME_DESIGN.md#educational-frameworks) map the development process retrospectively to ADDIE and explain how the scenarios, iterative 5E activities, and Bloom's cognitive levels relate to those outcomes. In-game checks record task performance. The optional teacher questions in the design notes give learners a chance to explain their thinking aloud.
+
 ## Gameplay gallery
 
 | Home | Mission Centre |
@@ -73,6 +88,11 @@ In the **MDA framework**, the loading and flight **mechanics** encourage the **d
 | **Worked Solution** | **Mobile Gameplay** |
 | ![Worked example with a crate, balance measurement and step controls](docs/screenshots/worked-solution.jpg) | <img src="docs/screenshots/mobile-gameplay.jpg" alt="Cargo Loading at a 390-pixel-wide emulated mobile viewport" width="260"> |
 | A worked example with before and after CG readings. | A 390 CSS-pixel browser viewport showing the wrapped title and enlarged cargo slots. |
+| **Learning Outcomes in About Game** | **Expanded ABCD Breakdown** |
+| ![The four complete Learning Outcomes in About Game](docs/screenshots/learning-outcomes.jpg) | ![Expanded ABCD components for a Learning Outcome](docs/screenshots/abcd-breakdown.jpg) |
+| All four formal statements are displayed by default. | Audience, Behaviour, Condition and Degree are available in the expandable details. |
+
+[View the expanded Pedagogical Frameworks panel.](docs/screenshots/pedagogical-frameworks.jpg)
 
 ## Controls
 
