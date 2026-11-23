@@ -9,6 +9,7 @@
 .diy-welcome h2 { margin: 10px 0 4px; color: var(--paper); }
 .diy-welcome p { max-width: 68ch; color: #e7f0ef; }
 .diy-welcome .diy-actions { margin-top: 15px; }
+.diy-studio .diy-welcome .diy-actions > .secondary-button { color: #153149; }
 .diy-unlock { display: flex; align-items: flex-start; gap: 6px; margin-top: 10px; }
 .diy-unlock svg { flex: none; width: 16px; }
 .diy-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
