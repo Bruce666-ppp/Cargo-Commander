@@ -1,5 +1,6 @@
 import type { Ref } from 'react'
 import { Icon } from './art'
+import { learningAudience, learningOutcomeIntro, learningOutcomes } from './learningOutcomes'
 
 const attributes = [
   { icon: 'target', title: 'Goal', description: 'Complete safe cargo delivery missions.' },
@@ -44,20 +45,36 @@ export function AboutGame({ dialogRef, onClose }: { dialogRef: Ref<HTMLDialogEle
             </ul>
           </section>
           <section className="about-section">
-            <h3><Icon name="crate" />STEM Activities</h3>
-            <ul>
-              <li>Arrange cargo of different masses to achieve a specified centre-of-gravity range.</li>
-              <li>Conduct simulated flight tests to investigate how cargo distribution affects aircraft stability and controllability.</li>
-            </ul>
+            <h3><Icon name="atom" />Branches of STEM</h3>
+            <dl className="learning-support">
+              <div><dt>Science — Physics</dt><dd>Understanding the relationship between mass, position, and centre of gravity.</dd></div>
+              <div><dt>Engineering — Aerospace Engineering</dt><dd>Applying physical principles to aircraft loading, stability, flight control, and engineering problem-solving.</dd></div>
+            </dl>
           </section>
         </div>
 
-        <section className="about-section">
-          <h3><Icon name="atom" />Branches of STEM</h3>
-          <dl className="about-branches">
-            <div><dt>Science — Physics</dt><dd>Understanding the relationship between mass, position, and centre of gravity.</dd></div>
-            <div><dt>Engineering — Aerospace Engineering</dt><dd>Applying physical principles to aircraft loading, stability, flight control, and engineering problem-solving.</dd></div>
-          </dl>
+        <section className="about-section about-outcomes" aria-labelledby="about-outcomes-title">
+          <h3 id="about-outcomes-title"><Icon name="target" />Learning Outcomes (LOs)</h3>
+          <p className="outcome-subtitle">Structured using the ABCD Model</p>
+          <p>{learningOutcomeIntro}</p>
+          <ol className="outcome-list" role="list">
+            {learningOutcomes.map(outcome => (
+              <li className="outcome-card" key={outcome.id}>
+                <p className="outcome-category">{outcome.id} · {outcome.category}</p>
+                <h4>{outcome.title}</h4>
+                <p>{outcome.statement}</p>
+                <details className="outcome-breakdown">
+                  <summary aria-label={`View ABCD Breakdown for ${outcome.id}`}>View ABCD Breakdown</summary>
+                  <dl>
+                    <div><dt>A — Audience</dt><dd>{learningAudience}</dd></div>
+                    <div><dt>B — Behaviour</dt><dd>{outcome.behaviour}</dd></div>
+                    <div><dt>C — Condition</dt><dd>{outcome.condition}</dd></div>
+                    <div><dt>D — Degree</dt><dd>{outcome.degree}</dd></div>
+                  </dl>
+                </details>
+              </li>
+            ))}
+          </ol>
         </section>
 
         <section className="about-section">
@@ -66,14 +83,11 @@ export function AboutGame({ dialogRef, onClose }: { dialogRef: Ref<HTMLDialogEle
         </section>
 
         <section className="about-section">
-          <h3><Icon name="target" />Learning Objectives</h3>
-          <p>By the end of the game, players will be able to:</p>
-          <ol>
-            <li>Explain how cargo mass and position influence an aircraft's centre of gravity.</li>
-            <li>Arrange cargo to achieve a specified centre-of-gravity range.</li>
-            <li>Analyse how different centre-of-gravity configurations affect aircraft stability and controllability.</li>
-            <li>Apply flight-test feedback to solve cargo-loading problems under given constraints.</li>
-          </ol>
+          <h3><Icon name="crate" />STEM Activities</h3>
+          <ul>
+            <li>Arrange cargo of different masses to achieve a specified centre-of-gravity range.</li>
+            <li>Conduct simulated flight tests to investigate how cargo distribution affects aircraft stability and controllability.</li>
+          </ul>
         </section>
 
         <section className="about-section">
@@ -104,6 +118,21 @@ export function AboutGame({ dialogRef, onClose }: { dialogRef: Ref<HTMLDialogEle
             <div><dt>Retry &amp; Reflection</dt><dd>Review your flight, watch a guided flight demonstration, and try the challenge yourself.</dd></div>
           </dl>
         </section>
+
+        <details className="about-section pedagogy-panel">
+          <summary>Pedagogical Frameworks</summary>
+          <dl className="learning-support">
+            <div>
+              <dt>5E Learning Model</dt>
+              <dd>
+                <p className="inquiry-sequence">Engage → Explore → Explain → Elaborate → Evaluate</p>
+                <p>Island delivery briefs set the challenge. Players try different cargo positions, use instructor feedback to explain the changes, apply what they learn when slots close or gusts strengthen, and review their flight before trying again.</p>
+              </dd>
+            </div>
+            <div><dt>Scenario-Based Learning</dt><dd>As the loadmaster delivering supplies to Mercy Cay, the player must find a powered slot for the clinic's medical case while keeping the aircraft balanced.</dd></div>
+            <div><dt>Constructive Alignment</dt><dd>Each outcome connects to an action and feedback. For example, players practise safe loading with the live balance gauge and check whether the required cargo, payload, slots, and CG pass inspection.</dd></div>
+          </dl>
+        </details>
 
         <p className="simulation-note"><Icon name="info" />This game uses simplified educational models to demonstrate centre of gravity and aircraft stability. It is not intended for real-world aircraft loading or flight training.</p>
       </div>

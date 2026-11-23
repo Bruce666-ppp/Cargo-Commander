@@ -97,7 +97,7 @@
 .education-card h2 svg { width: 18px; flex: none; }
 .education-branches h2 { background: #dcebf3; }
 .education-overview h2 { background: #e0eee5; color: #2c5c48; }
-.education-objectives h2 { background: #f0ead5; color: #655227; }
+.education-outcomes h2 { background: #f0ead5; color: #655227; }
 .education-body { padding: 12px 13px 14px; }
 .education-detail + .education-detail { margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--border); }
 .branch-detail { display: flex; align-items: flex-start; gap: 8px; }
@@ -107,10 +107,10 @@
 .education-checklist { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; font-size: .9rem; line-height: 1.35; }
 .education-checklist li { display: flex; align-items: flex-start; gap: 7px; }
 .education-checklist svg { flex: none; width: 15px; margin-top: 2px; color: #447354; }
-.objectives-checklist { gap: 9px; }
-.objectives-checklist li { align-items: center; }
-.objectives-checklist li > span { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #e6eed8; }
-.objectives-checklist svg { margin: 0; width: 13px; }
+.outcomes-checklist { gap: 9px; }
+.outcomes-checklist li { align-items: center; }
+.outcomes-checklist li > span { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #e6eed8; }
+.outcomes-checklist svg { margin: 0; width: 13px; }
 
 .overview-preview { height: 58px; display: grid; place-content: center; overflow: hidden; margin-block: 7px; border: 1px solid #cee0dc; border-radius: 8px; background-color: #e6f1ef; background-image: linear-gradient(90deg, #fff9 1px, transparent 1px), linear-gradient(#fff9 1px, transparent 1px); background-size: 12px 12px; }
 .overview-aircraft { position: relative; width: 122px; }
@@ -149,7 +149,7 @@ body:has(.about-dialog[open]) { overflow: hidden; }
 .about-dismiss svg { width: 17px; }
 .about-body { display: grid; gap: 10px; min-height: 0; padding: 13px 20px; overflow: auto; overscroll-behavior: contain; scrollbar-gutter: stable; color: #394f60; font-size: .95rem; line-height: 1.45; }
 .about-body:focus-visible { outline: 2px solid #6898b0; outline-offset: -3px; }
-.about-intro, .about-attributes, .about-branches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.about-intro, .about-attributes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .about-section { padding: 11px 13px; border: 1px solid #d6e2df; border-radius: 11px; background: #f1f5f1; }
 .about-intro .about-section { background: #edf4f5; }
 .about-section h3 { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; color: #244e68; font-size: 1rem; }
@@ -166,6 +166,32 @@ body:has(.about-dialog[open]) { overflow: hidden; }
 .about-framework li + li { margin-top: 0; }
 .about-framework li:not(:last-child)::after { right: -18px; width: 13px; }
 .learning-support > div + div { margin-top: 6px; }
+.outcome-subtitle, .outcome-category, .inquiry-sequence { color: #32665a; font-weight: 750; }
+.outcome-subtitle { margin-bottom: 4px; }
+.about-outcomes .outcome-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 9px;
+  margin: 9px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.outcome-list .outcome-card {
+  margin: 0;
+  padding: 9px 11px 6px;
+  border: 1px solid #d6e2df;
+  border-radius: 9px;
+  background: var(--paper);
+}
+.outcome-category { font-size: .84rem; }
+.outcome-card h4 { margin-block: 2px 4px; }
+.outcome-breakdown { margin-top: 4px; border-top: 1px solid #d6e2df; }
+.outcome-breakdown summary, .pedagogy-panel summary { cursor: pointer; color: #244e68; font-weight: 750; }
+.outcome-breakdown summary { padding-block: 7px; font-size: .88rem; }
+.outcome-breakdown dl, .pedagogy-panel dl { margin-top: 5px; }
+.outcome-breakdown dl { display: grid; gap: 5px; padding-bottom: 5px; font-size: .88rem; }
+.inquiry-sequence { margin-block: 2px 4px; }
 .simulation-note { display: flex; align-items: flex-start; gap: 7px; padding: 2px 4px; color: var(--muted); font-size: .86rem; }
 .simulation-note svg { flex: none; width: 16px; margin-top: 2px; }
 .about-footer { justify-content: flex-end; border-top: 1px solid var(--border); padding-block: 10px; }
@@ -205,7 +231,7 @@ body:has(.about-dialog[open]) { overflow: hidden; }
 @media (max-width: 550px) {
   .education-grid { grid-template-columns: minmax(0, 1fr); }
   .about-header, .about-body, .about-footer { padding-inline: 11px; }
-  .about-intro, .about-branches, .about-section .about-framework { grid-template-columns: minmax(0, 1fr); }
+  .about-intro, .about-outcomes .outcome-list, .about-section .about-framework { grid-template-columns: minmax(0, 1fr); }
   .about-section .about-framework { gap: 18px; }
   .about-framework li:not(:last-child)::after { top: auto; bottom: -16px; right: calc(50% - 6px); transform: rotate(90deg); }
   .about-attribute { flex-direction: column; }

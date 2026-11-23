@@ -67,3 +67,17 @@ On 23 November 2026, the [GitHub Actions build and deploy jobs](https://github.c
 ## Known limitations
 
 Progress is specific to the browser and origin. The longitudinal model, flight response, gusts and acceleration modes are educational simplifications. User testing was technical and functional. It did not measure learner engagement, conceptual mastery or learning gains.
+
+## Phase 7.1–7.2 educational alignment regression
+
+The 23 November 2026 candidate passed **39 automated tests** and the Vite production build. The new test checks that the four learning outcome titles, categories, complete statements and ABCD elements match across the game, README and design document. The existing campaign, loading, flight, audio, saved-progress and teaching-support tests passed again.
+
+| Check | Observed result |
+| --- | --- |
+| Home and About Game | Home displayed four short summaries. About Game displayed all four complete outcomes and their categories directly after the STEM topics and branches. All four ABCD breakdowns and Pedagogical Frameworks opened and closed. The complete statements remained visible when the panels were closed. |
+| Keyboard and responsive layout | The Chromium desktop check used 1280×720. The responsive checks used frame viewports of 320×568, 390×844, 768×1024 and 844×390. The modal and document had no horizontal overflow. Keyboard input toggled the ABCD details, and the pedagogy panel remained usable at narrow widths. |
+| Access during gameplay | Opened the updated About Game from both Mission Centre and active Cargo Loading. The game returned to the current screen on close, with the cargo layout retained. |
+| Existing gameplay and persistence | Advanced the spotlight to the balance explanation, opened a hint and stepped through a worked solution. Completed Mission 01 in Cruise with 100% corridor time in 30.0 s, receiving Junior Loadmaster, Balance Basics and the Harbor Base–Pinehaven route. Reload preserved the award, unlock and changed music volume. Automated tests covered all six missions. |
+| Screenshot evidence | Captures came from the running application. See [Home](docs/screenshots/home.jpg), [Learning Outcomes](docs/screenshots/learning-outcomes.jpg), [ABCD breakdown](docs/screenshots/abcd-breakdown.jpg) and [Pedagogical Frameworks](docs/screenshots/pedagogical-frameworks.jpg). |
+
+These checks verify functionality and content consistency. They do not measure learner understanding or learning gains. The optional teacher questions are documented assessment opportunities and have not been administered. Independent subject-matter review, physical mobile devices, Safari and full screen-reader testing remain open.
