@@ -170,3 +170,7 @@ The 63 automated tests and the TypeScript/Vite production build passed. The test
 | Narrow layout | The complete map showed all seven islands in its two-column layout at a 375 CSS-pixel content width without horizontal overflow. |
 
 See the [updated gallery](README.md#gameplay-gallery) for browser captures from the revised game.
+
+### Public deployment
+
+On 24 November 2026, the [Pages workflow](https://github.com/Bruce666-ppp/IDAT7220FinalGame/actions/runs/45353455879) succeeded for [`50891e9`](https://github.com/Bruce666-ppp/IDAT7220FinalGame/commit/50891e97def091a40cd4b06fd3289091d3413716). The [public game](https://bruce666-ppp.github.io/IDAT7220FinalGame/) and its JavaScript, CSS and audio assets returned HTTP 200 without authentication. All three asset SHA-256 hashes matched the local production build. In Chromium, Start Game opened the seven-island map with the revised Harbor Base water tower and one available route to Pinehaven. That check captured no error-level console messages.
