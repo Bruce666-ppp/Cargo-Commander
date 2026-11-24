@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react'
 import type { Ref } from 'react'
 import { Icon } from './art'
 import { gameAudio } from './audio'
+import { certifications } from './career'
 import { districtFor } from './districts'
 import { DistrictScene } from './IslandDevelopment'
+import { islandSites } from './map-layout'
 import { campaign, islandSupplyRun } from './mission'
 import type { Mission } from './mission'
 import { earnedGrowth, growthMilestones, money } from './rewards'
@@ -29,10 +31,10 @@ export function DevelopmentGallery({ completed, onBack }: { completed: string[];
   return <>
     <div className="page-heading campaign-heading"><div><h1>Island Development</h1><p>{completed.length} of 6 districts developed across the Windward Isles.</p></div>
       <button className="secondary-button" onClick={onBack}>Back to Mission Centre</button></div>
-    <div className="development-gallery">{campaign.map(mission => {
+    <div className="development-gallery">{campaign.map((mission, index) => {
       const district = districtFor(mission)
       const built = completed.includes(mission.id)
-      return <article className="panel development-card" key={mission.id}><DistrictScene district={district} developed={built} />
+      return <article className="panel development-card" key={mission.id}><DistrictScene site={islandSites[index + 1]} district={district} developed={built} />
         <div><p className="diy-status">Mission {mission.number} · {built ? 'Developed' : 'Awaiting delivery'}</p><h2>{district.name}</h2><p>{district.story}</p></div>
       </article>
     })}</div>
@@ -43,6 +45,8 @@ export function MissionReward({ mission, award, first, headingRef, final = false
   mission: Mission; award: DeliveryAward; first: boolean; headingRef?: Ref<HTMLHeadingElement>; final?: boolean; training?: boolean
 }) {
   const district = districtFor(mission)
+  const site = islandSites[campaign.indexOf(mission) + 1]
+  const certification = first && !training && certifications.find(entry => entry.id === mission.career.certificationId)
   const [reduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [elapsed, setElapsed] = useState(first && !reduced ? 0 : 4550)
   const [skipped, setSkipped] = useState(false)
@@ -50,10 +54,12 @@ export function MissionReward({ mission, award, first, headingRef, final = false
   const animating = !skipped && elapsed < duration
   const amount = award.income + award.bonus
   const count = animating ? Math.round(amount * Math.max(0, Math.min(1, (elapsed - 2450) / 1450))) : amount
+  const phase = !animating ? 'District complete' : elapsed < 520 ? 'Surveying the site' : elapsed < 920 ? 'Laying foundations' :
+    elapsed < 2470 ? 'Building the district' : elapsed < 2900 ? 'Connecting roads and services' : 'District opening'
 
   useEffect(() => {
     if (!first) return
-    gameAudio.celebrateDistrict({ buildings: district.facilities.length, bonus: award.bonus > 0, final, reduced })
+    gameAudio.celebrateDistrict({ bonus: award.bonus > 0, final, reduced })
     return () => gameAudio.stop('achievement')
   }, [first, district, award.bonus, final, reduced])
 
@@ -84,13 +90,14 @@ export function MissionReward({ mission, award, first, headingRef, final = false
         <p className="reward-kicker">Total Reward</p>
         <strong className="reward-amount" aria-hidden="true">{money(count)}</strong><span className="sr-only">{money(amount)}</span>
         {award.milestone && <p className="reward-milestone"><Icon name="rank" />Airline Growth · {award.milestone}</p>}
+        {certification && <p className="reward-milestone"><Icon name="wings" />STEM Certification · {certification.title}</p>}
         {!training && !amount && <p>This route and its development are already recorded.</p>}
       </div>
       <div className="reward-district"><h2>Island Development · {district.name}</h2>
         <div className="district-comparison">
-          <figure><DistrictScene district={district} developed={false} /><figcaption>Before development</figcaption></figure>
-          <figure><DistrictScene district={district} developed animate={animating} />
-            <figcaption>{animating ? elapsed < 900 ? 'Surveying the site' : elapsed < 3250 ? 'Building the district' : 'District opening' : 'District complete'}</figcaption></figure>
+          <figure><DistrictScene site={site} district={district} developed={false} /><figcaption>Before development</figcaption></figure>
+          <figure><DistrictScene site={site} district={district} developed animate={animating} />
+            <figcaption>{phase}</figcaption></figure>
         </div><p>{district.story}</p>
       </div>
     </div>

@@ -200,11 +200,11 @@ export function CampaignComplete({ progress, celebrate, headingRef, onWall, onCo
       <div className="flight-page-actions campaign-actions"><button className="start-button flight-primary" aria-haspopup="dialog" onClick={onWall}>View Achievement Wall</button><button className="secondary-button" onClick={onContinue}>Return to Mission Centre</button><button className="secondary-button" onClick={onReplay}>Replay Missions</button><button className="secondary-button" onClick={onReport}>View Flight Report</button></div>
       <div className="game-layout campaign-summary">
         <section className="panel map-panel" aria-labelledby="completed-map"><div className="panel-heading"><span className="panel-icon"><Icon name="pin" /></span><h2 id="completed-map">The Windward Isles</h2></div><FlightMap progress={progress} />
-          <dl className="campaign-totals"><div><dt>Completed missions</dt><dd>{deliveries}</dd></div><div><dt>Established routes</dt><dd>{routes}</dd></div><div><dt>Connected airports</dt><dd>{airports}</dd></div><div><dt>Earned certifications</dt><dd>{progress.certificationIds.length}</dd></div></dl>
+          <dl className="campaign-totals"><div><dt>Completed missions</dt><dd>{deliveries}</dd></div><div><dt>Established routes</dt><dd>{routes}</dd></div><div><dt>Connected islands</dt><dd>{airports}</dd></div><div><dt>Earned certifications</dt><dd>{progress.certificationIds.length}</dd></div></dl>
         </section>
         <section className="panel review-instructor campaign-learning"><h2>What You Learned</h2>
           <h3>Centre of Gravity and Mass Distribution</h3><p>You used cargo mass and distance from the datum to balance the aircraft while meeting payload and slot limits.</p>
-          <h3>Aircraft Stability and Flight Control</h3><p>You observed how the load and simulated gusts affect aircraft stability, then used pitch corrections to stay in the flight corridor.</p>
+          <h3>Aircraft Stability and Flight Control</h3><p>You observed how the load and simulated gusts affect aircraft stability, and how pitch corrections help keep a flight in the corridor.</p>
         </section>
       </div>
     </>

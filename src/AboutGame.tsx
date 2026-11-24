@@ -6,7 +6,7 @@ const attributes = [
   { icon: 'target', title: 'Goal', description: 'Apply STEM knowledge to deliver cargo, develop the islands and design original missions.' },
   { icon: 'book', title: 'Rules', description: 'Follow cargo, balance, flight safety and mission-specific engineering requirements.' },
   { icon: 'rank', title: 'Rewards', description: 'Earn Delivery Income, STEM Bonuses, island development, routes, career ranks, Airline Growth milestones and skill certifications.' },
-  { icon: 'flag', title: 'Challenges', description: 'Use scientific reasoning to meet engineering constraints, verify flights and build original missions.' },
+  { icon: 'flag', title: 'Challenges', description: 'Use scientific reasoning to meet engineering constraints, complete deliveries and build original missions.' },
 ] as const
 
 const framework = [
@@ -57,7 +57,7 @@ export function AboutGame({ dialogRef, onClose }: { dialogRef: Ref<HTMLDialogEle
 
         <section className="about-section">
           <h3><Icon name="plane" />Game Description</h3>
-          <p>Plan safe cargo deliveries across the six-mission Windward Isles campaign. Solve an engineering problem in each hold, check the centre of gravity and verify the load through a quick or manual simulated flight. Each first delivery supports a fictional building district. Optional STEM activities earn additional income.</p>
+          <p>Plan six safe deliveries to connect seven islands, starting at Harbor Base. Solve an engineering problem in each hold and check its centre of gravity. Choose Auto Delivery to let the aircraft fly your load, or Manual Delivery to control it yourself. Both use the same safety checks and earn the same rewards. Each first delivery develops a district on a newly connected island. Optional STEM activities earn additional income.</p>
           <p className="about-diy-copy">DIY Mission Studio is available from the Mission Centre. Create an original mission, build a reference load, verify it and share the challenge with a peer.</p>
         </section>
 

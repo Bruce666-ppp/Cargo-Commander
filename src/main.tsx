@@ -75,8 +75,8 @@ function MissionCentre({ progress, discovery, replaying, onStart, onWall, onTrai
         <section className="panel map-panel" aria-labelledby="map-heading">
           <div className="panel-heading"><span className="panel-icon"><Icon name="pin" /></span><h2 id="map-heading">The Windward Isles</h2></div>
           <FlightMap progress={progress} discovery={discovery} />
-          <div className="map-legend"><span><i />Available route</span><span className="established-key"><i />Established route</span><span className="airport-key"><Icon name="check" />Connected airport</span></div>
-          <dl className="mission-network"><div><dt>Established Routes</dt><dd>{network.routes}</dd></div><div><dt>Airports Connected</dt><dd>{network.airports}</dd></div><div><dt>Deliveries Completed</dt><dd>{network.deliveries}</dd></div></dl>
+          <div className="map-legend"><span><i />Available route</span><span className="established-key"><i />Established route</span><span className="available-airport"><i />Available island</span><span className="airport-key"><Icon name="check" />Connected island</span></div>
+          <dl className="mission-network"><div><dt>Established Routes</dt><dd>{network.routes}</dd></div><div><dt>Islands Connected</dt><dd>{network.airports} / 7</dd></div><div><dt>Deliveries Completed</dt><dd>{network.deliveries}</dd></div></dl>
           {discovery && <DiscoveryNotice discovery={discovery} />}
         </section>
         <section className="mission-list" aria-labelledby="missions-heading">
@@ -392,7 +392,7 @@ function App({ onReset }: { onReset: () => boolean }) {
                 earned={progress.stemBonusIds.includes(mission.id)} delivered={progress.completedMissionIds.includes(mission.id)} />} />}
             {screen === 'flight' && launch && <FlightScreen mission={mission} {...launch} blocked={overlayOpen} headingRef={focusHeading} onReturn={returnToLoading} onFinish={finishFlight} onDemonstration={() => showDemonstration(launch.configuration)} />}
             {screen === 'quick' && launch && <QuickFlight mission={mission} configuration={launch.configuration} headingRef={focusHeading}
-              paused={overlayOpen || settingsOpen} onReturn={returnToLoading} onFinish={result => finishFlight(result, true)} />}
+              official paused={overlayOpen || settingsOpen} onReturn={returnToLoading} onFinish={result => finishFlight(result, true)} />}
             {screen === 'arrival' && report && <Arrival mission={mission} headingRef={focusHeading} blocked={overlayOpen} onFinish={() => completeDelivery(report)} />}
             {screen === 'review' && report && <FlightReview mission={mission} report={report} previous={previousReport} headingRef={focusHeading}
               failedAttempts={failedAttempts[mission.id] ?? 0} onDemonstration={() => showDemonstration(report.configuration)}

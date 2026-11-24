@@ -1,11 +1,9 @@
 import { useId } from 'react'
-import { connectedAirports, discoveredAirports, nextAvailableMission } from './career'
-import type { CareerProgress, MapDiscovery } from './career'
-import { campaign } from './mission'
-import { districts } from './districts'
-import { DistrictFootprint } from './IslandDevelopment'
+export { FlightMap } from './CampaignMap'
 
 const icons = {
+  auto: <><path d="m12 3 2.1 5.2L19 10l-4.9 1.8L12 17l-2.1-5.2L5 10l4.9-1.8L12 3Z" /><path d="M4 16v5m-2-2.5h4M20 3v4m-2-2h4m-2 11v5m-2-2.5h4" /></>,
+  controls: <><path d="M3 8h18m-18 8h18" /><circle cx="8" cy="8" r="2.6" fill="currentColor" /><circle cx="16" cy="16" r="2.6" fill="currentColor" /></>,
   medical: <><rect x="3" y="7" width="18" height="13" rx="3" /><path d="M9 7V4h6v3m-3 3v7m-3.5-3.5h7" /></>,
   puzzle: <path d="M4 5h6a2.4 2.4 0 1 1 4 0h5v5a2.4 2.4 0 1 1 0 4v5h-5a2.4 2.4 0 1 1-4 0H4v-5a2.4 2.4 0 1 0 0-4Z" />,
   wings: <><path d="M9 9H2l2 3h5m-4 1 2 3h3m5-7h7l-2 3h-5m4 1-2 3h-3" /><path d="m12 6 4 4v4q0 3-4 5-4-2-4-5v-4Z" /></>,
@@ -34,139 +32,6 @@ const icons = {
 
 export function Icon({ name }: { name: keyof typeof icons }) {
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{icons[name]}</svg>
-}
-
-const islands = [
-  { name: 'Harbor Base', label: 'Harbor Base', x: 147, y: 351, land: 'harbor-land', dx: -186, dy: -303, size: .84, angle: -23, fill: '#a4c59c' },
-  { name: 'Pinehaven Airport', label: 'Pinehaven', x: 408, y: 151, land: 'pine-land', dx: -606, dy: -148, size: .78, angle: -18, fill: '#a5c8a4' },
-  { name: 'Sundrift Airport', label: 'Sundrift', x: 409, y: 421, land: 'sun-land', dx: -623, dy: -384, size: .76, angle: 13, fill: '#bdcda2' },
-  { name: 'Mercy Cay Airport', label: 'Mercy Cay', x: 680, y: 473, land: 'pine-land', dx: -606, dy: -148, size: .63, angle: -13, fill: '#aed3b5' },
-  { name: 'Stormwatch Airport', label: 'Stormwatch', x: 755, y: 282, land: 'harbor-land', dx: -186, dy: -303, size: .79, angle: 20, fill: '#8cb19e', mountains: true },
-  { name: 'Northstar Airport', label: 'Northstar', x: 682, y: 100, land: 'sun-land', dx: -623, dy: -384, size: .71, angle: -21, fill: '#b8ced0', mountains: true },
-] as const
-
-const routeLines = [
-  { d: 'M147 351C220 263 274 187 408 151', marker: '262 225' },
-  { d: 'M147 351Q251 440 409 421', marker: '276 413' },
-  { d: 'M409 421Q512 278 408 151', marker: '461 283' },
-  { d: 'M409 421Q557 401 680 473', marker: '546 428' },
-  { d: 'M680 473Q794 401 755 282', marker: '764 386' },
-  { d: 'M755 282Q645 221 682 100', marker: '684 197' },
-]
-
-export function FlightMap({ progress, discovery }: { progress: CareerProgress; discovery?: MapDiscovery | null }) {
-  const id = useId()
-  const asset = (name: string) => `${id}-${name}`
-  const url = (name: string) => `url(#${asset(name)})`
-  const ref = (name: string) => `#${asset(name)}`
-  const connected = connectedAirports(progress)
-  const discovered = discoveredAirports(progress)
-  const available = nextAvailableMission(progress)
-  const activeIndex = campaign.findIndex(mission => mission.id === available?.id)
-  const activeLine = routeLines[activeIndex]
-  const established = new Set(progress.routeIds)
-  return (
-    <svg className="flight-map" viewBox="0 0 900 580" role="img" aria-label={`Map of the Windward Isles. Discovered airports: ${[...discovered].join(', ')}. ${established.size} established routes. ${progress.completedMissionIds.length} developed districts.`}>
-      <defs>
-        <linearGradient id={asset('sea')} x2="1" y2="1"><stop stopColor="#bee7f0" /><stop offset="1" stopColor="#8fc5dd" /></linearGradient>
-        <pattern id={asset('grid')} width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0v40" fill="none" stroke="#f2ffff" strokeOpacity=".4" /><circle r="1.6" fill="#effdff" fillOpacity=".65" /></pattern>
-        <pattern id={asset('island-dots')} width="11" height="11" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" fill="#315f51" opacity=".17" /></pattern>
-        <path id={asset('harbor-land')} d="M65 272Q72 246 106 241l39-5q19-24 56-25l34 14q33 0 53 25 19 24 1 49l-16 13q-12 29-37 40l-38 3-26 17q-21 10-51-2L88 350q-27-8-34-30-8-22 11-48Z" />
-        <path id={asset('pine-land')} d="M498 109q17-22 45-22l38 1 29-17q28-12 55 4l23 18q34 5 47 29 12 25-21 45l-23 4q-20 29-56 26l-32-8q-40 16-70-6l-18-20q-39-14-17-54Z" />
-        <path id={asset('sun-land')} d="M522 350q24-21 66-15l20-14q21-11 48 1l24 16q32 4 45 25 14 26-14 48l-25 8q-22 28-60 17l-29-9q-37 7-64-12-32-13-11-65Z" />
-        <g id={asset('map-airport')}>
-          <rect x="-64" y="-14" width="128" height="28" rx="5" fill="#f1f1da" stroke="#749488" strokeWidth="2" />
-          <rect x="-58" y="-9" width="116" height="18" rx="2" fill="#385a61" />
-          <path d="M-48 0H49" stroke="#edf5e9" strokeWidth="1.4" strokeDasharray="8 5" />
-          <path d="M-52-5V5m3-10V5M52-5V5m-3-10V5" stroke="#edf5e9" />
-          <path d="M10 12v8h25v-8" fill="none" stroke="#f1f1da" strokeWidth="5" />
-          <rect x="5" y="21" width="38" height="10" rx="2" fill="#dbe8d7" stroke="#749488" strokeWidth="1.6" />
-          <path d="M11 25h8m4 0h7m4 0h4" stroke="#6e9b9e" strokeWidth="2" />
-        </g>
-        <g id={asset('trees')}><path d="m0 17 7-13 7 13Zm13-3L19 0l7 14Zm13 6 7-12 7 12Z" fill="#56836e" /><path d="M7 17v4m12-7v4m14 2v4" stroke="#56836e" strokeWidth="2" /></g>
-        <g id={asset('map-plane')}>
-          <circle r="20" fill="#1e4f6c" stroke="#d8f2f2" strokeWidth="2" />
-          <path d="m-12-2 8 .5-4-9 3-.3L4-2l7 .5q6 1.5 0 3L4 2l-9 8.8-3-.3 4-9-8 .5-3 3h-2l2-5-2-5h2Z" fill="#f9f9ee" />
-        </g>
-        <linearGradient id={asset('cloud')} x2="0" y2="1"><stop stopColor="#fffefa" /><stop offset="1" stopColor="#d6eef4" /></linearGradient>
-        <g id={asset('cloud-bank')}>
-          <path d="M-97 32Q-135 27-126-4q6-22 38-24 6-29 38-29 18 0 31 10 16-38 55-34 38 3 46 42 34-3 48 20 19 30-16 47L-97 32Z" fill="#e0f5f6" opacity=".56" transform="translate(5 16)" />
-          <path d="M-115 15c-16-28 4-48 36-45 1-31 40-48 65-27 17-37 74-42 94 4q8 12 8 26c28-3 49 16 46 38-4 30-36 32-61 31H-83q-30-2-32-27Z" fill={url('cloud')} stroke="#f7ffff" strokeOpacity=".58" strokeWidth="2" />
-          <path d="M-71 23q13-20 39-9Q-18-8 11-2l7-4q31-12 46 12 23-5 35 17l-9 9H-60Z" fill="#effbfa" opacity=".62" />
-          <path d="M-108 52q35 9 85 6m80 1q28 2 48-5" fill="none" stroke="#e1f4f9" strokeWidth="4" strokeLinecap="round" opacity=".64" />
-        </g>
-      </defs>
-      <rect width="900" height="580" fill={url('sea')} />
-      <rect width="900" height="580" fill={url('grid')} />
-      <g fill="none" stroke="#e4f7f7" strokeWidth="2" strokeLinecap="round" opacity=".8">
-        <path d="M97 124q7-4 14 0m4 7q7-4 14 0M239 91q7-4 14 0m5 8q7-4 14 0M350 527q7-4 14 0m4 8q7-4 14 0M571 301q7-4 14 0m3 8q7-4 14 0M89 473q7-4 14 0m1 8q7-4 14 0M867 447q7-4 14 0M524 121q7-4 14 0" />
-      </g>
-      {islands.map(island => discovered.has(island.name) && <g key={island.name} transform={`translate(${island.x} ${island.y})`}>
-        <g className={island.name === discovery?.airport ? 'island-reveal' : undefined} transform={`scale(${island.size}) translate(${island.dx} ${island.dy})`}>
-          <use href={ref(island.land)} fill="#b6dee2" stroke="#d5eeeb" strokeWidth="25" strokeLinejoin="round" opacity=".75" />
-          <use href={ref(island.land)} y="7" fill="#6aaba9" opacity=".55" />
-          <use href={ref(island.land)} fill={island.fill} stroke="#e9eacd" strokeWidth="6" strokeLinejoin="round" />
-          <use href={ref(island.land)} fill={url('island-dots')} />
-        </g>
-        {'mountains' in island
-          ? <g transform="translate(-45 -34)"><path d="m0 14 19-30 13 17 13-21 23 34Z" fill="#598784" /><path d="m13-6 6-10 7 9-7-2Zm25-3 7-11 9 13-9-3Z" fill="#e1f0e9" /></g>
-          : <><use href={ref('trees')} x="-76" y="-38" /><use href={ref('trees')} x="35" y="25" /></>}
-      </g>)}
-      {campaign.map((mission, index) => {
-        const complete = established.has(mission.career.routeId)
-        if (!complete && mission.id !== available?.id) return null
-        const { d } = routeLines[index]
-        return <g key={mission.id}>
-          <path d={d} fill="none" stroke="#f3fcf8" strokeWidth="6" strokeOpacity=".72" />
-          <path d={d} pathLength={complete ? 100 : undefined} fill="none" stroke={complete ? '#3e8059' : '#255d7a'} strokeWidth={complete ? 4.5 : 3.7}
-            strokeDasharray={complete ? undefined : '1 10'} strokeLinecap="round"
-            className={discovery?.routeId === mission.career.routeId ? 'route-draw' : discovery && !complete ? 'route-discovery' : undefined} />
-        </g>
-      })}
-      {districts.map((district, index) => {
-        if (!progress.completedMissionIds.includes(campaign[index].id)) return null
-        const [x, y, scale] = district.map
-        return <g key={district.name} data-district={campaign[index].id} transform={`translate(${x} ${y}) scale(${scale})`}>
-          <title>{district.name}</title><DistrictFootprint district={district} />
-        </g>
-      })}
-      {islands.map(island => {
-        if (!discovered.has(island.name)) return null
-        const ready = island.name === available?.origin || island.name === available?.destination
-        const joined = connected.has(island.name)
-        const home = island.name === 'Harbor Base'
-        const width = island.label.length * 9 + 36
-        return <g key={island.name} transform={`translate(${island.x} ${island.y})`}>
-          <use href={ref('map-airport')} transform={`rotate(${island.angle}) scale(.80)`} />
-          <g className="airport-label" transform={`translate(${-width / 2} 50)`}>
-            <rect width={width} height="35" rx="9" fill={home ? '#214a67' : joined ? '#dcf1cc' : '#f6faf0'} stroke={ready ? '#41839a' : 'none'} strokeWidth="2" />
-            {joined ? <path d="m12 18 4 4 7-8" fill="none" stroke={home ? '#cceeb7' : '#3a724d'} strokeWidth="2.3" strokeLinecap="round" />
-              : <circle cx="17" cy="17.5" r="4" fill={home ? '#b8e5b7' : '#44839a'} />}
-            <text x="29" y="23" fill={home ? '#fffdf2' : '#214a67'}>{island.label}</text>
-          </g>
-        </g>
-      })}
-      {islands.map(island => {
-        const parting = island.name === discovery?.airport
-        return (!discovered.has(island.name) || parting) && <g key={island.name} transform={`translate(${island.x} ${island.y})`}>
-          <use href={ref('cloud-bank')} className={parting ? 'cloud-parting' : undefined} />
-        </g>
-      })}
-      {activeLine && <>
-        <g key={available?.id} className="map-plane-moving">
-          <animateMotion dur="8s" repeatCount="indefinite" rotate="auto" path={activeLine.d} keyPoints=".18;.80" keyTimes="0;1" calcMode="linear" />
-          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.87;1" dur="8s" repeatCount="indefinite" />
-          <use href={ref('map-plane')} transform="scale(.83)" />
-        </g>
-        <use className="map-plane-still" href={ref('map-plane')} transform={`translate(${activeLine.marker}) scale(.83)`} />
-      </>}
-      <g transform="translate(61 72)" fill="#285773">
-        <circle r="21" fill="#d8f2f3" fillOpacity=".5" stroke="#82b5ca" />
-        <path d="m0-14 7 20-7-4-7 4Z" /><path d="M0 2v-16l7 20Z" fill="#68a7be" />
-        <text y="-29" textAnchor="middle" fontSize="14" fontWeight="800">N</text>
-      </g>
-    </svg>
-  )
 }
 
 export function CargoAircraft() {

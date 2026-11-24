@@ -21,11 +21,13 @@ class AudioNode {
 
   connect(destination) { this.connected = destination; return destination }
   disconnect() { this.connected = null }
-  start(at) { this.startedAt = at }
+  start(at, offset, duration) { this.startedAt = at; this.offset = offset; this.duration = duration }
   stop(at = 0) { this.stoppedAt = at }
 }
 
-function audioHarness() {
+const crowdSample = { duration: 4.9 }
+
+function audioHarness(loadCrowd = async () => crowdSample) {
   const sources = []
   const gains = []
   let contexts = 0
@@ -37,12 +39,13 @@ function audioHarness() {
     createOscillator: () => { const node = new AudioNode(); sources.push(node); return node },
     createBiquadFilter: () => new AudioNode(),
     createBufferSource: () => { const node = new AudioNode(); sources.push(node); return node },
+    decodeAudioData: async () => crowdSample,
     createBuffer: (_, length, sampleRate) => {
       const data = new Float32Array(length)
       return { getChannelData: () => data, duration: length / sampleRate, sampleRate }
     },
   }
-  const audio = new GameAudio(() => { contexts++; return context }, storage)
+  const audio = new GameAudio(() => { contexts++; return context }, storage, loadCrowd)
   return { audio, context, sources, gains, storage, contexts: () => contexts }
 }
 
@@ -112,20 +115,46 @@ test('first rewards play sequentially after the mission cue, while replay plays 
   assert.deepEqual(failure.sources.slice(0, 3).map(note => note.frequency.value), [440, 349, 294])
 })
 
-test('district impacts follow the building timing and skip or mute cancels scheduled notes', () => {
+test('district celebrations use recorded cheering at launch and opening with four construction accents', async () => {
   const { audio, sources } = audioHarness()
   audio.unlock()
-  audio.celebrateDistrict({ buildings: 5, bonus: true, final: false, reduced: false })
+  await new Promise(resolve => setImmediate(resolve))
+  audio.celebrateDistrict({ bonus: true, final: false, reduced: false })
+  const crowd = sources.filter(source => source.buffer === crowdSample)
+  assert.deepEqual(crowd.map(source => [source.startedAt, source.offset, source.duration]), [[.008, 0, 1.02], [.008 + 2.84, 1.55, 1.23]])
   const impacts = sources.filter(note => note.frequency.automation[0]?.[1] === 105 && note.frequency.automation[1]?.[1] === 41)
-  assert.equal(impacts.length, 5)
-  impacts.forEach((note, index) => assert.ok(Math.abs(note.startedAt - (.008 + .92 + .39 * index)) < 1e-9))
+  assert.deepEqual(impacts.map(note => note.startedAt), [.92, 1.53, 2.14, 2.54].map(at => at + .008))
   audio.stop('achievement')
   assert.ok(sources.every(note => !note.connected))
+
+  const finale = audioHarness()
+  finale.audio.unlock()
+  await new Promise(resolve => setImmediate(resolve))
+  finale.audio.celebrateDistrict({ bonus: true, final: true, reduced: false })
+  assert.deepEqual(finale.sources.filter(source => source.buffer === crowdSample).map(source => source.duration), [1.24, 1.94])
+  assert.ok(finale.sources.some(source => source.frequency.automation[0]?.[1] === 392))
+  finale.audio.setPreferences({ muted: true })
+  assert.ok(finale.sources.every(source => !source.connected))
+
   const muted = audioHarness()
-  muted.audio.unlock()
   muted.audio.setPreferences({ muted: true })
-  muted.audio.celebrateDistrict({ buildings: 5, bonus: true, final: true, reduced: false })
+  muted.audio.unlock()
+  muted.audio.celebrateDistrict({ bonus: true, final: true, reduced: false })
   assert.equal(muted.sources.length, 0)
+})
+
+test('leaving or skipping while the crowd sample loads cannot start a late celebration', async () => {
+  let finishLoading
+  const pending = new Promise(resolve => { finishLoading = resolve })
+  const { audio, sources } = audioHarness(() => pending)
+  audio.unlock()
+  audio.celebrateDistrict({ bonus: true, final: false, reduced: false })
+  audio.stop('achievement')
+  finishLoading(crowdSample)
+  await new Promise(resolve => setImmediate(resolve))
+  assert.ok(sources.every(source => !source.connected && source.buffer !== crowdSample))
+  audio.celebrateDistrict({ bonus: false, final: false, reduced: true })
+  assert.deepEqual(sources.filter(source => source.buffer === crowdSample).map(source => source.duration), [2.22])
 })
 
 test('engine spools once, fades on pause, stops immediately on mute or tab hiding, and preferences persist', () => {

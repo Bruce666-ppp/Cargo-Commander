@@ -45,6 +45,7 @@ export function MissionBrief({ mission, dialogRef, onAccept, onClose, training }
         <span><Icon name="pin" />{mission.destination}</span>
       </div>
       <p>{training ? 'Pinehaven needs supplies. Bring all three crates aboard and find a place for each one so the aircraft is balanced.' : mission.narrative}</p>
+      {!training && <p>After passing the loading checks, choose Auto Delivery or Manual Delivery.</p>}
       <section className="brief-objective">
         <h3>Mission Objective</h3><p>{mission.objective}</p><p className="learning-focus">{mission.learningFocus}</p>
         {!training && <p className="mission-mechanic"><strong>STEM Challenge · {stemChallenge(mission).title}</strong><br />{stemChallenge(mission).prompt}</p>}

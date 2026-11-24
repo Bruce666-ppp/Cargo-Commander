@@ -229,7 +229,7 @@ export function TrainingSession({ module, headingRef, blocked, onExit, onFirstMi
         headingRef={headingRef} onReturn={module === 'flight' ? askToExit : () => setStep(5)} onFinish={retryFlight}
         exercise={{ next: readingFlight ? 'read' : recoveringFlight ? 'recover' : flightStep as FlightExerciseAction, observe: advanceFlightGuide, onStatus: setFlightStatus }} />)}
     {step === 7 && <section className="panel diy-card" data-tutorial="campaign-training">
-      <h2>Your Windward Isles Career</h2><p>Six official deliveries link the islands and advance you from Trainee Loadmaster to Cargo Commander.</p>
+      <h2>Your Windward Isles Career</h2><p>Six official deliveries connect seven islands and advance you from Trainee Loadmaster to Cargo Commander. Auto Delivery and Manual Delivery develop the same districts.</p>
       <p>Each completed official mission earns its own certification. Mission Architect celebrates your own validated DIY design. It is independent of the campaign rank and routes.</p>
     </section>}
     <TutorialSpotlight step={step} stageLabel={trainingModules.find(entry => entry.id === module)?.title}

@@ -9,6 +9,7 @@ import { CreatorNote, MissionEditor, MissionFacts, ScientificExplanation, Worksh
 import { FlightReview } from './FlightResults'
 import { FlightScreen } from './FlightScreen'
 import { QuickFlight } from './QuickFlight'
+import { DeliveryOptions } from './DeliveryOptions'
 import { creativeReward, money } from './rewards'
 import { newHintClock } from './learning'
 import { FlightDemonstration, LearningDialog, WorkedSolution } from './LearningSupport'
@@ -319,13 +320,12 @@ export function DiyStudio({ headingRef, blocked, initialToken = null, store, sto
         <h2>{draft.validated ? 'Mission Validated' : 'Test Your Mission'}</h2><h3>{mission.title}</h3>
         <MissionFacts config={draft.config} />
         <p>{draft.validated ? 'The saved reference load passed inspection and completed the test flight.' :
-          'Verify your reference solution in Cruise. You can use assisted verification or fly manually.'}</p>
+          'Test the reference load in Cruise before saving your challenge.'}</p>
         {report?.passed && <p className="diy-ok">{(report.corridorFraction * 100).toFixed(1)}% in the altitude corridor · {report.elapsed.toFixed(1)} s</p>}
+        {!draft.validated && !training && <DeliveryOptions onAuto={() => testMission(true)} onManual={() => testMission()} testing />}
         <div className="flight-page-actions">
           {draft.validated ? !training && <button className="start-button flight-primary" onClick={() => saveCreated(true)}>Save Mission</button>
-            : training ? <button className="start-button flight-primary" data-tutorial="diy-test" onClick={() => testMission()}>Test Your Mission</button> : <>
-              <button className="start-button flight-primary" onClick={() => testMission(true)}>Quick Flight Verification</button>
-              <button className="secondary-button" onClick={() => testMission()}>Manual Test Flight</button></>}
+            : training && <button className="start-button flight-primary" data-tutorial="diy-test" onClick={() => testMission()}>Test Your Mission</button>}
           {!training && !draft.validated && <button className="secondary-button" onClick={() => saveCreated(false)}>Save Draft</button>}
           <button className="secondary-button" onClick={() => go('create')}>Edit Mission Settings</button>
         </div>

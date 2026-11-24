@@ -1,7 +1,8 @@
 import { strict as assert } from 'node:assert'
 import { test } from 'node:test'
 import { emptyProgress, readProgress, recordDelivery, recordStemBonus, writeProgress } from '../src/career.ts'
-import { districts, districtFor } from '../src/districts.ts'
+import { districts, districtFor, harborSettlement } from '../src/districts.ts'
+import { islandScale, islandSites, narrowMap, wideMap } from '../src/map-layout.ts'
 import { emptyDiyStore, makeDiyMission, authorFlightPassed, readDiyStore, saveDiyStore } from '../src/diy.ts'
 import { simulateFlight } from '../src/flight-learning.ts'
 import { learningOutcomes } from '../src/learningOutcomes.ts'
@@ -122,13 +123,42 @@ test('a prospective bonus pays at the first delivery and the creative reward doe
   assert.deepEqual(earnings(emptyProgress(), readDiyStore(storage).store.architect), { base: 0, stem: 0, creative: 2000, total: 2000 })
 })
 
-test('six unique complexes use original route destinations and each contains at least four facilities', () => {
+test('seven distinct map sites have increasingly substantial built districts that clear the runway', () => {
   assert.equal(districts.length, 6)
   assert.equal(new Set(districts.map(district => district.name)).size, 6)
-  assert.ok(campaign.every(mission => districtFor(mission).facilities.length >= 4))
-  assert.equal(campaign[0].destination, campaign[2].destination)
-  assert.notDeepEqual(districtFor(campaign[0]).map, districtFor(campaign[2]).map)
-  assert.equal(districtFor(campaign[3]).name, 'Mercy Cay Medical Complex')
+  assert.deepEqual(islandSites.map(site => site.airport), [campaign[0].origin, ...campaign.map(mission => mission.destination)])
+  assert.equal(new Set(islandSites.map(site => site.airport)).size, 7)
+  assert.deepEqual([harborSettlement, ...districts].map(district => district.facilities.length), [7, 11, 13, 15, 18, 20, 24])
+  assert.ok([harborSettlement, ...districts].every(district => district.facilities.every(({ x, y, width, depth }) =>
+    x > 25 && x + width + depth < 295 && y + 4 < 146)))
+  assert.equal(districtFor(campaign[2]).name, 'Coral Point Aviation Relay District')
+  assert.equal(districtFor(campaign[3]).name, 'Mercy Cay Medical Campus')
+  for (const map of [narrowMap, wideMap]) {
+    assert.equal(map.routeLines.length, 6)
+    for (const site of map.sites) {
+      assert.ok(site.x >= 0 && site.x + 320 * islandScale < map.width)
+      assert.ok(site.y >= 0 && site.y + 217 < map.height)
+      for (const other of map.sites.filter(entry => entry !== site)) {
+        assert.ok(Math.abs(site.x - other.x) >= 272 || Math.abs(site.y - other.y) >= 217, site.label + ' overlaps ' + other.label)
+      }
+    }
+  }
+})
+
+test('a Phase 7.4 relay save acquires Coral Point while keeping its records and earnings', () => {
+  let previous = emptyProgress()
+  for (const mission of campaign.slice(0, 3)) {
+    previous = recordDelivery(recordStemBonus(previous, mission), mission, verify(mission)).progress
+  }
+  const storage = { getItem: () => JSON.stringify({ ...previous, routeIds: ['harbor-base-pinehaven', 'harbor-base-sundrift', 'sundrift-pinehaven'] }) }
+  const updated = readProgress(storage)
+  assert.deepEqual(updated.completedMissionIds, previous.completedMissionIds)
+  assert.deepEqual(updated.bestFlights, previous.bestFlights)
+  assert.deepEqual(updated.certificationIds, previous.certificationIds)
+  assert.deepEqual(updated.stemBonusIds, previous.stemBonusIds)
+  assert.deepEqual(updated.routeIds, ['harbor-base-pinehaven', 'harbor-base-sundrift', 'pinehaven-coral-point'])
+  assert.equal(earnings(updated, true).total, 4500)
+  assert.equal(earnings(recordDelivery(updated, campaign[2], verify(campaign[2])).progress, true).total, 4500)
 })
 
 test('the DIY author can verify the exact reference through quick flight using the approved envelope', () => {

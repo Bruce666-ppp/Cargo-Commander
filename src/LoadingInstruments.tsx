@@ -1,4 +1,5 @@
 import { Icon } from './art'
+import { DeliveryOptions } from './DeliveryOptions'
 import { aircraftPercent, formatCg, formatCgRange, getCargo, inspectLoading } from './mission'
 import type { Hold, Mission } from './mission'
 
@@ -69,12 +70,11 @@ export function SafetyChecklist({ mission, inspection, onTestFlight, onQuickFlig
         <div role="status">
           {ready ? <div className="ready flight-status-ready"><span><Icon name="check" /></span><strong>Mission Ready</strong></div> : <p id="flight-outstanding">{outstanding}</p>}
         </div>
-        {onQuickFlight && <button type="button" className="start-button test-flight-button" disabled={!ready} onClick={onQuickFlight}><Icon name="plane" />Quick Flight Verification</button>}
-        {onTestFlight && <button type="button" className={onQuickFlight ? 'secondary-button practice-launch' : 'start-button test-flight-button'} data-audio-custom="" aria-describedby={ready ? undefined : 'flight-outstanding'} disabled={!ready} onClick={onTestFlight}><Icon name="plane" />{onQuickFlight ? 'Manual Flight' : 'Test Flight'}</button>}
-        {onTestFlight && <p className="flight-mode-explanation">{onQuickFlight ? 'Quick verification is recommended. Both paths use your actual load and the same safety requirements.' : custom ? 'Test Flight uses your current load.' : 'Practice Flight lets you explore how loads respond.'}</p>}
+        {onQuickFlight && onTestFlight && <DeliveryOptions ready={ready} onAuto={onQuickFlight} onManual={onTestFlight} testing={custom} />}
+        {onTestFlight && !onQuickFlight && <button type="button" className="start-button test-flight-button" data-audio-custom="" aria-describedby={ready ? undefined : 'flight-outstanding'} disabled={!ready} onClick={onTestFlight}><Icon name="plane" />Test Flight</button>}
         {onSaveReference && <button type="button" className="start-button test-flight-button" data-tutorial="save-reference" disabled={!ready} onClick={onSaveReference}><Icon name="check" />Save Reference Solution</button>}
         {onPractice && <button type="button" data-tutorial="practice-flight" className={training ? 'start-button test-flight-button' : 'secondary-button practice-launch'} disabled={training ? !ready : !inspection.practiceReady} onClick={onPractice}>Practice Flight</button>}
-        {onPractice && !training && !inspection.practiceReady && <p className="practice-requires">Practice requires all supplies, a valid payload and permitted slots.</p>}
+        {onPractice && !training && <p className="practice-requires">{inspection.practiceReady ? 'Experiment in Practice Flight without completing the delivery.' : 'Practice requires all supplies, a valid payload and permitted slots.'}</p>}
       </div>}
     </section>
   )

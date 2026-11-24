@@ -99,7 +99,7 @@ Ask the designer to show the saved mission, explain why they added one constrain
 
 From the first visit to Mission Centre, learners can apply the balance principles to a problem they design. They start with two crates and can edit types, masses and blocked slots. Advanced Details contains the narrower CG targets and three simulated wind options. The studio uses Mission 01's empty aircraft, six positions and 60 kg payload limit. Targets stay within 4.40–4.60 m, the envelope for this educational exercise. A medical case reuses the requirement to occupy powered slot 3 or 4.
 
-**Create** verifies the configuration and uses the existing bounded loading search. At most six required crates are placed one per permitted slot. **Solve** requires a valid arrangement entered by the designer in Cargo Loading. **Explain** builds a diagram, placement steps and optional moment calculation using that reference load and the empty aircraft's mass and CG. **Test & Save** requires a successful flight with the reference load, through Quick Flight Verification or Manual Flight. A change to cargo, slots, CG or wind requires a fresh reference and flight.
+**Create** verifies the configuration and uses the existing bounded loading search. At most six required crates are placed one per permitted slot. **Solve** requires a valid arrangement entered by the designer in Cargo Loading. **Explain** builds a diagram, placement steps and optional moment calculation using that reference load and the empty aircraft's mass and CG. **Test & Save** requires a successful flight with the reference load through Auto Delivery or Manual Delivery. A change to cargo, slots, CG or wind requires a fresh reference and flight.
 
 Mission Architect and the one-time $2,000 creative reward recognise a saved design with a blocked slot, narrower CG target or powered cargo constraint. Reset Progress clears official campaign records, earnings and development. The creative archive, award, badge and sound settings remain available.
 
@@ -135,7 +135,7 @@ The studio adds an optional goal of designing and validating an original mission
 | --- | --- |
 | 01 · Island Supply Run | Pinehaven needs basic supplies. Three crate masses introduce balance and the safety checklist. |
 | 02 · Coastal Resupply | Sundrift needs a replacement turbine. The 50 kg crate makes a large shift when it moves. |
-| 03 · Inter-Island Relay | Maintenance closes two slots at Sundrift. Plan the relay load with the remaining positions. |
+| 03 · Inter-Island Relay | Two cargo slots are closed after inspection at Pinehaven. Find a safe layout for communications equipment bound for Coral Point. |
 | 04 · Emergency Medical Delivery | Mercy Cay's clinic needs a delivery. Its medical case must use a powered position. |
 | 05 · Flight Through the Gusts | Deliver instruments and shelter to Stormwatch. Anticipate stronger simulated gusts and wait for the response to each pitch input. |
 | 06 · Operation Windward | Connect Northstar to the network. Combine special cargo, two closed slots, a tight payload and stronger gusts. Evaluate the optional battery against the manifest and payload. |
@@ -146,18 +146,22 @@ The studio adds an optional goal of designing and validating an original mission
 
 ### Delivery income, STEM bonuses and development
 
-| Mission | Income | Bonus | District developed after the first delivery |
-| --- | ---: | ---: | --- |
-| 01 | $400 | $100 | Pinehaven Essential Supply District |
-| 02 | $600 | $200 | Sundrift Logistics District |
-| 03 | $900 | $300 | Inter-Island Aviation Relay District, Pinehaven |
-| 04 | $1,500 | $500 | Mercy Cay Medical Complex |
-| 05 | $2,200 | $800 | Stormwatch Emergency and Weather Operations District |
-| 06 | $3,400 | $1,100 | Northstar Regional Development District |
+| Mission | Route | Income | Bonus | District developed after the first delivery |
+| --- | --- | ---: | ---: | --- |
+| 01 | Harbor Base → Pinehaven | $400 | $100 | Essential Supply District · 11 buildings |
+| 02 | Harbor Base → Sundrift | $600 | $200 | Logistics District · 13 buildings |
+| 03 | Pinehaven → Coral Point | $900 | $300 | Aviation Relay District · 15 buildings |
+| 04 | Sundrift → Mercy Cay | $1,500 | $500 | Medical Campus · 18 buildings |
+| 05 | Mercy Cay → Stormwatch | $2,200 | $800 | Emergency and Weather Operations District · 20 buildings |
+| 06 | Stormwatch → Northstar | $3,400 | $1,100 | Regional Development District · 24 buildings |
 
 Income totals $9,000 and optional STEM bonuses total $3,000. A record of each successful delivery supports migration of base income and its district. STEM bonuses depend on separately observed in-game activities and may be earned later. The valid Mission Architect achievement supports the independent $2,000 creative reward. Earnings are derived from these records, which prevents a replay from paying them again. The milestone thresholds are $500, $2,000, $4,500, $7,500, $12,000 and $14,000.
 
-The reward screen presents a before-and-after district, staged construction and an earnings count-up. The animated sequence uses local, synthesised victory, construction, coins and certification cues. The completed complexes also appear as original SVG geometry on the existing navigable map. A player can skip the sequence without affecting their delivery record.
+Harbor Base begins with seven modest buildings and an operational runway. A new destination becomes visible when its mission is unlocked. It gains a green route and a district after first delivery. The six routes form a connected, branching network, with each one adding a new island. The map reflows into two columns on narrow screens. Completed mission IDs restore the new geography for existing saves, including Coral Point for a completed Mission 03.
+
+The 4.55-second reward sequence presents the destination before development, then a site survey, foundations, three building waves, roads and vehicles, and a district opening. The same original SVG terrain and buildings appear on the campaign map. Building parcels sit above the runway and aircraft apron. In reduced-motion mode the completed state appears immediately. Rewards and progress are recorded before either presentation begins.
+
+The primary success cue is a locally bundled recording with real audience cheers, claps and shouts. The opening burst precedes the construction impacts. A second burst plays when the district opens, followed by lighter coin and certification accents. The final mission uses longer bursts and a musical accent. The crowd is a filtered 4.9-second, 96 kb/s MP3 excerpt of Shane Vincent's GameSoundCon 2024 Walla recording, shared by ShangusBurger under CC0. [Original recording and licence](https://freesound.org/people/ShangusBurger/sounds/763932/)
 
 ## Learning support design
 
@@ -171,7 +175,7 @@ The longitudinal CG is a mass-weighted mean, `(empty aircraft mass × empty CG +
 
 The simulated aircraft uses a simplified pitch and altitude response. A forward CG reduces response to nose-up input in the model. An aft CG weakens the restoring response and damping. Baseline stability, the player's inputs and simulated wind together determine flight behaviour. Cruise, Express and Rush vary pace and simulated disturbance for gameplay. Flight reports show modes and elapsed durations to support fairer comparisons.
 
-Quick Flight Verification preserves the submitted configuration and uses the original simulator and delivery criteria with assisted pitch control. It presents the resulting trace and verdict in a shorter real-time window. In the controlled Mission 05 activity the two runs both use Cruise, the same gust profile and the same timed pitch input for 32 simulated seconds. The two valid CG values produce 87.7% and 61.1% corridor occupancy in that particular experiment. Freely chosen attempts can vary in loading, mode, controls and duration, which limits causal comparisons.
+Auto Delivery uses the submitted configuration, original simulator and delivery criteria with assisted pitch control. A successful result enters the completion screen automatically. Manual Delivery uses the same loading and delivery checks, with the player's pitch inputs and selected speed. Both advance the same record and rewards. In the controlled Mission 05 activity the two runs both use Cruise, the same gust profile and the same timed pitch input for 32 simulated seconds. The two valid CG values produce 87.7% and 61.1% corridor occupancy in that particular experiment. Freely chosen attempts can vary in loading, mode, controls and duration, which limits causal comparisons.
 
 Cargo Commander uses simplified educational models to demonstrate centre of gravity and aircraft stability. It is not intended for real-world aircraft loading, engineering certification or aviation flight training.
 

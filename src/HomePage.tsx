@@ -7,8 +7,8 @@ import { LearningOutcomes } from './OutcomeCards'
 const steps = [
   { icon: 'crate', title: 'Load Cargo', description: 'Arrange cargo inside the aircraft.' },
   { icon: 'scale', title: 'Check Balance', description: 'Keep the centre of gravity within the target range.' },
-  { icon: 'plane', title: 'Test Flight', description: 'Explore aircraft stability and control.' },
-  { icon: 'rank', title: 'Earn Certification', description: 'Earn skill badges, advance your career, and establish new routes.' },
+  { icon: 'plane', title: 'Deliver Cargo', description: 'Choose Auto Delivery or fly with Manual Delivery.' },
+  { icon: 'rank', title: 'Develop Islands', description: 'Build a district, connect an island and earn a STEM badge.' },
 ] as const
 
 const overview = ['Arrange cargo.', 'Monitor aircraft balance.', 'Test flight stability.', 'Complete deliveries.', 'Design and share original challenges.']
@@ -25,7 +25,7 @@ export function HomePage({ headingRef, onStart, onAbout }: HomePageProps) {
         <div className="hero-copy">
           <h1 id="home-title" ref={headingRef} tabIndex={-1}>Cargo <span>Commander</span></h1>
           <p className="hero-subtitle">The Balance Mission</p>
-          <p className="hero-tagline">Balance cargo · Verify flights · Develop islands</p>
+          <p className="hero-tagline">Balance cargo · Deliver supplies · Develop islands</p>
           <button type="button" className="start-button home-start" onClick={onStart}><Icon name="plane" />Start Game</button>
         </div>
         <HomeFlightScene />

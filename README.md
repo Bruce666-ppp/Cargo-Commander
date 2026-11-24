@@ -30,16 +30,16 @@ The Home Page and About Game both show each complete sentence and its colour-cod
 
 **Mission Briefing → STEM Decision → Cargo Loading → Safety Inspection → Flight Verification → Delivery and Island Development**
 
-The position of each crate affects the CG even when total mass stays fixed. A valid delivery needs the required cargo, permitted slots, a load within the payload limit and a CG within the target band. **Quick Flight Verification** runs the selected load through the same educational simulator in a few seconds. Choose **Manual Flight** to fly using pitch controls, or **Practice Flight** to experiment. The safety checks apply equally to both delivery paths.
+The position of each crate affects the CG even when total mass stays fixed. A valid delivery needs the required cargo, permitted slots, a load within the payload limit and a CG within the target band. **Auto Delivery** flies the actual loaded aircraft through the educational simulator and completes the mission automatically when the flight meets the delivery criteria. **Manual Delivery** uses W/S or touch controls and the original Cruise, Express and Rush options. Either mode completes the same mission and earns the same rewards. **Practice Flight** is available for experiments without campaign rewards.
 
-| Mission | STEM activity | Delivery | Optional STEM bonus | Certification |
-| --- | --- | ---: | ---: | --- |
-| 01 · Island Supply Run | Read the actual CG and place it in relation to the target range. | $400 | $100 | Balance Basics |
-| 02 · Coastal Resupply | Predict and compare equal-distance moves of a heavy and a light crate. | $600 | $200 | Mass Master |
-| 03 · Inter-Island Relay | Record two distinct safe layouts around closed slots. | $900 | $300 | Cargo Strategist |
-| 04 · Emergency Medical Delivery | Explain why the Medical Case needs a powered position. | $1,500 | $500 | Safety Specialist |
-| 05 · Flight Through the Gusts | Interpret measured results from two loads under controlled flight conditions. | $2,200 | $800 | Flight Controller |
-| 06 · Operation Windward | Choose a valid strategy using payload, balance and special fittings together. | $3,400 | $1,100 | Cargo Commander |
+| Mission | Route | STEM activity | Delivery | Optional STEM bonus | Certification |
+| --- | --- | --- | ---: | ---: | --- |
+| 01 · Island Supply Run | Harbor Base → Pinehaven | Read the current CG against the permitted range. | $400 | $100 | Balance Basics |
+| 02 · Coastal Resupply | Harbor Base → Sundrift | Compare equal-distance moves of heavy and light cargo. | $600 | $200 | Mass Master |
+| 03 · Inter-Island Relay | Pinehaven → Coral Point | Record two distinct layouts around closed slots. | $900 | $300 | Cargo Strategist |
+| 04 · Emergency Medical Delivery | Sundrift → Mercy Cay | Explain why the Medical Case needs a powered slot. | $1,500 | $500 | Safety Specialist |
+| 05 · Flight Through the Gusts | Mercy Cay → Stormwatch | Interpret measured results from two controlled flights. | $2,200 | $800 | Flight Controller |
+| 06 · Operation Windward | Stormwatch → Northstar | Compare strategies using payload, balance and cargo fittings. | $3,400 | $1,100 | Cargo Commander |
 
 Successful official deliveries establish routes and clear clouds over later destinations. The Achievement Wall tracks the three parts of the **ABE reward system**.
 
@@ -47,7 +47,9 @@ Successful official deliveries establish routes and clear clouds over later dest
 - **B · Aviation route network expansion.** Discover destinations and establish connections on the archipelago map.
 - **E · STEM skill certifications.** Earn a mission-specific badge for each official delivery. These badges represent in-game achievements.
 
-The first successful delivery develops a permanent district on the map and grants its delivery income once. Replay any completed route to earn a missed STEM bonus. Campaign earnings reach $12,000, plus $2,000 for the first qualifying original mission, for a combined $14,000 in fictional game currency. **Airline Growth** tracks six earnings milestones. **Island Development** shows what each delivery built.
+Harbor Base starts with an operational seven-building settlement. Every first delivery connects one new island and builds its district permanently. The completed map has seven islands and six routes. Replay any completed route to earn a missed STEM Bonus. Campaign earnings reach $12,000. The first qualifying original mission adds $2,000, for a combined $14,000 in fictional game currency. **Airline Growth** tracks six earnings milestones. **Island Development** shows the six districts.
+
+The construction sequence uses a locally bundled excerpt of the crowd cheering, clapping and calling out at the GameSoundCon 2024 Walla session. Recording and editing by Shane Vincent, uploaded as ShangusBurger under CC0 1.0. The game trims and filters the recording and schedules two bursts around construction. [Recording and licence](https://freesound.org/people/ShangusBurger/sounds/763932/)
 
 ## DIY Mission Studio
 
@@ -56,7 +58,7 @@ From the first visit to Mission Centre, open **DIY Mission Studio** and follow *
 1. **Create** a challenge with a default two-crate manifest, editable masses and optional blocked positions. Use **Advanced Details** for a narrower CG target or simulated wind. Check that at least one legal loading arrangement exists.
 2. **Solve** your challenge in Cargo Loading and select **Save Reference Solution** when the checks pass.
 3. **Explain** by reviewing the worked example and its calculated balance. Add an optional Creator's Note and confirm the explanation.
-4. **Test & Save** by verifying that exact reference load with Quick Flight Verification or Manual Flight, then save the validated mission.
+4. **Test & Save** by testing that exact reference load with Auto Delivery or Manual Delivery, then save the validated mission.
 
 In **My Missions**, revisit drafts and manage created or received missions. Open **Share → Copy Mission Link** on a validated mission to invite someone to solve it. The link opens the challenge in their browser. They can try another legal arrangement, use the creator's worked example when needed, and save the received mission locally. Receiving and playing a challenge leave official campaign progress independent.
 
@@ -66,7 +68,7 @@ The **Mission Architect** badge and one-time $2,000 creative reward recognise a 
 
 **Guided learning → Independent exploration → Progressive hints → Worked examples → Independent retry**
 
-At first launch, **Quick Beginner Training** takes players through **Place → Balance → Verify & Deliver** and a sample island development scene. Experienced players can enter the Mission Centre directly. The **Training Centre** also offers the original **Complete Training** and all six individual modules for self-paced practice. Manual and timed hints build from a conceptual reminder to a legal move. Each campaign and saved custom mission offers a step-by-step worked solution with optional maths.
+At first launch, **Quick Beginner Training** takes players through **Place → Balance → Auto Delivery** and a sample island development scene. Experienced players can enter the Mission Centre directly. The **Training Centre** also offers the original **Complete Training** and all six individual modules for self-paced practice. Manual and timed hints build from a conceptual reminder to a legal move. Each campaign and saved custom mission offers a step-by-step worked solution with optional maths.
 
 Practice flights, live coaching, instructor demonstrations and flight reviews give players ways to test a change and try again. Using any of these supports carries no reward penalty. Official deliveries establish routes, ranks and certifications.
 
@@ -80,16 +82,15 @@ The [educational design notes](GAME_DESIGN.md#educational-frameworks) map the de
 
 ## Gameplay gallery
 
-| Home and the five ABCD outcomes | Mercy Cay Medical Complex |
+| Initial Harbor Base settlement | Completed seven-island network |
 | --- | --- |
-| ![Home Page and complete colour-coded Learning Outcomes](docs/screenshots/phase74-home.jpg) | ![Before and after medical campus, delivery income and STEM bonus](docs/screenshots/phase74-mercy-cay.jpg) |
-| **Scientific decision** | **Developed network** |
-| ![Recorded CG shifts for two equal-distance cargo movements](docs/screenshots/phase74-stem-decision.jpg) | ![Final route network with six developed districts](docs/screenshots/phase74-completed-network.jpg) |
+| ![Harbor Base is operational with Pinehaven available and later islands clouded](docs/screenshots/phase75-initial-map.jpg) | ![All seven connected islands and six established routes](docs/screenshots/phase75-final-map.jpg) |
+| **Mercy Cay Medical Campus** | **Northstar Regional Development District** |
+| ![Mercy Cay before and after the medical delivery](docs/screenshots/phase75-mercy-campus.jpg) | ![Northstar before and after the final campaign delivery](docs/screenshots/phase75-northstar.jpg) |
 
-- [Quick Beginner Training](docs/screenshots/phase74-quick-training.jpg), [sample training reward](docs/screenshots/phase74-training-reward.jpg) and [Training Centre](docs/screenshots/phase74-training-centre.jpg)
-- [Quick Flight Verification](docs/screenshots/phase74-quick-flight.jpg), [Manual Flight](docs/screenshots/phase74-manual-flight.jpg) and [controlled flight comparison](docs/screenshots/phase74-flight-comparison.jpg)
-- [Mission Complete](docs/screenshots/phase74-mission-reward.jpg), [Mercy Cay during construction](docs/screenshots/phase74-mercy-construction.jpg), [Airline Growth](docs/screenshots/phase74-airline-growth.jpg) and [all six districts](docs/screenshots/phase74-island-gallery.jpg)
-- [Simplified DIY editor](docs/screenshots/phase74-diy-editor.jpg), [About Game](docs/screenshots/phase74-about.jpg) and [mobile layout](docs/screenshots/phase74-mobile.jpg)
+- [Early campaign map](docs/screenshots/phase75-early-map.jpg), [Coral Point relay district](docs/screenshots/phase75-coral-point.jpg), [first construction](docs/screenshots/phase75-first-construction.jpg) and [Mercy Cay construction waves](docs/screenshots/phase75-construction-waves.jpg)
+- [Auto Delivery and Manual Delivery options](docs/screenshots/phase75-delivery-modes.jpg), [controlled flight comparison](docs/screenshots/phase74-flight-comparison.jpg) and [mobile map](docs/screenshots/phase75-mobile-map.jpg)
+- [Home and the five ABCD outcomes](docs/screenshots/phase74-home.jpg), [About Game](docs/screenshots/phase74-about.jpg), [Training Centre](docs/screenshots/phase74-training-centre.jpg) and [DIY editor](docs/screenshots/phase74-diy-editor.jpg)
 
 ## Controls
 

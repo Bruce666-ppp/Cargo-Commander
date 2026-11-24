@@ -6,9 +6,9 @@ import type { FlightReport } from './flight'
 import { formatCg, formatCgRange } from './mission'
 import type { FlightConfiguration, Mission } from './mission'
 
-export function QuickFlight({ mission, configuration, headingRef, paused, training, onFinish, onReturn }: {
+export function QuickFlight({ mission, configuration, headingRef, paused, official, training, onFinish, onReturn }: {
   mission: Mission; configuration: FlightConfiguration; headingRef?: Ref<HTMLHeadingElement>
-  paused?: boolean; training?: boolean; onFinish: (report: FlightReport) => void; onReturn: () => void
+  paused?: boolean; official?: boolean; training?: boolean; onFinish: (report: FlightReport) => void; onReturn: () => void
 }) {
   const result = useMemo(() => simulateFlight(mission, configuration, 'delivery'), [mission, configuration])
   const [elapsed, setElapsed] = useState(0)
@@ -30,6 +30,13 @@ export function QuickFlight({ mission, configuration, headingRef, paused, traini
     return () => window.clearInterval(timer)
   }, [result, done, paused, playback])
 
+  const delivered = official && done && result?.report.passed
+  useEffect(() => {
+    if (!delivered || paused || !result || finished.current) return
+    finished.current = true
+    onFinish(result.report)
+  }, [delivered, paused, result, onFinish])
+
   function review() {
     if (!result || finished.current) return
     finished.current = true
@@ -38,8 +45,8 @@ export function QuickFlight({ mission, configuration, headingRef, paused, traini
 
   return <section className="panel quick-verification">
     <header className="panel-heading">
-      <div><h1 ref={headingRef} tabIndex={-1}>{training ? 'Verify & Deliver' : 'Quick Flight Verification'}</h1>
-        <p>{mission.title} · Simulated Cruise with assisted pitch</p></div>
+      <div><h1 ref={headingRef} tabIndex={-1}>Auto Delivery</h1>
+        <p>{mission.title} · The aircraft flies in Cruise using the load you arranged.</p></div>
     </header>
     {frame && result ? <>
       <FlightScene destination={mission.destination} settings={mission.flight} altitude={frame.altitude} pitch={frame.pitch} fraction={frame.fraction} />
@@ -51,10 +58,10 @@ export function QuickFlight({ mission, configuration, headingRef, paused, traini
       </dl>
       <p className="quick-explanation">The simulator is evaluating your {configuration.totalCargoMass} kg load. The green band marks the safe altitude corridor for this mission.</p>
       <p className="quick-explanation">{configuration.cargoArrangement.flatMap(({ slot, cargo }) => cargo ? [`${cargo.name} (${cargo.mass} kg) → slot ${slot}`] : []).join(' · ')}</p>
-      <p className="quick-explanation" role="status">{done ? `${result.report.passed ? 'Flight verified' : 'Flight requirements not met'} · ${(result.report.corridorFraction * 100).toFixed(1)}% in the altitude corridor.` : 'Playing the calculated flight at an accelerated pace.'}</p>
+      <p className="quick-explanation" role="status">{done ? `${result.report.passed ? 'Flight verified' : 'Flight requirements not met'} · ${(result.report.corridorFraction * 100).toFixed(1)}% in the altitude corridor.` : 'The plane flies automatically. Watch how your load affects its flight.'}</p>
     </> : <p className="quick-explanation" role="alert">This load did not pass the safety checks. Return to the hold and verify it again.</p>}
     <footer className="flight-page-actions">
-      {result && <button className="start-button flight-primary" disabled={!done || paused} onClick={review}>{result.report.passed ? training ? 'See Training Reward' : 'Continue' : 'Review Flight'}</button>}
+      {result && (!official || !result.report.passed) && <button className="start-button flight-primary" disabled={!done || paused} onClick={review}>{result.report.passed ? training ? 'See Training Reward' : 'Continue' : 'Review Flight'}</button>}
       <button className="secondary-button" onClick={onReturn}>{training ? 'Exit Training' : 'Return to Cargo Loading'}</button>
     </footer>
   </section>

@@ -12,7 +12,7 @@ const mission = { ...islandSupplyRun, id: 'training-supply-delivery', number: 'T
   cargo: [crate], completionConditions: { requiredCargo: [crate.id] },
   objective: 'Place one crate, move it into balance and verify the simulated flight.',
 }
-const lessonTitles = ['Place', 'Balance', 'Verify & Deliver', 'Reward']
+const lessonTitles = ['Place', 'Balance', 'Auto Delivery', 'Reward']
 
 export function QuickTraining({ headingRef, blocked, onExit, reward }: {
   headingRef: Ref<HTMLHeadingElement>; blocked: boolean; onExit: () => void; reward: ReactNode
@@ -38,8 +38,8 @@ export function QuickTraining({ headingRef, blocked, onExit, reward }: {
       choose ? 'Place it in slot 3 and watch the balance point.' : 'Moving the same crate towards the tail also moves the balance point towards the tail.',
   } : {
     target: '[data-tutorial="safety-checklist"]', title: 'Verify the load',
-    message: `The balance point is ${formatCg(mission, inspection.cg)} m, inside the green range. The other safety checks passed too.`,
-    read: true, action: { label: 'Verify & Deliver', run: () => setVerifying(true) },
+    message: `At ${formatCg(mission, inspection.cg)} m, the load passes all checks. Auto Delivery flies it for you. In campaign missions, you can also choose Manual Delivery.`,
+    read: true, action: { label: 'Auto Delivery', run: () => setVerifying(true) },
   }
 
   return <div className="training-session quick-training">

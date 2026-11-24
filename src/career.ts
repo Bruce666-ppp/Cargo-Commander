@@ -10,7 +10,7 @@ export const certifications = [
   { id: 'mass-master', icon: 'crate', title: 'Mass Master', competency: 'Explain how different masses and positions change balance.', topic: 'Centre of gravity and mass distribution' },
   { id: 'cargo-strategist', icon: 'puzzle', title: 'Cargo Strategist', competency: 'Plan a balanced load when some cargo slots are closed.', topic: 'Centre of gravity and mass distribution' },
   { id: 'safety-specialist', icon: 'rank', title: 'Safety Specialist', competency: 'Secure special cargo in approved positions and pass all safety checks.', topic: 'Centre of gravity and mass distribution' },
-  { id: 'flight-controller', icon: 'plane', title: 'Flight Controller', competency: 'Use short pitch corrections to maintain altitude through stronger gusts.', topic: 'Aircraft stability and flight control' },
+  { id: 'flight-controller', icon: 'plane', title: 'Flight Controller', competency: 'Deliver a balanced load through stronger gusts and meet the altitude corridor requirement.', topic: 'Aircraft stability and flight control' },
   { id: 'cargo-commander', icon: 'wings', title: 'Cargo Commander', competency: 'Combine cargo planning, loading constraints and flight control in one delivery.', topic: 'Mass distribution, aircraft stability and flight control' },
 ] as const
 
@@ -74,7 +74,7 @@ export function nextAvailableMission(progress: CareerProgress) {
 }
 
 export function connectedAirports(progress: CareerProgress) {
-  return new Set(establishedRoutes(progress).flatMap(mission => [mission.origin, mission.destination]))
+  return new Set([campaign[0].origin, ...establishedRoutes(progress).map(mission => mission.destination)])
 }
 
 export function discoveredAirports(progress: CareerProgress) {
@@ -93,7 +93,7 @@ export function deliveryDiscovery(mission: Mission, before: CareerProgress, afte
   const routeId = mission.career.routeId
   if (airport) return { routeId, airport, title: 'New Destination Discovered', detail: `${airport} · ${next?.title ?? ''}` }
   if (next) return { routeId, title: 'New Route Discovered', detail: `${next.origin} → ${next.destination} · ${next.title}` }
-  return { routeId, title: 'Network Established', detail: 'All six airports are connected.' }
+  return { routeId, title: 'Network Established', detail: 'All seven islands are connected.' }
 }
 
 export function networkSummary(progress: CareerProgress) {

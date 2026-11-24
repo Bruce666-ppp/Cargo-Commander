@@ -104,9 +104,9 @@ export const campaign: readonly Mission[] = [islandSupplyRun, {
   career: { routeId: 'harbor-base-sundrift', rankMilestone: 2, certificationId: 'mass-master', nextMissionId: 'inter-island-relay' },
 }, {
   ...islandSupplyRun,
-  id: 'inter-island-relay', number: '03', title: 'Inter-Island Relay', origin: 'Sundrift Airport',
+  id: 'inter-island-relay', number: '03', title: 'Inter-Island Relay', origin: 'Pinehaven Airport', destination: 'Coral Point Airport',
   hintTimes: [60, 120, 180, 300],
-  narrative: 'A maintenance inspection at Sundrift has closed two cargo positions. Pinehaven still needs its relay equipment.',
+  narrative: 'Coral Point needs communications equipment to join the island network. A maintenance inspection at Pinehaven has closed two positions in the cargo hold.',
   objective: 'Balance the relay cargo using the four serviceable slots.',
   learningFocus: 'Plan the distribution of mass when some positions are unavailable.',
   mechanic: 'Slots 2 and 5 are closed for maintenance. Use the four open slots.',
@@ -116,7 +116,7 @@ export const campaign: readonly Mission[] = [islandSupplyRun, {
     { id: 'battery', name: 'Relay Battery', mass: 15, icon: 'crate', colour: 'sand' },
   ],
   targetCg: [4.42, 4.65], loadingConstraints: { blockedSlots: [2, 5] }, completionConditions: { requiredCargo: ['tools', 'instruments', 'battery'] },
-  career: { routeId: 'sundrift-pinehaven', rankMilestone: 3, certificationId: 'cargo-strategist', nextMissionId: 'emergency-medical-delivery' },
+  career: { routeId: 'pinehaven-coral-point', rankMilestone: 3, certificationId: 'cargo-strategist', nextMissionId: 'emergency-medical-delivery' },
 }, {
   ...islandSupplyRun,
   id: 'emergency-medical-delivery', number: '04', title: 'Emergency Medical Delivery', origin: 'Sundrift Airport', destination: 'Mercy Cay Airport',

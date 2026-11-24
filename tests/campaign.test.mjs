@@ -1,8 +1,10 @@
 import { strict as assert } from 'node:assert'
 import { test } from 'node:test'
-import { connectedAirports, deliveryDiscovery, discoveredAirports, emptyProgress, isMissionUnlocked, networkSummary, nextAvailableMission, readProgress, recordDelivery, writeProgress } from '../src/career.ts'
+import { connectedAirports, deliveryDiscovery, discoveredAirports, emptyProgress, isMissionUnlocked, networkSummary, nextAvailableMission, readProgress, recordDelivery, recordStemBonus, writeProgress } from '../src/career.ts'
 import { advanceFlight, aircraftResponse, flightReport, flightStep, newFlight } from '../src/flight.ts'
+import { simulateFlight } from '../src/flight-learning.ts'
 import { campaign, emptyLoadingState, inspectLoading, moveCargo, prepareFlightConfiguration, verifiedLoadingSolutions } from '../src/mission.ts'
+import { earnings } from '../src/rewards.ts'
 
 function countSolutions(mission, hold = [], used = new Set()) {
   if (hold.length === mission.slots.length) {
@@ -71,14 +73,33 @@ test('all approved loads can complete delivery in Cruise, and later gusts increa
   assert.ok(fly(campaign[5], 'delivery', 0).peakPitch > fly(campaign[0], 'delivery', 0).peakPitch)
 })
 
+test('each successful delivery mode earns the same payment, certification and new connection', () => {
+  let progress = emptyProgress()
+  for (const mission of campaign) {
+    const pending = recordStemBonus(progress, mission)
+    const configuration = prepareFlightConfiguration(mission, verifiedLoadingSolutions[mission.id])
+    const auto = recordDelivery(pending, mission, simulateFlight(mission, configuration, 'delivery').report)
+    const manual = recordDelivery(pending, mission, fly(mission))
+    assert.ok(auto.firstDelivery && manual.firstDelivery)
+    assert.deepEqual(earnings(auto.progress, false), earnings(manual.progress, false))
+    assert.deepEqual(auto.progress.routeIds, manual.progress.routeIds)
+    assert.deepEqual(auto.progress.certificationIds, manual.progress.certificationIds)
+    assert.deepEqual(auto.progress.completedMissionIds, manual.progress.completedMissionIds)
+    progress = auto.progress
+    assert.equal(earnings(recordDelivery(progress, mission, fly(mission)).progress, false).total, earnings(progress, false).total)
+  }
+})
+
 test('official deliveries advance all six ranks, routes and badges through the discovery sequence', () => {
   let progress = emptyProgress()
   assert.deepEqual([...discoveredAirports(progress)], ['Harbor Base', 'Pinehaven Airport'])
-  assert.equal(connectedAirports(progress).size, 0)
-  const newAirports = ['Sundrift Airport', undefined, 'Mercy Cay Airport', 'Stormwatch Airport', 'Northstar Airport', undefined]
+  assert.deepEqual([...connectedAirports(progress)], ['Harbor Base'])
+  const newAirports = ['Sundrift Airport', 'Coral Point Airport', 'Mercy Cay Airport', 'Stormwatch Airport', 'Northstar Airport', undefined]
   const storage = memoryStorage()
   for (const [index, mission] of campaign.entries()) {
     assert.equal(nextAvailableMission(progress), mission)
+    assert.ok(connectedAirports(progress).has(mission.origin))
+    assert.ok(!connectedAirports(progress).has(mission.destination))
     if (index < 5) assert.equal(isMissionUnlocked(progress, campaign[index + 1]), false)
     const report = fly(mission)
     const { progress: updated, accepted, firstDelivery } = recordDelivery(progress, mission, report)
@@ -88,7 +109,7 @@ test('official deliveries advance all six ranks, routes and badges through the d
     assert.ok(updated.routeIds.includes(mission.career.routeId))
     const discovery = deliveryDiscovery(mission, progress, updated)
     assert.equal(discovery.airport, newAirports[index])
-    if (index === 1) assert.equal(discovery.title, 'New Route Discovered')
+    assert.deepEqual([...connectedAirports(updated)].filter(airport => !connectedAirports(progress).has(airport)), [mission.destination])
     const replay = recordDelivery(updated, mission, report)
     assert.equal(replay.firstDelivery, false)
     assert.strictEqual(replay.progress, updated)
@@ -97,8 +118,8 @@ test('official deliveries advance all six ranks, routes and badges through the d
     assert.deepEqual(progress, updated)
   }
   assert.equal(nextAvailableMission(progress), undefined)
-  assert.deepEqual(networkSummary(progress), { deliveries: 6, routes: 6, airports: 6 })
-  assert.equal(discoveredAirports(progress).size, 6)
+  assert.deepEqual(networkSummary(progress), { deliveries: 6, routes: 6, airports: 7 })
+  assert.equal(discoveredAirports(progress).size, 7)
 })
 
 test('a legacy Mission 01 save opens Coastal Resupply and later rewards require unlocked official success', () => {

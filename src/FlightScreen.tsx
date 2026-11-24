@@ -10,7 +10,7 @@ import { formatCg } from './mission'
 import type { FlightConfiguration, FlightMode, Mission } from './mission'
 
 export const practiceWarning = 'This loading configuration is outside the permitted CG range. It can be explored in this educational simulation, but it is not approved for an official delivery flight.'
-export const modeLabel = (mode: FlightMode) => mode === 'practice' ? 'Practice Flight — Educational Simulation' : 'Delivery Flight'
+export const modeLabel = (mode: FlightMode) => mode === 'practice' ? 'Practice Flight — Educational Simulation' : 'Manual Delivery'
 export type FlightExerciseAction = 'start' | 'up' | 'down' | 'pace' | 'cruise' | 'pause' | 'resume'
 export type FlightStatus = 'briefing' | 'running' | 'paused'
 

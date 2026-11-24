@@ -83,12 +83,24 @@
 .district-scene { display: block; width: 100%; }
 .reward-takeaway { display: flex; gap: 8px; padding: 9px 11px; margin-top: 12px; background: #285574; border-radius: 8px; }
 .district-building-sequence .district-facility { transform-box: fill-box; transform-origin: bottom; animation: district-build .46s var(--build-delay) both cubic-bezier(.22,.66,.30,1.2); }
-.district-building-sequence .district-services { animation: district-survey .55s .61s both; }
-.district-survey { animation: district-survey 1s .35s both; }
-.district-glow, .district-sparks { animation: district-light 1.32s 3.08s both; }
+.district-foundations { animation: district-foundation 2.4s .49s both; }
+.district-building-sequence .district-infrastructure { animation: district-survey .48s 2.32s both; }
+.district-building-sequence .district-amenities { animation: district-survey .6s 2.52s both; }
+.district-survey { animation: district-foundation 1.2s .12s both; }
+.district-glow, .district-sparks { animation: district-light 1.49s 2.84s both; }
 @keyframes district-build { from { opacity: 0; transform: translateY(-20px) scale(.7); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @keyframes district-survey { from { opacity: 0; } 40% { opacity: .85; } to { opacity: 1; } }
+@keyframes district-foundation { 0%, 100% { opacity: 0; } 25%, 73% { opacity: 1; } }
 @keyframes district-light { 0%, 100% { opacity: 0; } 38% { opacity: 1; } }
+.campaign-map .airport-label { font-size: 21px; }
+.map-legend .available-airport i { width: 9px; height: 9px; border: 0; border-radius: 50%; background: #a67c33; }
+.delivery-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; margin: 8px 0; }
+.delivery-option { min-width: 0; padding: 8px; border: 1px solid #cadcde; background: #f4f8f5; border-radius: 8px; }
+.delivery-auto { background: #eff6e7; border-color: #bfceac; }
+.delivery-option > button { width: 100%; min-height: 38px; padding: 7px 5px; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: .86rem; text-align: left; }
+.delivery-option > button svg { width: 16px; flex: none; }
+.delivery-options p { margin: 6px 0 0; color: #425c68; font-size: .8rem; line-height: 1.35; }
+.delivery-options .delivery-equality { grid-column: 1 / -1; font-weight: 700; margin: 0; }
 
 @media (max-width: 740px) {
   .growth-panel { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 8px; }
@@ -104,7 +116,8 @@
   .home-outcomes .outcome-list, .about-outcomes .outcome-list, .development-gallery { grid-template-columns: minmax(0, 1fr); }
   .mission-reward-top { flex-wrap: wrap; }
   .stem-form label, .stem-form input { width: 100%; }
+  .delivery-option > button { min-height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .district-facility, .district-services, .district-glow, .district-sparks { animation: none !important; }
+  .district-facility, .district-foundations, .district-infrastructure, .district-amenities, .district-glow, .district-sparks { animation: none !important; }
 }

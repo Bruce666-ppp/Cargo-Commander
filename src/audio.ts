@@ -40,21 +40,10 @@ const cues = {
   promotion: [[0, .19, 392, .11, 'triangle'], [.14, .2, 523, .118, 'triangle'], [.30, .43, 659, .125, 'triangle'], [.30, .36, 392, .051]],
   route: [[0, .095, 554, .086, 'sine', 647], [.09, .095, 740, .083, 'sine', 840], [.20, .23, 932, .079]],
   certification: [[0, .23, 659, .090], [.04, .08, 1497, .032], [.16, .34, 880, .101], [.16, .18, 1320, .045], [.17, .12, 1852, .021]],
-  fanfare: [
-    [0, .24, 86, .19, 'sine', 38], [0, .44, 196, .105, 'triangle'], [0, .20, 392, .052, 'sawtooth'],
-    [.15, .19, 494, .090, 'triangle'], [.31, .20, 587, .098, 'triangle'], [.47, .32, 784, .108, 'triangle'],
-    [.47, .30, 587, .062], [.47, .34, 392, .060, 'triangle'], [.47, .19, 90, .18, 'sine', 41],
-    [.74, .28, 988, .075, 'triangle'], [.86, .37, 784, .075], [.86, .35, 494, .063, 'triangle'],
-  ],
   buildImpact: [[0, .18, 105, .15, 'sine', 41], [.012, .11, 275, .044, 'triangle', 105], [.034, .08, 590, .021, 'sine', 227]],
-  districtRise: [[0, .22, 392, .075], [.145, .22, 523, .09, 'triangle'], [.30, .49, 784, .108, 'triangle'], [.30, .44, 523, .07], [.30, .42, 330, .06, 'triangle'], [.30, .21, 94, .11, 'sine', 44]],
   coins: [[0, .13, 1175, .048], [.075, .16, 1568, .049], [.16, .21, 1976, .052], [.16, .14, 988, .036]],
   stemBonus: [[0, .14, 659, .079], [.09, .16, 880, .080, 'triangle'], [.20, .29, 1175, .081], [.23, .15, 1760, .03]],
-  finale: [
-    [0, .31, 88, .17, 'sine', 40], [0, .3, 523, .106, 'triangle'], [.17, .28, 659, .10, 'triangle'],
-    [.34, .35, 784, .11, 'triangle'], [.51, .36, 1047, .087, 'triangle'], [.51, .55, 523, .070, 'sawtooth'],
-    [.69, .76, 1047, .092, 'triangle'], [.69, .72, 784, .069], [.69, .76, 659, .072], [.69, .75, 262, .069, 'triangle'],
-  ],
+  campaignAccent: [[0, .25, 392, .062, 'triangle'], [.17, .26, 523, .052], [.35, .65, 784, .065], [.35, .59, 523, .046, 'triangle']],
 } satisfies Record<string, readonly Note[]>
 
 type Cue = keyof typeof cues
@@ -69,6 +58,12 @@ export const awardTiming = { promotion: 2.55, route: 3.48, certification: 4.12 }
 function createBrowserContext() {
   const Context = globalThis.AudioContext ?? (globalThis as typeof globalThis & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
   return Context ? new Context() : null
+}
+
+async function decodeCrowd(context: AudioContext) {
+  const response = await fetch(new URL('./assets/delivery-crowd.mp3', import.meta.url))
+  if (!response.ok) throw new Error('Crowd recording is unavailable')
+  return context.decodeAudioData(await response.arrayBuffer())
 }
 
 export class GameAudio {
@@ -89,12 +84,17 @@ export class GameAudio {
   private engine: Engine | null = null
   private voices = new Set<Voice>()
   private lastCue = new Map<Cue, number>()
+  private crowd: AudioBuffer | null = null
+  private crowdRequest: Promise<AudioBuffer | null> | null = null
+  private celebration = 0
   private createContext: () => AudioContext | null
   private storage?: AudioStorage
+  private loadCrowd: (context: AudioContext) => Promise<AudioBuffer>
 
-  constructor(createContext = createBrowserContext, storage?: AudioStorage) {
+  constructor(createContext = createBrowserContext, storage?: AudioStorage, loadCrowd = decodeCrowd) {
     this.createContext = createContext
     this.storage = storage
+    this.loadCrowd = loadCrowd
     this.settings = readAudioSettings(storage)
   }
 
@@ -119,12 +119,14 @@ export class GameAudio {
         this.engineBus.connect(this.master)
       }
       if (this.context.state === 'running') {
+        if (this.settings.effects > 0 && typeof this.context.decodeAudioData === 'function') this.preloadCrowd(this.context)
         this.syncMusic()
         if (this.engineWanted) this.startEngine(false)
       } else if (!this.resuming) {
         this.resuming = true
         this.context.resume().then(() => {
           this.resuming = false
+          if (this.audible && this.settings.effects > 0 && this.context) this.preloadCrowd(this.context)
           this.syncMusic()
           if (this.engineWanted && this.audible) this.startEngine(false)
         }).catch(() => { this.resuming = false; this.stop() })
@@ -206,6 +208,7 @@ export class GameAudio {
   }
 
   stop(group?: Group) {
+    if (!group || group === 'achievement') this.celebration++
     for (const voice of this.voices) {
       if (group && voice.group !== group) continue
       try { voice.source.stop() } catch { /* The source can already be finished. */ }
@@ -283,13 +286,45 @@ export class GameAudio {
     }
   }
 
-  celebrateDistrict({ buildings, bonus, final, reduced }: { buildings: number; bonus: boolean; final: boolean; reduced: boolean }) {
+  private preloadCrowd(context: AudioContext) {
+    this.crowdRequest ??= this.loadCrowd(context).then(sample => this.crowd = sample).catch(() => null)
+    return this.crowdRequest
+  }
+
+  private crowdBurst(context: AudioContext, bus: GainNode, sample: AudioBuffer, at: number, offset: number, length: number, level: number) {
+    const start = Math.max(at, context.currentTime + .008)
+    const elapsed = start - at
+    const duration = Math.min(length, sample.duration - offset) - elapsed
+    if (duration < .12) return
+    const source = context.createBufferSource()
+    const envelope = context.createGain()
+    source.buffer = sample
+    envelope.gain.setValueAtTime(0, start)
+    envelope.gain.linearRampToValueAtTime(level, start + .035)
+    envelope.gain.setValueAtTime(level, start + Math.max(.04, duration - .22))
+    envelope.gain.linearRampToValueAtTime(0, start + duration)
+    source.connect(envelope).connect(bus)
+    source.start(start, offset + elapsed, duration)
+    this.track(source, 'achievement', [envelope])
+  }
+
+  celebrateDistrict({ bonus, final, reduced }: { bonus: boolean; final: boolean; reduced: boolean }) {
     this.stop('achievement')
-    if (!this.play(final ? 'finale' : 'fanfare', 0, 'achievement')) return
-    this.background?.duck(reduced ? 1.6 : 4.82)
+    const { context, effectBus } = this
+    if (!context || !effectBus || !this.audible || this.settings.effects === 0 || (context.state !== 'running' && !this.resuming)) return
+    const start = context.currentTime + .008
+    const celebration = this.celebration
+    const playCrowd = (sample: AudioBuffer | null) => {
+      if (!sample || celebration !== this.celebration || !this.audible || this.settings.effects === 0) return
+      this.crowdBurst(context, effectBus, sample, start, 0, reduced ? 2.22 : final ? 1.24 : 1.02, .73)
+      if (!reduced) this.crowdBurst(context, effectBus, sample, start + 2.84, final ? 2.57 : 1.55, final ? 1.94 : 1.23, .88)
+    }
+    if (this.crowd) playCrowd(this.crowd)
+    else void this.preloadCrowd(context).then(playCrowd)
+    this.background?.duck(reduced ? 2.55 : final ? 4.86 : 4.67)
     if (!reduced) {
-      for (let index = 0; index < buildings; index++) this.play('buildImpact', .92 + index * .39, 'achievement')
-      this.play('districtRise', 3.08, 'achievement')
+      for (const at of [.92, 1.53, 2.14, 2.54]) this.play('buildImpact', at, 'achievement')
+      if (final) this.play('campaignAccent', 3.03, 'achievement')
     }
     this.play('coins', reduced ? .66 : 3.61, 'achievement')
     if (bonus) this.play('stemBonus', reduced ? .89 : 3.94, 'achievement')
