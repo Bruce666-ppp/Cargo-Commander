@@ -135,7 +135,7 @@ The studio adds an optional goal of designing and validating an original mission
 | --- | --- |
 | 01 · Island Supply Run | Pinehaven needs basic supplies. Three crate masses introduce balance and the safety checklist. |
 | 02 · Coastal Resupply | Sundrift needs a replacement turbine. The 50 kg crate makes a large shift when it moves. |
-| 03 · Inter-Island Relay | Two cargo slots are closed after inspection at Pinehaven. Find a safe layout for communications equipment bound for Coral Point. |
+| 03 · Inter-Island Relay | Two cargo slots are closed after inspection at Sundrift. Find a safe layout for communications equipment bound for Coral Point. |
 | 04 · Emergency Medical Delivery | Mercy Cay's clinic needs a delivery. Its medical case must use a powered position. |
 | 05 · Flight Through the Gusts | Deliver instruments and shelter to Stormwatch. Anticipate stronger simulated gusts and wait for the response to each pitch input. |
 | 06 · Operation Windward | Connect Northstar to the network. Combine special cargo, two closed slots, a tight payload and stronger gusts. Evaluate the optional battery against the manifest and payload. |
@@ -148,18 +148,18 @@ The studio adds an optional goal of designing and validating an original mission
 
 | Mission | Route | Income | Bonus | District developed after the first delivery |
 | --- | --- | ---: | ---: | --- |
-| 01 | Harbor Base → Pinehaven | $400 | $100 | Essential Supply District · 11 buildings |
-| 02 | Harbor Base → Sundrift | $600 | $200 | Logistics District · 13 buildings |
-| 03 | Pinehaven → Coral Point | $900 | $300 | Aviation Relay District · 15 buildings |
-| 04 | Sundrift → Mercy Cay | $1,500 | $500 | Medical Campus · 18 buildings |
-| 05 | Mercy Cay → Stormwatch | $2,200 | $800 | Emergency and Weather Operations District · 20 buildings |
-| 06 | Stormwatch → Northstar | $3,400 | $1,100 | Regional Development District · 24 buildings |
+| 01 | Harbor Base → Pinehaven | $400 | $100 | Essential Supply District with a community hall, market, pitched-roof homes and gardens |
+| 02 | Pinehaven → Sundrift | $600 | $200 | Logistics District with high-bay warehouses, a glass dispatch centre and a freight yard |
+| 03 | Sundrift → Coral Point | $900 | $300 | Aviation Relay District with a glazed terminal, curved hangars, a control tower and aprons |
+| 04 | Coral Point → Mercy Cay | $1,500 | $500 | Medical Campus with a multi-storey hospital, emergency wing and landscaped patient gardens |
+| 05 | Mercy Cay → Stormwatch | $2,200 | $800 | Emergency and Weather Operations District with a radar dome, rescue hangar and solar infrastructure |
+| 06 | Stormwatch → Northstar | $3,400 | $1,100 | Regional Development District with a curved glass landmark, stepped towers, modern terminal and fountain plaza |
 
 Income totals $9,000 and optional STEM bonuses total $3,000. A record of each successful delivery supports migration of base income and its district. STEM bonuses depend on separately observed in-game activities and may be earned later. The valid Mission Architect achievement supports the independent $2,000 creative reward. Earnings are derived from these records, which prevents a replay from paying them again. The milestone thresholds are $500, $2,000, $4,500, $7,500, $12,000 and $14,000.
 
-Harbor Base begins with seven modest buildings and an operational runway. A new destination becomes visible when its mission is unlocked. It gains a green route and a district after first delivery. The six routes form a connected, branching network, with each one adding a new island. The map reflows into two columns on narrow screens. Completed mission IDs restore the new geography for existing saves, including Coral Point for a completed Mission 03.
+Harbor Base begins with a modest airfield, two hillside cottages and small cargo facilities. Unlocked destinations emerge from the clouds, then gain an established route and a district after their first delivery. Each arrival island becomes the departure island for the next mission. The single route chain winds through seven islands, with a two-column layout on narrow screens. Existing saves derive the revised routes and districts from completed mission IDs while retaining awards and flight records.
 
-The 4.55-second reward sequence presents the destination before development, then a site survey, foundations, three building waves, roads and vehicles, and a district opening. The same original SVG terrain and buildings appear on the campaign map. Building parcels sit above the runway and aircraft apron. In reduced-motion mode the completed state appears immediately. Rewards and progress are recorded before either presentation begins.
+The 4.55-second reward sequence presents the destination before development, then a site survey, foundations, three building waves, roads and vehicles, and a district opening. The campaign map and development gallery render the same original SVG artwork. Taller structures sit behind public spaces and airside equipment, while roofs, materials and silhouettes give each island a distinct role. In reduced-motion mode the completed state appears immediately. Rewards and progress are recorded before either presentation begins.
 
 The primary success cue is a locally bundled recording with real audience cheers, claps and shouts. The opening burst precedes the construction impacts. A second burst plays when the district opens, followed by lighter coin and certification accents. The final mission uses longer bursts and a musical accent. The crowd is a filtered 4.9-second, 96 kb/s MP3 excerpt of Shane Vincent's GameSoundCon 2024 Walla recording, shared by ShangusBurger under CC0. [Original recording and licence](https://freesound.org/people/ShangusBurger/sounds/763932/)
 

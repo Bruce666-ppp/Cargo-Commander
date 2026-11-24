@@ -123,14 +123,18 @@ test('a prospective bonus pays at the first delivery and the creative reward doe
   assert.deepEqual(earnings(emptyProgress(), readDiyStore(storage).store.architect), { base: 0, stem: 0, creative: 2000, total: 2000 })
 })
 
-test('seven distinct map sites have increasingly substantial built districts that clear the runway', () => {
+test('seven distinct map sites have recognisable landmarks and building plots that clear the runway', () => {
   assert.equal(districts.length, 6)
   assert.equal(new Set(districts.map(district => district.name)).size, 6)
   assert.deepEqual(islandSites.map(site => site.airport), [campaign[0].origin, ...campaign.map(mission => mission.destination)])
   assert.equal(new Set(islandSites.map(site => site.airport)).size, 7)
-  assert.deepEqual([harborSettlement, ...districts].map(district => district.facilities.length), [7, 11, 13, 15, 18, 20, 24])
   assert.ok([harborSettlement, ...districts].every(district => district.facilities.every(({ x, y, width, depth }) =>
-    x > 25 && x + width + depth < 295 && y + 4 < 146)))
+    x > 25 && x + width + depth * .66 < 305 && y + 4 < 145)))
+  assert.ok([harborSettlement, ...districts].every(district => new Set(district.facilities.map(({ wave }) => wave)).size === 3))
+  assert.ok(districts[0].facilities.some(({ kind }) => kind === 'rowhouse'))
+  assert.ok(districts[2].facilities.some(({ kind }) => kind === 'terminal'))
+  assert.ok(districts[3].facilities.some(({ kind }) => kind === 'hospital'))
+  assert.ok(districts[4].facilities.some(({ kind }) => kind === 'radar'))
   assert.equal(districtFor(campaign[2]).name, 'Coral Point Aviation Relay District')
   assert.equal(districtFor(campaign[3]).name, 'Mercy Cay Medical Campus')
   for (const map of [narrowMap, wideMap]) {
@@ -145,20 +149,22 @@ test('seven distinct map sites have increasingly substantial built districts tha
   }
 })
 
-test('a Phase 7.4 relay save acquires Coral Point while keeping its records and earnings', () => {
+test('older relay saves adopt the sequential routes while keeping records and earnings', () => {
   let previous = emptyProgress()
   for (const mission of campaign.slice(0, 3)) {
     previous = recordDelivery(recordStemBonus(previous, mission), mission, verify(mission)).progress
   }
-  const storage = { getItem: () => JSON.stringify({ ...previous, routeIds: ['harbor-base-pinehaven', 'harbor-base-sundrift', 'sundrift-pinehaven'] }) }
-  const updated = readProgress(storage)
-  assert.deepEqual(updated.completedMissionIds, previous.completedMissionIds)
-  assert.deepEqual(updated.bestFlights, previous.bestFlights)
-  assert.deepEqual(updated.certificationIds, previous.certificationIds)
-  assert.deepEqual(updated.stemBonusIds, previous.stemBonusIds)
-  assert.deepEqual(updated.routeIds, ['harbor-base-pinehaven', 'harbor-base-sundrift', 'pinehaven-coral-point'])
-  assert.equal(earnings(updated, true).total, 4500)
-  assert.equal(earnings(recordDelivery(updated, campaign[2], verify(campaign[2])).progress, true).total, 4500)
+  for (const priorRelay of ['sundrift-pinehaven', 'pinehaven-coral-point']) {
+    const storage = { getItem: () => JSON.stringify({ ...previous, routeIds: ['harbor-base-pinehaven', 'harbor-base-sundrift', priorRelay] }) }
+    const updated = readProgress(storage)
+    assert.deepEqual(updated.completedMissionIds, previous.completedMissionIds)
+    assert.deepEqual(updated.bestFlights, previous.bestFlights)
+    assert.deepEqual(updated.certificationIds, previous.certificationIds)
+    assert.deepEqual(updated.stemBonusIds, previous.stemBonusIds)
+    assert.deepEqual(updated.routeIds, ['harbor-base-pinehaven', 'pinehaven-sundrift', 'sundrift-coral-point'])
+    assert.equal(earnings(updated, true).total, 4500)
+    assert.equal(earnings(recordDelivery(updated, campaign[2], verify(campaign[2])).progress, true).total, 4500)
+  }
 })
 
 test('the DIY author can verify the exact reference through quick flight using the approved envelope', () => {

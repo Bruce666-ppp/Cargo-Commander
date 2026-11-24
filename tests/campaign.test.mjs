@@ -98,6 +98,7 @@ test('official deliveries advance all six ranks, routes and badges through the d
   const storage = memoryStorage()
   for (const [index, mission] of campaign.entries()) {
     assert.equal(nextAvailableMission(progress), mission)
+    assert.equal(mission.origin, index === 0 ? 'Harbor Base' : campaign[index - 1].destination)
     assert.ok(connectedAirports(progress).has(mission.origin))
     assert.ok(!connectedAirports(progress).has(mission.destination))
     if (index < 5) assert.equal(isMissionUnlocked(progress, campaign[index + 1]), false)

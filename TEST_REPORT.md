@@ -158,3 +158,15 @@ On 24 November 2026, the [GitHub Actions build and deployment](https://github.co
 
 - A clean, isolated Chromium session started at $0 with seven sites and seven Harbor Base buildings. It completed the actual Mission 01 load through Auto Delivery and reached the reward screen without a manual flight. After a reload the Mission Centre still showed $500 and one developed destination. The sound switch stayed off after a reload and could be enabled again.
 - A separate 390-pixel public session reopened a Phase 7.4 save with four deliveries and Mission Architect. It displayed the new Coral Point development, four established routes and the original $5,900 total without replaying Mission 03.
+
+## Phase 7.5.3 sequential campaign and architecture regression
+
+The 63 automated tests and the TypeScript/Vite production build passed. The tests cover the exact sequential campaign, migration of saved mission and reward records, runway clearance, official loading and flight requirements, both delivery modes, audio cues, and DIY validation.
+
+| Browser check | Observed result |
+| --- | --- |
+| Fresh campaign | Harbor Base was built, Pinehaven was available and later destinations were clouded. All six official missions completed through Auto Delivery. Reloading retained six developed destinations and six established routes. |
+| Island construction | Captured the Mercy Cay foundations, roads and services, and finished campus during first delivery. The complete map and the enlarged Harbor Base and Northstar views used the actual in-game SVG components. |
+| Narrow layout | The complete map showed all seven islands in its two-column layout at a 375 CSS-pixel content width without horizontal overflow. |
+
+See the [updated gallery](README.md#gameplay-gallery) for browser captures from the revised game.

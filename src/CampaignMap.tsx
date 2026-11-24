@@ -90,7 +90,7 @@ export function FlightMap({ progress, discovery }: { progress: CareerProgress; d
       </g>
       <use className="map-plane-still" href={`#${id}-plane`} transform={`translate(${activeLine.marker})`} />
     </>}
-    <g transform="translate(73 89)" fill="#285773">
+    <g transform={narrow ? 'translate(530 71)' : 'translate(73 89)'} fill="#285773">
       <circle r="23" fill="#d8f2f3" fillOpacity=".5" stroke="#82b5ca" />
       <path d="m0-14 7 20-7-4-7 4Z" /><path d="M0 2v-16l7 20Z" fill="#68a7be" />
       <text y="-32" textAnchor="middle" fontSize="18" fontWeight="800">N</text>

@@ -35,9 +35,9 @@ The position of each crate affects the CG even when total mass stays fixed. A va
 | Mission | Route | STEM activity | Delivery | Optional STEM bonus | Certification |
 | --- | --- | --- | ---: | ---: | --- |
 | 01 · Island Supply Run | Harbor Base → Pinehaven | Read the current CG against the permitted range. | $400 | $100 | Balance Basics |
-| 02 · Coastal Resupply | Harbor Base → Sundrift | Compare equal-distance moves of heavy and light cargo. | $600 | $200 | Mass Master |
-| 03 · Inter-Island Relay | Pinehaven → Coral Point | Record two distinct layouts around closed slots. | $900 | $300 | Cargo Strategist |
-| 04 · Emergency Medical Delivery | Sundrift → Mercy Cay | Explain why the Medical Case needs a powered slot. | $1,500 | $500 | Safety Specialist |
+| 02 · Coastal Resupply | Pinehaven → Sundrift | Compare equal-distance moves of heavy and light cargo. | $600 | $200 | Mass Master |
+| 03 · Inter-Island Relay | Sundrift → Coral Point | Record two distinct layouts around closed slots. | $900 | $300 | Cargo Strategist |
+| 04 · Emergency Medical Delivery | Coral Point → Mercy Cay | Explain why the Medical Case needs a powered slot. | $1,500 | $500 | Safety Specialist |
 | 05 · Flight Through the Gusts | Mercy Cay → Stormwatch | Interpret measured results from two controlled flights. | $2,200 | $800 | Flight Controller |
 | 06 · Operation Windward | Stormwatch → Northstar | Compare strategies using payload, balance and cargo fittings. | $3,400 | $1,100 | Cargo Commander |
 
@@ -47,7 +47,7 @@ Successful official deliveries establish routes and clear clouds over later dest
 - **B · Aviation route network expansion.** Discover destinations and establish connections on the archipelago map.
 - **E · STEM skill certifications.** Earn a mission-specific badge for each official delivery. These badges represent in-game achievements.
 
-Harbor Base starts with an operational seven-building settlement. Every first delivery connects one new island and builds its district permanently. The completed map has seven islands and six routes. Replay any completed route to earn a missed STEM Bonus. Campaign earnings reach $12,000. The first qualifying original mission adds $2,000, for a combined $14,000 in fictional game currency. **Airline Growth** tracks six earnings milestones. **Island Development** shows the six districts.
+Harbor Base starts as a small aviation settlement with a runway, hangar and hillside cottages. Each first delivery develops a new district and establishes the next leg of the seven-island journey. The architecture progresses from Pinehaven’s pitched roofs through specialist campuses to Northstar’s glass towers, wave-roof terminal and landscaped plaza. Replay any completed route to earn a missed STEM Bonus. Campaign earnings reach $12,000. The first qualifying original mission adds $2,000, for a combined $14,000 in fictional game currency. **Airline Growth** tracks six earnings milestones. **Island Development** shows the six districts.
 
 The construction sequence uses a locally bundled excerpt of the crowd cheering, clapping and calling out at the GameSoundCon 2024 Walla session. Recording and editing by Shane Vincent, uploaded as ShangusBurger under CC0 1.0. The game trims and filters the recording and schedules two bursts around construction. [Recording and licence](https://freesound.org/people/ShangusBurger/sounds/763932/)
 
@@ -82,14 +82,17 @@ The [educational design notes](GAME_DESIGN.md#educational-frameworks) map the de
 
 ## Gameplay gallery
 
+![Enlarged in-game illustrations of Harbor Base at the start and Northstar after the final delivery](docs/screenshots/phase753/contrast.jpg)
+
 | Initial Harbor Base settlement | Completed seven-island network |
 | --- | --- |
-| ![Harbor Base is operational with Pinehaven available and later islands clouded](docs/screenshots/phase75-initial-map.jpg) | ![All seven connected islands and six established routes](docs/screenshots/phase75-final-map.jpg) |
+| ![Harbor Base is operational with Pinehaven available and later islands clouded](docs/screenshots/phase753/harbor-base.jpg) | ![All seven connected islands and six established routes](docs/screenshots/phase753/complete-network.jpg) |
 | **Mercy Cay Medical Campus** | **Northstar Regional Development District** |
-| ![Mercy Cay before and after the medical delivery](docs/screenshots/phase75-mercy-campus.jpg) | ![Northstar before and after the final campaign delivery](docs/screenshots/phase75-northstar.jpg) |
+| ![Mercy Cay before and after the medical delivery](docs/screenshots/phase753/mercy-cay.jpg) | ![Northstar before and after the final campaign delivery](docs/screenshots/phase753/northstar.jpg) |
 
-- [Early campaign map](docs/screenshots/phase75-early-map.jpg), [Coral Point relay district](docs/screenshots/phase75-coral-point.jpg), [first construction](docs/screenshots/phase75-first-construction.jpg) and [Mercy Cay construction waves](docs/screenshots/phase75-construction-waves.jpg)
-- [Auto Delivery and Manual Delivery options](docs/screenshots/phase75-delivery-modes.jpg), [controlled flight comparison](docs/screenshots/phase74-flight-comparison.jpg) and [mobile map](docs/screenshots/phase75-mobile-map.jpg)
+- [Pinehaven supply district](docs/screenshots/phase753/pinehaven.jpg) and [Stormwatch weather and emergency district](docs/screenshots/phase753/stormwatch.jpg)
+- Mercy Cay construction sequence. [Foundations](docs/screenshots/phase753/construction-foundations.jpg), [roads and services](docs/screenshots/phase753/construction-buildings.jpg), and [district opening](docs/screenshots/phase753/construction-complete.jpg).
+- [Auto Delivery and Manual Delivery options](docs/screenshots/phase75-delivery-modes.jpg) and [controlled flight comparison](docs/screenshots/phase74-flight-comparison.jpg)
 - [Home and the five ABCD outcomes](docs/screenshots/phase74-home.jpg), [About Game](docs/screenshots/phase74-about.jpg), [Training Centre](docs/screenshots/phase74-training-centre.jpg) and [DIY editor](docs/screenshots/phase74-diy-editor.jpg)
 
 ## Controls
