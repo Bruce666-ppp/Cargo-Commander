@@ -2,6 +2,8 @@ import { useId } from 'react'
 import { connectedAirports, discoveredAirports, nextAvailableMission } from './career'
 import type { CareerProgress, MapDiscovery } from './career'
 import { campaign } from './mission'
+import { districts } from './districts'
+import { DistrictFootprint } from './IslandDevelopment'
 
 const icons = {
   medical: <><rect x="3" y="7" width="18" height="13" rx="3" /><path d="M9 7V4h6v3m-3 3v7m-3.5-3.5h7" /></>,
@@ -64,7 +66,7 @@ export function FlightMap({ progress, discovery }: { progress: CareerProgress; d
   const activeLine = routeLines[activeIndex]
   const established = new Set(progress.routeIds)
   return (
-    <svg className="flight-map" viewBox="0 0 900 580" role="img" aria-label={`Map of the Windward Isles. Discovered airports: ${[...discovered].join(', ')}. ${established.size} established routes.`}>
+    <svg className="flight-map" viewBox="0 0 900 580" role="img" aria-label={`Map of the Windward Isles. Discovered airports: ${[...discovered].join(', ')}. ${established.size} established routes. ${progress.completedMissionIds.length} developed districts.`}>
       <defs>
         <linearGradient id={asset('sea')} x2="1" y2="1"><stop stopColor="#bee7f0" /><stop offset="1" stopColor="#8fc5dd" /></linearGradient>
         <pattern id={asset('grid')} width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0v40" fill="none" stroke="#f2ffff" strokeOpacity=".4" /><circle r="1.6" fill="#effdff" fillOpacity=".65" /></pattern>
@@ -119,6 +121,13 @@ export function FlightMap({ progress, discovery }: { progress: CareerProgress; d
           <path d={d} pathLength={complete ? 100 : undefined} fill="none" stroke={complete ? '#3e8059' : '#255d7a'} strokeWidth={complete ? 4.5 : 3.7}
             strokeDasharray={complete ? undefined : '1 10'} strokeLinecap="round"
             className={discovery?.routeId === mission.career.routeId ? 'route-draw' : discovery && !complete ? 'route-discovery' : undefined} />
+        </g>
+      })}
+      {districts.map((district, index) => {
+        if (!progress.completedMissionIds.includes(campaign[index].id)) return null
+        const [x, y, scale] = district.map
+        return <g key={district.name} data-district={campaign[index].id} transform={`translate(${x} ${y}) scale(${scale})`}>
+          <title>{district.name}</title><DistrictFootprint district={district} />
         </g>
       })}
       {islands.map(island => {

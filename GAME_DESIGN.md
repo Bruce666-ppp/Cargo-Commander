@@ -6,19 +6,15 @@ Cargo Commander is a browser-based STEM game for beginner learners. A trainee lo
 
 ## Learning Outcomes and ABCD Model
 
-**Centre of Gravity and Mass Distribution** is taught through Science — Physics. **Aircraft Stability and Flight Control** is taught through Engineering — Aerospace Engineering.
+The visible ABCD labels and sentences follow the instructor’s IDAT7220 ABCD Model teaching material. Audience identifies the learner, Behaviour states one principal observable action, Condition describes the circumstances or tools and Degree specifies acceptable performance. Home and About Game share the same content definition.
 
-By the end of the game, beginner STEM learners aged 10–14 will be able to:
-
-| Learning Outcome | Learning type | A · Audience | B · Behaviour | C · Condition | D · Degree |
+| Learning Outcome | Learning category | A · Audience | B · Behaviour | C · Condition | D · Degree |
 | --- | --- | --- | --- | --- | --- |
-| **LO1 · Identify Aircraft Balance Information.** Using the cargo inventory and aircraft balance indicators, correctly identify the cargo masses, current centre of gravity, and permitted CG range. | Factual Learning | Beginner STEM learners aged 10–14. | Identify cargo masses, current centre of gravity, and permitted CG range. | Using the cargo inventory and aircraft balance indicators. | Correctly identify all three types of information. |
-| **LO2 · Understand How Cargo Affects Balance.** By comparing equal-distance movements of heavy and light cargo while keeping the total loaded mass unchanged, correctly explain the direction of CG movement and why heavier cargo produces a greater change. | Conceptual Learning | Beginner STEM learners aged 10–14. | Explain the direction and relative magnitude of centre-of-gravity changes. | Comparing equal-distance movements of heavy and light cargo while keeping the total loaded mass unchanged. | Correctly explain the direction of CG movement and why heavier cargo produces a greater change. |
-| **LO3 · Load and Balance an Aircraft.** Using the cargo-loading interface and real-time CG feedback, arrange all required cargo within the specified CG range while satisfying all loading safety requirements. | Procedural Learning | Beginner STEM learners aged 10–14. | Arrange all required cargo. | Using the cargo-loading interface and real-time CG feedback. | Achieve the specified CG range and satisfy all loading safety requirements. |
-| **LO4 · Complete a Cargo Delivery Challenge.** Given mission-specific cargo restrictions and flight-test feedback, develop and refine a cargo-loading and flight-control strategy that satisfies all mission requirements and achieves a successful delivery. | Problem-solving Learning | Beginner STEM learners aged 10–14. | Develop and refine a cargo-loading and flight-control strategy. | Given mission-specific cargo restrictions and flight-test feedback. | Satisfy all mission requirements and achieve a successful delivery. |
-| **LO5 · Design Your Own Cargo Mission.** Design and validate an original cargo delivery mission using the DIY Mission Studio, producing a valid loading solution that satisfies all selected constraints and achieves a successful test flight. | Creative Application | Beginner STEM learners aged 10–14. | Design and validate an original cargo delivery mission. | Using the DIY Mission Studio and the existing educational cargo-loading and flight-simulation tools. | Produce a valid loading solution that satisfies all selected mission constraints and achieve a successful test flight. |
-
-In the IDAT7220 ABCD framework the Condition describes the tools and circumstances. The Degree describes the standard. The controlled comparison in LO2 fixes distance and total loaded mass so that learners can explain the difference in CG movement. In LO3 and LO4, the existing mission requirements supply the performance standard. Cruise remains a valid mode for all six deliveries.
+| **LO1 · Identify Aircraft Balance Information.** By the end of the game, beginner STEM learners aged 10–14 will be able to identify cargo masses, the current centre of gravity and the permitted CG range using the cargo inventory and balance indicators, with all three types of information correctly identified. | Factual Knowledge | Beginner STEM learners aged 10–14. | Identify cargo masses, the current centre of gravity and the permitted CG range. | Using the cargo inventory and balance indicators. | All three types of information correctly identified. |
+| **LO2 · Explain Cargo Effects on Balance.** By the end of the game, beginner STEM learners aged 10–14 will be able to explain the effect of cargo movement on the centre of gravity through equal-distance comparisons at constant total loaded mass, with correct reasoning about the direction of movement and the greater effect of heavier cargo. | Conceptual Knowledge | Beginner STEM learners aged 10–14. | Explain the effect of cargo movement on the centre of gravity. | Through equal-distance comparisons at constant total loaded mass. | Correct reasoning about the direction of movement and the greater effect of heavier cargo. |
+| **LO3 · Arrange Cargo Safely.** By the end of the game, beginner STEM learners aged 10–14 will be able to arrange all required cargo using the loading interface and real-time CG feedback, with all applicable loading safety requirements satisfied. | Procedural Knowledge | Beginner STEM learners aged 10–14. | Arrange all required cargo. | Using the loading interface and real-time CG feedback. | All applicable loading safety requirements satisfied. |
+| **LO4 · Select an Effective Delivery Strategy.** By the end of the game, beginner STEM learners aged 10–14 will be able to select an appropriate cargo-loading and flight strategy given mission-specific constraints and flight feedback, with all mission requirements satisfied and a successful delivery. | Problem-Solving Knowledge | Beginner STEM learners aged 10–14. | Select an appropriate cargo-loading and flight strategy. | Given mission-specific constraints and flight feedback. | All mission requirements satisfied and a successful delivery. |
+| **LO5 · Design Your Own Cargo Mission.** By the end of the game, beginner STEM learners aged 10–14 will be able to design an original cargo delivery mission using DIY Mission Studio, with a valid reference solution, satisfaction of all selected constraints and a successful test flight. | Creative Application | Beginner STEM learners aged 10–14. | Design an original cargo delivery mission. | Using DIY Mission Studio. | A valid reference solution, satisfaction of all selected constraints and a successful test flight. |
 
 ### Constructive Alignment
 
@@ -40,7 +36,7 @@ In the IDAT7220 ABCD framework the Condition describes the tools and circumstanc
 | Design | The six routes layer loading constraints and simulated flight demands. Training, hints and worked solutions support players who need more guidance. |
 | Development | Iteration connected the cargo interface, mass-weighted CG, simulator and feedback. Automated tests and worked-solution checks provide internal verification of content and logic. |
 | Implementation | GitHub Pages provides access without installation. Mission briefs, the new-player choice, and keyboard and on-screen controls explain how to begin. |
-| Evaluation | Automated tests, browser playthroughs, responsive checks and classmate feedback informed revisions. These provide technical, usability and formative evidence. |
+| Evaluation | Five points of formative peer feedback led to a shorter first run, visible ABCD outcomes, one observable action in each outcome, tangible island rewards and a simulator-led delivery option. Automated tests and browser playthroughs verify the implementation. |
 
 This is a retrospective mapping of the project to ADDIE. Learner needs studies, classroom implementation, independent subject matter expert validation and direct measurements of learning gains remain unverified.
 
@@ -66,10 +62,10 @@ LO5 extends procedural and problem-solving knowledge into creative application. 
 | Stage | Example from the Windward Isles |
 | --- | --- |
 | Engage | Pinehaven's supply brief gives the trainee loadmaster an immediate reason to prepare the aircraft. |
-| Explore | Move crates, watch the CG indicator and test different loads in Practice Flight. |
-| Explain | Compare the two crate movements and use the instructor's explanation or worked example to interpret the readings. |
-| Elaborate | Apply the same balance principles around closed slots, powered cargo positions and stronger simulated gusts. |
-| Evaluate | Check aircraft readiness, review the altitude trace and corridor time, then adjust and retry. |
+| Explore | Move crates, watch the CG indicator and run two equal-distance trials from the same baseline. |
+| Explain | Interpret the mass trials or explain the operational reason for the powered medical slot using the engineering requirement. |
+| Elaborate | Find a second feasible layout, interpret a controlled gust comparison and transfer the design rules to a new DIY mission. |
+| Evaluate | Check aircraft readiness, put the actual load through flight verification and use the report to inform a retry. |
 
 Players can cycle among these activities during a mission. The game supplies explanations and evaluates task performance. Teacher observation can provide evidence about a learner's own explanation.
 
@@ -101,15 +97,15 @@ Ask the designer to show the saved mission, explain why they added one constrain
 
 ## DIY Mission Studio and peer challenges
 
-After Mission 03, learners can apply the same balance principles to a problem they design. They choose cargo types and masses, blocked positions, a target CG range and one of three simulated wind conditions. The studio uses Mission 01's empty aircraft, six positions and 60 kg payload limit. Targets stay within 4.40–4.60 m, the envelope for this educational exercise. A medical case reuses the existing requirement to occupy powered slot 3 or 4.
+From the first visit to Mission Centre, learners can apply the balance principles to a problem they design. They start with two crates and can edit types, masses and blocked slots. Advanced Details contains the narrower CG targets and three simulated wind options. The studio uses Mission 01's empty aircraft, six positions and 60 kg payload limit. Targets stay within 4.40–4.60 m, the envelope for this educational exercise. A medical case reuses the requirement to occupy powered slot 3 or 4.
 
-**Create** verifies the configuration and uses the existing bounded loading search. At most six required crates are placed one per permitted slot. This check establishes that there is some valid load. **Solve** requires the designer to place the crates in Cargo Loading and submit their own valid arrangement. **Explain** builds a diagram, placement steps and optional moment calculation using that exact reference load, including the empty aircraft mass and original CG. The placement order is a worked example. **Test & Save** requires a successful manual flight with that same load. A change to cargo, slots, CG or wind requires a fresh reference and flight.
+**Create** verifies the configuration and uses the existing bounded loading search. At most six required crates are placed one per permitted slot. **Solve** requires a valid arrangement entered by the designer in Cargo Loading. **Explain** builds a diagram, placement steps and optional moment calculation using that reference load and the empty aircraft's mass and CG. **Test & Save** requires a successful flight with the reference load, through Quick Flight Verification or Manual Flight. A change to cargo, slots, CG or wind requires a fresh reference and flight.
 
-Mission Architect recognises a complete saved design with a blocked slot, narrower CG target or powered cargo constraint. The original six certifications and career progression remain tied to official deliveries. Reset Progress clears the official career record while retaining the creative archive, its badge and sound settings. Formal creation unlocks again after the third official delivery.
+Mission Architect and the one-time $2,000 creative reward recognise a saved design with a blocked slot, narrower CG target or powered cargo constraint. Reset Progress clears official campaign records, earnings and development. The creative archive, award, badge and sound settings remain available.
 
 The share link stores only the small, versioned mission definition, reference slots and optional note. A receiver can replay the challenge with a different arrangement, request hints or open the creator's worked example. The receiver checks the schema and recalculates what can be reproduced locally. A portable link does not authenticate the author or certify that a flight was flown. My Missions stores designs on the current browser, and shared links provide an opportunity to compare designs with peers.
 
-The Training Centre supports self-paced replay of the whole beginner sequence and separate loading, CG, inspection, flight, career and DIY modules. The temporary DIY exercise integrates a changed cargo mass, a blocked slot, a manual reference load and a short actual test flight. Training stays separate from the official career and the saved creative archive.
+The Training Centre includes Quick Beginner Training, Complete Training and separate loading, CG, inspection, flight, career and DIY modules. Training uses an independent exercise state and sample rewards.
 
 ## Learning strategies
 
@@ -129,9 +125,9 @@ The studio adds an optional goal of designing and validating an original mission
 
 | Layer | How it appears in play |
 | --- | --- |
-| Mechanics | Cargo placement, weighted CG, payload and slot limits, pitch controls, flight modes, delivery milestones, mission configuration, submitted reference solutions, validation and share links. |
-| Dynamics | Experiment with mass and distance, plan around restrictions, compare flights, revise an original design and challenge a peer to find another solution. |
-| Aesthetics | Challenge from constraints and flight, discovery through cloud clearance, achievement through the campaign and ownership of a mission you built. |
+| Mechanics | Cargo placement, weighted CG, payload and slot checks, measured STEM comparisons, assisted or manual simulator control, persistent rewards and development, and validated mission sharing. |
+| Dynamics | Predict and test, revise unsafe loads, evaluate alternatives, observe an engineering consequence and challenge a peer to find a different solution. |
+| Aesthetics | Discovery through the archipelago, challenge through its constraints, accomplishment through a growing network, and ownership through an original mission. |
 
 ## Six-mission campaign
 
@@ -148,9 +144,24 @@ The studio adds an optional goal of designing and validating an original mission
 
 **A · Aviation career progression** advances the player from Trainee Loadmaster to Cargo Commander. **B · Aviation route network expansion** establishes routes and reveals new destinations through cloud clearing. **E · STEM skill certifications** associates one badge with each mission's demonstrated in-game competency. The Achievement Wall brings all three together. Replays can improve a saved flight without duplicating rewards. Practice, training and demonstrations support experimentation, while an official successful delivery earns the career rewards. Seeking help does not reduce reward eligibility.
 
+### Delivery income, STEM bonuses and development
+
+| Mission | Income | Bonus | District developed after the first delivery |
+| --- | ---: | ---: | --- |
+| 01 | $400 | $100 | Pinehaven Essential Supply District |
+| 02 | $600 | $200 | Sundrift Logistics District |
+| 03 | $900 | $300 | Inter-Island Aviation Relay District, Pinehaven |
+| 04 | $1,500 | $500 | Mercy Cay Medical Complex |
+| 05 | $2,200 | $800 | Stormwatch Emergency and Weather Operations District |
+| 06 | $3,400 | $1,100 | Northstar Regional Development District |
+
+Income totals $9,000 and optional STEM bonuses total $3,000. A record of each successful delivery supports migration of base income and its district. STEM bonuses depend on separately observed in-game activities and may be earned later. The valid Mission Architect achievement supports the independent $2,000 creative reward. Earnings are derived from these records, which prevents a replay from paying them again. The milestone thresholds are $500, $2,000, $4,500, $7,500, $12,000 and $14,000.
+
+The reward screen presents a before-and-after district, staged construction and an earnings count-up. The animated sequence uses local, synthesised victory, construction, coins and certification cues. The completed complexes also appear as original SVG geometry on the existing navigable map. A player can skip the sequence without affecting their delivery record.
+
 ## Learning support design
 
-The first-run choice offers either beginner training or entry to the Mission Centre. Training shows one action at a time, including loading, comparing mass effects and practising pitch and flight-mode controls. It then introduces campaign progression and a short DIY exercise. The tutorial can pause the simulated flight while the learner reads, and the Training Centre offers each topic independently.
+The first-run choice offers Quick Beginner Training or direct entry to the Mission Centre. The short training asks the learner to place one crate, move it until balanced and verify the load in the simulator. A temporary reward demonstration completes the loop. Complete Training preserves the earlier stages including pitch control, career progression and DIY. The Training Centre offers each topic independently.
 
 Automatic help uses active time in the loading screen. The first reminder arrives after 45–75 seconds across the six missions, with a bounded delay for productive moves. Subsequent cues offer a strategy, a specific legal move and an optional solution invitation. The worked solution explains each placement, shows the balance point before and after and lets the player return to the original hold or start with an empty one. Its optional calculation table introduces the formula without interrupting the cargo task. After a flight, the instructor connects recorded events to a next action and can demonstrate flying the route.
 
@@ -159,6 +170,8 @@ Automatic help uses active time in the loading screen. The first reminder arrive
 The longitudinal CG is a mass-weighted mean, `(empty aircraft mass × empty CG + Σ(crate mass × slot position)) ÷ total loaded mass`. All positions share the same nose datum. The gauge uses the aircraft's illustrated reference coordinates. Safety comparisons use the unrounded CG, with both target endpoints inclusive. Display precision increases where a two-decimal reading would obscure a safety boundary.
 
 The simulated aircraft uses a simplified pitch and altitude response. A forward CG reduces response to nose-up input in the model. An aft CG weakens the restoring response and damping. Baseline stability, the player's inputs and simulated wind together determine flight behaviour. Cruise, Express and Rush vary pace and simulated disturbance for gameplay. Flight reports show modes and elapsed durations to support fairer comparisons.
+
+Quick Flight Verification preserves the submitted configuration and uses the original simulator and delivery criteria with assisted pitch control. It presents the resulting trace and verdict in a shorter real-time window. In the controlled Mission 05 activity the two runs both use Cruise, the same gust profile and the same timed pitch input for 32 simulated seconds. The two valid CG values produce 87.7% and 61.1% corridor occupancy in that particular experiment. Freely chosen attempts can vary in loading, mode, controls and duration, which limits causal comparisons.
 
 Cargo Commander uses simplified educational models to demonstrate centre of gravity and aircraft stability. It is not intended for real-world aircraft loading, engineering certification or aviation flight training.
 

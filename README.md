@@ -18,40 +18,28 @@ Cargo Commander is an interactive STEM aviation game for learners new to physics
 
 ### Learning Outcomes (ABCD Model)
 
-By the end of the game, beginner STEM learners aged 10–14 will be able to:
+1. **LO1 · Factual Knowledge — Identify Aircraft Balance Information.** By the end of the game, beginner STEM learners aged 10–14 will be able to identify cargo masses, the current centre of gravity and the permitted CG range using the cargo inventory and balance indicators, with all three types of information correctly identified.
+2. **LO2 · Conceptual Knowledge — Explain Cargo Effects on Balance.** By the end of the game, beginner STEM learners aged 10–14 will be able to explain the effect of cargo movement on the centre of gravity through equal-distance comparisons at constant total loaded mass, with correct reasoning about the direction of movement and the greater effect of heavier cargo.
+3. **LO3 · Procedural Knowledge — Arrange Cargo Safely.** By the end of the game, beginner STEM learners aged 10–14 will be able to arrange all required cargo using the loading interface and real-time CG feedback, with all applicable loading safety requirements satisfied.
+4. **LO4 · Problem-Solving Knowledge — Select an Effective Delivery Strategy.** By the end of the game, beginner STEM learners aged 10–14 will be able to select an appropriate cargo-loading and flight strategy given mission-specific constraints and flight feedback, with all mission requirements satisfied and a successful delivery.
+5. **LO5 · Creative Application — Design Your Own Cargo Mission.** By the end of the game, beginner STEM learners aged 10–14 will be able to design an original cargo delivery mission using DIY Mission Studio, with a valid reference solution, satisfaction of all selected constraints and a successful test flight.
 
-1. **LO1 · Factual Learning — Identify Aircraft Balance Information.** Using the cargo inventory and aircraft balance indicators, correctly identify the cargo masses, current centre of gravity, and permitted CG range.
-2. **LO2 · Conceptual Learning — Understand How Cargo Affects Balance.** By comparing equal-distance movements of heavy and light cargo while keeping the total loaded mass unchanged, correctly explain the direction of CG movement and why heavier cargo produces a greater change.
-3. **LO3 · Procedural Learning — Load and Balance an Aircraft.** Using the cargo-loading interface and real-time CG feedback, arrange all required cargo within the specified CG range while satisfying all loading safety requirements.
-4. **LO4 · Problem-solving Learning — Complete a Cargo Delivery Challenge.** Given mission-specific cargo restrictions and flight-test feedback, develop and refine a cargo-loading and flight-control strategy that satisfies all mission requirements and achieves a successful delivery.
-5. **LO5 · Creative Application — Design Your Own Cargo Mission.** Design and validate an original cargo delivery mission using the DIY Mission Studio, producing a valid loading solution that satisfies all selected constraints and achieves a successful test flight.
-
-The shared audience above is **A** for each outcome. The game links the observable behaviour (**B**), its conditions (**C**) and the performance standard (**D**) to hands-on activities:
-
-| Outcome | B · Behaviour | C · Condition | D · Degree | In the game |
-| --- | --- | --- | --- | --- |
-| LO1 | Identify cargo masses, current CG and permitted range. | Cargo inventory and balance indicators. | Identify all three types of information correctly. | Cargo labels, live CG and Safety Checklist. |
-| LO2 | Explain the direction and relative size of CG changes. | Equal-distance moves with total loaded mass fixed. | Correctly explain the direction and why heavier cargo has the greater effect. | The Training Centre compares moving 30 kg and 10 kg crates by one slot each. |
-| LO3 | Arrange all required cargo. | Loading interface and live CG feedback. | Achieve the target CG and pass the loading safety checks. | The Safety Checklist gates official departure. |
-| LO4 | Develop and refine a loading and flight strategy. | Mission restrictions and flight-test feedback. | Meet the mission requirements and deliver successfully. | Practice Flight, Flight Review and official deliveries. |
-| LO5 | Design and validate an original delivery. | DIY Mission Studio with loading and flight simulation. | Produce a valid load and pass the test flight. | Choose constraints, save a reference load and validate a mission. |
-
-About Game presents all five outcomes with expandable ABCD breakdowns. [See the constructive alignment and assessment limits.](GAME_DESIGN.md#constructive-alignment)
+The Home Page and About Game both show each complete sentence and its colour-coded **A · Audience**, **B · Behaviour**, **C · Condition** and **D · Degree**. [See the course alignment and assessment evidence.](GAME_DESIGN.md#constructive-alignment)
 
 ## From manifest to delivery
 
-**Mission Briefing → Cargo Loading → Safety Inspection → Flight Challenge → Delivery → Learning Feedback → Career Progression**
+**Mission Briefing → STEM Decision → Cargo Loading → Safety Inspection → Flight Verification → Delivery and Island Development**
 
-The position of each crate affects the CG even when total mass stays fixed. A valid delivery needs the required cargo, permitted slots, a load within the payload limit and a CG within the target band. In flight, use small pitch corrections to reach the destination within the altitude and stability requirements.
+The position of each crate affects the CG even when total mass stays fixed. A valid delivery needs the required cargo, permitted slots, a load within the payload limit and a CG within the target band. **Quick Flight Verification** runs the selected load through the same educational simulator in a few seconds. Choose **Manual Flight** to fly using pitch controls, or **Practice Flight** to experiment. The safety checks apply equally to both delivery paths.
 
-| Mission | Route | Main challenge | Certification |
-| --- | --- | --- | --- |
-| 01 · Island Supply Run | Harbor Base → Pinehaven | Balance three differently weighted crates. | Balance Basics |
-| 02 · Coastal Resupply | Harbor Base → Sundrift | Plan around the 50 kg replacement turbine. | Mass Master |
-| 03 · Inter-Island Relay | Sundrift → Pinehaven | Redistribute cargo around two closed slots. | Cargo Strategist |
-| 04 · Emergency Medical Delivery | Sundrift → Mercy Cay | Use a powered position for the Medical Case. | Safety Specialist |
-| 05 · Flight Through the Gusts | Mercy Cay → Stormwatch | Maintain altitude in stronger simulated gusts. | Flight Controller |
-| 06 · Operation Windward | Stormwatch → Northstar | Combine closed slots, special fittings, a tight payload and gusts. | Cargo Commander |
+| Mission | STEM activity | Delivery | Optional STEM bonus | Certification |
+| --- | --- | ---: | ---: | --- |
+| 01 · Island Supply Run | Read the actual CG and place it in relation to the target range. | $400 | $100 | Balance Basics |
+| 02 · Coastal Resupply | Predict and compare equal-distance moves of a heavy and a light crate. | $600 | $200 | Mass Master |
+| 03 · Inter-Island Relay | Record two distinct safe layouts around closed slots. | $900 | $300 | Cargo Strategist |
+| 04 · Emergency Medical Delivery | Explain why the Medical Case needs a powered position. | $1,500 | $500 | Safety Specialist |
+| 05 · Flight Through the Gusts | Interpret measured results from two loads under controlled flight conditions. | $2,200 | $800 | Flight Controller |
+| 06 · Operation Windward | Choose a valid strategy using payload, balance and special fittings together. | $3,400 | $1,100 | Cargo Commander |
 
 Successful official deliveries establish routes and clear clouds over later destinations. The Achievement Wall tracks the three parts of the **ABE reward system**.
 
@@ -59,24 +47,26 @@ Successful official deliveries establish routes and clear clouds over later dest
 - **B · Aviation route network expansion.** Discover destinations and establish connections on the archipelago map.
 - **E · STEM skill certifications.** Earn a mission-specific badge for each official delivery. These badges represent in-game achievements.
 
+The first successful delivery develops a permanent district on the map and grants its delivery income once. Replay any completed route to earn a missed STEM bonus. Campaign earnings reach $12,000, plus $2,000 for the first qualifying original mission, for a combined $14,000 in fictional game currency. **Airline Growth** tracks six earnings milestones. **Island Development** shows what each delivery built.
+
 ## DIY Mission Studio
 
-Complete Mission 03 to create a new mission. From Mission Centre, open **DIY Mission Studio** and follow **Create → Solve → Explain → Test & Save**.
+From the first visit to Mission Centre, open **DIY Mission Studio** and follow **Create → Solve → Explain → Test & Save**.
 
-1. **Create** a challenge using existing cargo, blocked positions, a CG target and simulated wind. Check that at least one legal loading arrangement exists.
+1. **Create** a challenge with a default two-crate manifest, editable masses and optional blocked positions. Use **Advanced Details** for a narrower CG target or simulated wind. Check that at least one legal loading arrangement exists.
 2. **Solve** your challenge in Cargo Loading and select **Save Reference Solution** when the checks pass.
 3. **Explain** by reviewing the worked example and its calculated balance. Add an optional Creator's Note and confirm the explanation.
-4. **Test & Save** by flying the reference load yourself. After you pass, save the validated mission. Cruise is sufficient.
+4. **Test & Save** by verifying that exact reference load with Quick Flight Verification or Manual Flight, then save the validated mission.
 
-In **My Missions**, revisit drafts and manage created or received missions. Open **Share → Copy Mission Link** on a validated mission to invite someone to solve it. The link opens directly in their browser, even before Mission 03. They can try another legal arrangement, use the creator's worked example when needed, and save the received mission locally. Receiving and playing a challenge leave official campaign progress independent.
+In **My Missions**, revisit drafts and manage created or received missions. Open **Share → Copy Mission Link** on a validated mission to invite someone to solve it. The link opens the challenge in their browser. They can try another legal arrangement, use the creator's worked example when needed, and save the received mission locally. Receiving and playing a challenge leave official campaign progress independent.
 
-The **Mission Architect** badge recognises a completed original design with a meaningful constraint. It supports **Create** in Bloom's Taxonomy and is separate from career rank. The **Training Centre** includes the complete beginner path and six individual modules. Its temporary DIY exercise is available before Mission 03.
+The **Mission Architect** badge and one-time $2,000 creative reward recognise a completed original design with a meaningful constraint. It supports **Create** in Bloom's Taxonomy and is separate from career rank. The studio uses Mission 01's 60 kg payload and 4.40–4.60 m CG envelope as fixed educational simulation parameters.
 
 ## Learning support
 
 **Guided learning → Independent exploration → Progressive hints → Worked examples → Independent retry**
 
-At first launch, beginners can follow a continuous spotlight tutorial through loading, flight controls, campaign progression and a short DIY exercise. Experienced players can go directly to the Mission Centre. Select **Training Centre → Individual Training Modules** for self-paced practice. Manual and timed hints build from a conceptual reminder to a legal move. Each campaign and saved custom mission offers a step-by-step worked solution with optional maths.
+At first launch, **Quick Beginner Training** takes players through **Place → Balance → Verify & Deliver** and a sample island development scene. Experienced players can enter the Mission Centre directly. The **Training Centre** also offers the original **Complete Training** and all six individual modules for self-paced practice. Manual and timed hints build from a conceptual reminder to a legal move. Each campaign and saved custom mission offers a step-by-step worked solution with optional maths.
 
 Practice flights, live coaching, instructor demonstrations and flight reviews give players ways to test a change and try again. Using any of these supports carries no reward penalty. Official deliveries establish routes, ranks and certifications.
 
@@ -90,32 +80,16 @@ The [educational design notes](GAME_DESIGN.md#educational-frameworks) map the de
 
 ## Gameplay gallery
 
-| Home | Mission Centre |
+| Home and the five ABCD outcomes | Mercy Cay Medical Complex |
 | --- | --- |
-| ![Home Page with the cargo aircraft and STEM overview](docs/screenshots/home.jpg) | ![Mission Centre map with airports, routes and unexplored clouds](docs/screenshots/mission-centre.jpg) |
-| The title, gameplay loop and STEM overview. | The Windward Isles and available deliveries. |
-| **Cargo Loading** | **Flight Challenge** |
-| ![Cargo hold with a live CG gauge, safety checklist and inventory](docs/screenshots/cargo-loading.jpg) | ![Flight challenge with altitude corridor and flight mode controls](docs/screenshots/flight-challenge.jpg) |
-| Live balance and cargo checks as supplies move. | Simulated altitude, pitch and route progress. |
-| **Achievement Wall** | **Spotlight Tutorial** |
-| ![Achievement Wall showing rank and mission certifications](docs/screenshots/achievement-wall.jpg) | ![Guided tutorial highlighting the required interaction](docs/screenshots/spotlight-tutorial.jpg) |
-| Career rank, certifications and completed deliveries. | A focused step in the beginner training. |
-| **Worked Solution** | **Mobile Gameplay** |
-| ![Worked example with a crate, balance measurement and step controls](docs/screenshots/worked-solution.jpg) | <img src="docs/screenshots/mobile-gameplay.jpg" alt="Cargo Loading at a 390-pixel-wide emulated mobile viewport" width="260"> |
-| A worked example with before and after CG readings. | A 390 CSS-pixel browser viewport showing the wrapped title and enlarged cargo slots. |
-| **Learning Outcomes in About Game** | **Expanded ABCD Breakdown** |
-| ![LO5 Creative Application in the in-game About panel](docs/screenshots/learning-outcomes.jpg) | ![Expanded ABCD components for a Learning Outcome](docs/screenshots/abcd-breakdown.jpg) |
-| The five complete statements are available without expanding the details. | Each outcome offers Audience, Behaviour, Condition and Degree in the expandable details. |
+| ![Home Page and complete colour-coded Learning Outcomes](docs/screenshots/phase74-home.jpg) | ![Before and after medical campus, delivery income and STEM bonus](docs/screenshots/phase74-mercy-cay.jpg) |
+| **Scientific decision** | **Developed network** |
+| ![Recorded CG shifts for two equal-distance cargo movements](docs/screenshots/phase74-stem-decision.jpg) | ![Final route network with six developed districts](docs/screenshots/phase74-completed-network.jpg) |
 
-[View the expanded Pedagogical Frameworks panel.](docs/screenshots/pedagogical-frameworks.jpg)
-
-| DIY Mission Editor | Validated Custom Mission |
-| --- | --- |
-| ![Cargo settings, target range and blocked slot in the editor](docs/screenshots/diy-editor.jpg) | ![A custom mission after a successful manual test flight](docs/screenshots/diy-validated.jpg) |
-
-- [Studio entry](docs/screenshots/diy-studio.jpg), [reference loading](docs/screenshots/diy-reference.jpg) and [scientific explanation](docs/screenshots/diy-explanation.jpg)
-- [My Missions](docs/screenshots/my-missions.jpg), [Share Mission Link](docs/screenshots/share-mission-link.jpg) and [received challenge](docs/screenshots/received-mission.jpg)
-- [Training Centre](docs/screenshots/training-centre.jpg), [DIY spotlight](docs/screenshots/diy-spotlight.jpg), [Mission Architect](docs/screenshots/mission-architect.jpg) and [mobile aircraft settings](docs/screenshots/mobile-diy.jpg)
+- [Quick Beginner Training](docs/screenshots/phase74-quick-training.jpg), [sample training reward](docs/screenshots/phase74-training-reward.jpg) and [Training Centre](docs/screenshots/phase74-training-centre.jpg)
+- [Quick Flight Verification](docs/screenshots/phase74-quick-flight.jpg), [Manual Flight](docs/screenshots/phase74-manual-flight.jpg) and [controlled flight comparison](docs/screenshots/phase74-flight-comparison.jpg)
+- [Mission Complete](docs/screenshots/phase74-mission-reward.jpg), [Mercy Cay during construction](docs/screenshots/phase74-mercy-construction.jpg), [Airline Growth](docs/screenshots/phase74-airline-growth.jpg) and [all six districts](docs/screenshots/phase74-island-gallery.jpg)
+- [Simplified DIY editor](docs/screenshots/phase74-diy-editor.jpg), [About Game](docs/screenshots/phase74-about.jpg) and [mobile layout](docs/screenshots/phase74-mobile.jpg)
 
 ## Controls
 
@@ -128,7 +102,7 @@ The [educational design notes](GAME_DESIGN.md#educational-frameworks) map the de
 | Change flight mode | Select **Cruise**, **Express** or **Rush**. | Same buttons. |
 | Pause or resume flight | **Space** or the on-screen flight button. | Tap **Pause** or **Resume**. |
 | Get learning support | **Hint**, **Show Solution**, **Show Flight Demonstration** or **Training Centre**. | Same buttons. |
-| Reset campaign | **Achievement Wall → Reset Progress**, then confirm. DIY missions, Mission Architect and audio preferences are kept. Complete Mission 03 again to create a new DIY mission. | Same controls. |
+| Reset campaign | **Achievement Wall → Reset Progress**, then confirm. Official earnings, districts, ranks, routes and certifications reset. DIY missions, Mission Architect, its creative reward and audio preferences are kept. | Same controls. |
 
 ## Run locally
 

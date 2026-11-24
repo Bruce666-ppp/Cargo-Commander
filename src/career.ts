@@ -26,13 +26,14 @@ export type SavedFlight = {
 }
 
 export type CareerProgress = {
-  version: 1
+  version: 2
   completedMissionIds: string[]
   certificationIds: string[]
   rankMilestone: number
   routeIds: string[]
   unlockedMissionIds: string[]
   bestFlights: Record<string, SavedFlight>
+  stemBonusIds: string[]
 }
 
 const progressKey = 'cargo-commander.career'
@@ -47,10 +48,10 @@ export function resetSavedProgress(storage?: Pick<Storage, 'removeItem'>) {
   }
 }
 
-function fromFlights(bestFlights: Record<string, SavedFlight>): CareerProgress {
+function fromFlights(bestFlights: Record<string, SavedFlight>, stemBonusIds: string[] = []): CareerProgress {
   const completed = campaign.filter(mission => Object.hasOwn(bestFlights, mission.id))
   return {
-    version: 1, bestFlights, completedMissionIds: completed.map(mission => mission.id),
+    version: 2, bestFlights, stemBonusIds, completedMissionIds: completed.map(mission => mission.id),
     rankMilestone: Math.max(0, ...completed.map(mission => mission.career.rankMilestone)),
     certificationIds: [...new Set(completed.map(mission => mission.career.certificationId))],
     routeIds: [...new Set(completed.map(mission => mission.career.routeId))],
@@ -115,7 +116,12 @@ export function recordDelivery(progress: CareerProgress, requested: Mission, rep
     ...progress.bestFlights,
     [mission.id]: { cg, cargoMass: totalCargoMass, aircraftMass: totalAircraftMass, elapsed: report.elapsed, routeProgress: report.routeProgress, corridorFraction: report.corridorFraction, finalAltitude: report.finalAltitude, peakPitch: report.peakPitch },
   }
-  return { progress: fromFlights(bestFlights), accepted: true, firstDelivery: previous === undefined }
+  return { progress: fromFlights(bestFlights, progress.stemBonusIds), accepted: true, firstDelivery: previous === undefined }
+}
+
+export function recordStemBonus(progress: CareerProgress, mission: Mission) {
+  if (!campaign.some(entry => entry.id === mission.id) || !isMissionUnlocked(progress, mission) || progress.stemBonusIds.includes(mission.id)) return progress
+  return { ...progress, stemBonusIds: [...progress.stemBonusIds, mission.id] }
 }
 
 function savedFlightValid(value: unknown, mission: Mission): value is SavedFlight {
@@ -132,14 +138,17 @@ function savedFlightValid(value: unknown, mission: Mission): value is SavedFligh
 export function readProgress(storage?: Pick<Storage, 'getItem'>) {
   try {
     const saved = JSON.parse((storage ?? window.localStorage).getItem(progressKey) ?? 'null')
-    if (saved?.version === 1 && saved.bestFlights && typeof saved.bestFlights === 'object') {
+    if ((saved?.version === 1 || saved?.version === 2) && saved.bestFlights && typeof saved.bestFlights === 'object') {
       const flights: Record<string, SavedFlight> = {}
       for (const mission of campaign) {
         const flight: unknown = saved.bestFlights[mission.id]
         if (!savedFlightValid(flight, mission)) break
         flights[mission.id] = flight
       }
-      return fromFlights(flights)
+      const progress = fromFlights(flights)
+      const bonus: unknown = saved.version === 2 ? saved.stemBonusIds : null
+      if (Array.isArray(bonus)) progress.stemBonusIds = campaign.filter(mission => bonus.includes(mission.id) && isMissionUnlocked(progress, mission)).map(mission => mission.id)
+      return progress
     }
   } catch { /* An unavailable or malformed local save can be ignored. */ }
   return emptyProgress()

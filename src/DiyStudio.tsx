@@ -8,6 +8,8 @@ import type { DiyConfig, DiyDraft, DiyStore, SavedDiy } from './diy'
 import { CreatorNote, MissionEditor, MissionFacts, ScientificExplanation, WorkshopHeading } from './DiyWorkshop'
 import { FlightReview } from './FlightResults'
 import { FlightScreen } from './FlightScreen'
+import { QuickFlight } from './QuickFlight'
+import { creativeReward, money } from './rewards'
 import { newHintClock } from './learning'
 import { FlightDemonstration, LearningDialog, WorkedSolution } from './LearningSupport'
 import { emptyLoadingState, flightConfigurationAllowed, inspectLoading, prepareFlightConfiguration } from './mission'
@@ -16,12 +18,11 @@ import type { FlightReport } from './flight'
 import { TutorialSpotlight } from './TutorialSpotlight'
 import type { TutorialGuide } from './TutorialSpotlight'
 
-export const diyUnlockMessage = 'Complete Mission 03 to unlock DIY Mission Studio.'
 export const sharedToken = (hash: string) => hash.startsWith('#mission=') ? hash.slice(9) : null
 export type UpdateDiyStore = (update: (current: DiyStore) => DiyStore) => string
 type View = 'studio' | 'library' | 'received' | 'create' | 'solve' | 'explain' | 'test' | 'play' | 'flight' | 'review'
 type StudioProps = {
-  headingRef: Ref<HTMLHeadingElement>; blocked: boolean; unlocked: boolean; initialToken?: string | null
+  headingRef: Ref<HTMLHeadingElement>; blocked: boolean; initialToken?: string | null
   store: DiyStore; storageError: string; onStoreChange: UpdateDiyStore
   onExit: () => void; onTraining?: () => void; onCompleteTraining?: () => void; trainingStage?: string
 }
@@ -57,14 +58,14 @@ function SharePanel({ draft, onClose }: { draft: DiyDraft; onClose: () => void }
   </LearningDialog>
 }
 
-export function DiyStudio({ headingRef, blocked, unlocked, initialToken = null, store, storageError, onStoreChange, onExit, onTraining, onCompleteTraining, trainingStage }: StudioProps) {
+export function DiyStudio({ headingRef, blocked, initialToken = null, store, storageError, onStoreChange, onExit, onTraining, onCompleteTraining, trainingStage }: StudioProps) {
   const training = Boolean(onCompleteTraining)
   const incoming = useMemo(() => initialToken === null ? null : decodeDiyMission(initialToken), [initialToken])
   const [view, setView] = useState<View>(training ? 'create' : initialToken !== null ? 'received' : 'studio')
   const [draft, setDraft] = useState<DiyDraft>(training ? practiceDraft : newDiyDraft)
   const [id, setId] = useState<string | null>(null)
   const [loading, setLoading] = useState<LoadingState>(() => emptyLoadingState(makeDiyMission(practiceDraft().config)))
-  const [flight, setFlight] = useState<{ configuration: FlightConfiguration; author: boolean } | null>(null)
+  const [flight, setFlight] = useState<{ configuration: FlightConfiguration; author: boolean; quick: boolean } | null>(null)
   const [report, setReport] = useState<FlightReport | null>(null)
   const [previous, setPrevious] = useState<FlightReport | null>(null)
   const [tries, setTries] = useState(0)
@@ -81,7 +82,6 @@ export function DiyStudio({ headingRef, blocked, unlocked, initialToken = null, 
   const handledFlight = useRef<FlightReport | null>(null)
   const check = useMemo(() => checkDiyConfig(draft.config), [draft.config])
   const mission = useMemo(() => check.status === 'solvable' ? training ? makeDiyMission(draft.config, true) : check.mission : null, [check, draft.config, training])
-  const canCreate = training || unlocked || id !== null
 
   useEffect(() => {
     if (view !== 'flight') gameAudio.setMusic('planning')
@@ -95,7 +95,7 @@ export function DiyStudio({ headingRef, blocked, unlocked, initialToken = null, 
   }
 
   function beginEdit(saved?: SavedDiy) {
-    if (saved ? saved.source !== 'created' : !unlocked) return
+    if (saved && saved.source !== 'created') return
     setDraft(saved ?? newDiyDraft())
     setId(saved?.id ?? null)
     setReport(null)
@@ -117,7 +117,7 @@ export function DiyStudio({ headingRef, blocked, unlocked, initialToken = null, 
   }
 
   function enterSolve() {
-    if (!canCreate || !mission) return
+    if (!mission) return
     setLoading({ ...emptyLoadingState(mission), hold: draft.reference ?? emptyLoadingState(mission).hold })
     go('solve')
   }
@@ -129,16 +129,16 @@ export function DiyStudio({ headingRef, blocked, unlocked, initialToken = null, 
     go('explain')
   }
 
-  function launch(configuration: FlightConfiguration, author: boolean) {
+  function launch(configuration: FlightConfiguration, author: boolean, quick = false) {
     if (!mission || !flightConfigurationAllowed(mission, configuration, 'delivery')) return
-    setFlight({ configuration, author })
+    setFlight({ configuration, author, quick })
     go('flight')
   }
 
-  function testMission() {
-    if (!canCreate || !mission || !draft.reference || !draft.confirmed) return
+  function testMission(quick = false) {
+    if (!mission || !draft.reference || !draft.confirmed) return
     const configuration = prepareFlightConfiguration(mission, draft.reference)
-    if (configuration) launch(configuration, true)
+    if (configuration) launch(configuration, true, quick)
   }
 
   function finishFlight(result: FlightReport) {
@@ -159,7 +159,7 @@ export function DiyStudio({ headingRef, blocked, unlocked, initialToken = null, 
   }
 
   function saveCreated(validated: boolean) {
-    if (training || !canCreate || (!unlocked && !store.missions.some(existing => existing.id === id && existing.source === 'created'))) return
+    if (training) return
     const issue = configIssue(draft.config, !validated)
     if (issue) { setError(issue); return }
     if (validated && (!draft.confirmed || !draft.validated || !encodeDiyMission(draft))) {
@@ -178,7 +178,7 @@ export function DiyStudio({ headingRef, blocked, unlocked, initialToken = null, 
     if (failure) { setError(failure); return }
     const firstBadge = earned && !store.architect
     go('library')
-    setNotice(firstBadge ? 'Mission saved. Mission Architect earned!' : validated ? 'Validated mission saved.' : 'Draft saved.')
+    setNotice(firstBadge ? `Mission Architect earned · ${money(creativeReward)} creative reward!` : validated ? 'Validated mission saved.' : 'Draft saved.')
     if (firstBadge) gameAudio.completeMission(true)
   }
 
@@ -246,9 +246,9 @@ export function DiyStudio({ headingRef, blocked, unlocked, initialToken = null, 
         <span className="mission-icon"><Icon name="puzzle" /></span>
         <h2>Design a Cargo Challenge</h2>
         <p>Choose cargo and constraints, solve your own loading problem and test it before inviting another Loadmaster to try.</p>
-        {!unlocked && <p className="diy-unlock"><Icon name="lock" />{diyUnlockMessage}</p>}
+        <p className="diy-unlock"><Icon name="atom" />STEM Challenge · Design a solvable loading problem and verify your reference solution.</p>
         <div className="diy-actions">
-          <button className="start-button" disabled={!unlocked} onClick={() => beginEdit()}>Create Mission</button>
+          <button className="start-button" onClick={() => beginEdit()}>Create Mission</button>
           <button className="secondary-button" onClick={library}>My Missions</button>
           {onTraining && <button className="secondary-button" onClick={onTraining}>DIY Training</button>}
         </div>
@@ -270,7 +270,7 @@ export function DiyStudio({ headingRef, blocked, unlocked, initialToken = null, 
     {view === 'library' && <>
       <div className="page-heading campaign-heading"><div><h1 ref={headingRef} tabIndex={-1}>My Missions</h1><p>Your own missions and challenges from other Loadmasters.</p></div>
         <div className="diy-actions"><button className="secondary-button" onClick={studio}>Back</button>
-          {unlocked && <button className="start-button" onClick={() => beginEdit()}>Create Mission</button>}</div></div>
+          <button className="start-button" onClick={() => beginEdit()}>Create Mission</button></div></div>
       {(['created', 'received'] as const).map(source => <section key={source} className="diy-library" aria-label={source === 'created' ? 'Created Missions' : 'Received Missions'}>
         <h2>{source === 'created' ? 'Created Missions' : 'Received Missions'}</h2>
         {store.missions.some(entry => entry.source === source) ? <div className="diy-library-grid">
@@ -287,7 +287,7 @@ export function DiyStudio({ headingRef, blocked, unlocked, initialToken = null, 
         </div> : <p>{source === 'created' ? 'Your saved missions will appear here.' : 'Open a shared link and save the challenge to find it here later.'}</p>}
       </section>)}
     </>}
-    {view === 'create' && canCreate && <>
+    {view === 'create' && <>
       <WorkshopHeading headingRef={headingRef} stage={0} training={training} onBack={authorBack} />
       <MissionEditor config={draft.config} check={check} training={training}
         onChange={(config: DiyConfig) => { setDraft(current => changeDiyConfig(current, config)); setError('') }}
@@ -298,6 +298,7 @@ export function DiyStudio({ headingRef, blocked, unlocked, initialToken = null, 
       <CargoLoading mission={mission} loading={loading} setLoading={setLoading} headingRef={headingRef} blocked={blocked || brief}
         hintClock={hintClock.current} onBack={() => go(view === 'solve' ? 'create' : initialToken !== null ? 'received' : 'library')}
         onBrief={() => setBrief(true)} onFlight={(_, configuration) => launch(configuration, false)}
+        onQuick={view === 'play' ? configuration => launch(configuration, false, true) : undefined}
         custom={view === 'solve' ? { onSaveReference: saveReference } : { reference: draft.reference ?? undefined, note: draft.note }} />
     </>}
     {view === 'explain' && mission && draft.reference && <>
@@ -318,18 +319,22 @@ export function DiyStudio({ headingRef, blocked, unlocked, initialToken = null, 
         <h2>{draft.validated ? 'Mission Validated' : 'Test Your Mission'}</h2><h3>{mission.title}</h3>
         <MissionFacts config={draft.config} />
         <p>{draft.validated ? 'The saved reference load passed inspection and completed the test flight.' :
-          'Fly using your reference solution. Cruise mode is enough to validate this mission.'}</p>
+          'Verify your reference solution in Cruise. You can use assisted verification or fly manually.'}</p>
         {report?.passed && <p className="diy-ok">{(report.corridorFraction * 100).toFixed(1)}% in the altitude corridor · {report.elapsed.toFixed(1)} s</p>}
         <div className="flight-page-actions">
           {draft.validated ? !training && <button className="start-button flight-primary" onClick={() => saveCreated(true)}>Save Mission</button>
-            : <button className="start-button flight-primary" data-tutorial="diy-test" onClick={testMission}>Test Your Mission</button>}
+            : training ? <button className="start-button flight-primary" data-tutorial="diy-test" onClick={() => testMission()}>Test Your Mission</button> : <>
+              <button className="start-button flight-primary" onClick={() => testMission(true)}>Quick Flight Verification</button>
+              <button className="secondary-button" onClick={() => testMission()}>Manual Test Flight</button></>}
           {!training && !draft.validated && <button className="secondary-button" onClick={() => saveCreated(false)}>Save Draft</button>}
           <button className="secondary-button" onClick={() => go('create')}>Edit Mission Settings</button>
         </div>
       </section>
       <ScientificExplanation mission={mission} reference={draft.reference} note={draft.note} />
     </>}
-    {view === 'flight' && mission && flight && <div onClickCapture={event => {
+    {view === 'flight' && mission && flight?.quick && <QuickFlight mission={mission} configuration={flight.configuration}
+      headingRef={headingRef} paused={blocked} onFinish={finishFlight} onReturn={backFromFlight} />}
+    {view === 'flight' && mission && flight && !flight.quick && <div onClickCapture={event => {
       if (training && event.target instanceof Element && event.target.closest(tutorialTarget('start-flight'))) setTrainingFlightStarted(true)
     }}>
       <FlightScreen mission={mission} configuration={flight.configuration} mode="delivery" blocked={blocked || confirmExit || !!demo}
@@ -338,7 +343,7 @@ export function DiyStudio({ headingRef, blocked, unlocked, initialToken = null, 
     </div>}
     {view === 'review' && mission && report && flight && <>
       <FlightReview mission={mission} report={report} previous={previous} headingRef={headingRef} failedAttempts={tries} custom
-        onRetry={() => launch(report.configuration, flight.author)} onReturn={backFromFlight} onDemonstration={training ? undefined : () => setDemo(report.configuration)} />
+        onRetry={() => launch(report.configuration, flight.author, flight.quick)} onReturn={backFromFlight} onDemonstration={training ? undefined : () => setDemo(report.configuration)} />
       <div className="flight-page-actions">{flight.author ? <>
         <button className="secondary-button" onClick={enterSolve}>Return to Reference Solution</button>
         <button className="secondary-button" onClick={() => go('create')}>Edit Mission Settings</button>

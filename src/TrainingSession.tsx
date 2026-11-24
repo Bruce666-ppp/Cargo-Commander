@@ -23,8 +23,8 @@ export const trainingModules = [
   { id: 'career', title: 'Campaign & Achievements', description: 'Explore routes, ranks and skill certifications.' },
   { id: 'diy', title: 'DIY Mission Studio', description: 'Design, balance and test a temporary challenge.' },
 ] as const
-export type TrainingModule = 'complete' | typeof trainingModules[number]['id']
-const startSteps: Record<TrainingModule, Step> = { complete: 1, cargo: 2, cg: 3, safety: 5, flight: 6, career: 7, diy: 8 }
+export type TrainingModule = 'quick' | 'complete' | typeof trainingModules[number]['id']
+const startSteps: Record<Exclude<TrainingModule, 'quick'>, Step> = { complete: 1, cargo: 2, cg: 3, safety: 5, flight: 6, career: 7, diy: 8 }
 const cargoActions = [0, 1, null] as const
 const safetyMission: Mission = { ...campaign[3], loadingConstraints: { ...campaign[3].loadingConstraints, blockedSlots: [1] } }
 const trainingFlight: Mission = { ...islandSupplyRun, flight: { ...islandSupplyRun.flight, countdown: 2 } }
@@ -34,8 +34,9 @@ export function TrainingCentre({ headingRef, onSelect, onExit }: { headingRef: R
   return <>
     <div className="page-heading campaign-heading"><div><h1 ref={headingRef} tabIndex={-1}>Training Centre</h1><p>Practise at your own pace. Exercises use temporary missions.</p></div>
       <button className="secondary-button" onClick={onExit}>Back</button></div>
-    <section className="active-mission diy-welcome"><h2>Complete Beginner Training</h2><p>Follow the full course from the first crate to a short DIY test flight.</p>
-      <div className="diy-actions"><button className="start-button" onClick={() => onSelect('complete')}>Replay Beginner Training</button></div></section>
+    <section className="active-mission diy-welcome"><h2>Beginner Training</h2><p>Try one cargo delivery, or explore the full training course at your own pace.</p>
+      <div className="diy-actions"><button className="start-button" onClick={() => onSelect('quick')}>Quick Beginner Training</button>
+        <button className="secondary-button training-complete-entry" onClick={() => onSelect('complete')}>Complete Training</button></div></section>
     <section className="diy-library"><h2>Individual Training Modules</h2><div className="diy-library-grid">
       {trainingModules.map(({ id, title, description }, index) => <article className="panel diy-card" key={id}>
         <p className="diy-status">Module {String(index + 1).padStart(2, '0')}</p><h3>{title}</h3><p>{description}</p>
@@ -61,7 +62,7 @@ function cargoGuide(mission: Mission, hold: Hold, move: SuggestedMove, selected:
 }
 
 export function TrainingSession({ module, headingRef, blocked, onExit, onFirstMission, missionCentre, diyTraining }: {
-  module: TrainingModule; headingRef: Ref<HTMLHeadingElement>; blocked: boolean; onExit: () => void; onFirstMission: () => void
+  module: Exclude<TrainingModule, 'quick'>; headingRef: Ref<HTMLHeadingElement>; blocked: boolean; onExit: () => void; onFirstMission: () => void
   missionCentre: (start: () => void) => ReactNode; diyTraining: (finish: () => void) => ReactNode
 }) {
   const mission = module === 'safety' ? safetyMission : islandSupplyRun

@@ -1,18 +1,18 @@
 import type { Ref } from 'react'
 import { Icon } from './art'
-import { learningAudience, learningOutcomeIntro, learningOutcomes } from './learningOutcomes'
+import { LearningOutcomes } from './OutcomeCards'
 
 const attributes = [
-  { icon: 'target', title: 'Goal', description: 'Complete safe cargo deliveries and, if you choose, design and validate an original mission.' },
-  { icon: 'book', title: 'Rules', description: 'Meet aircraft loading and flight safety checks and the constraints selected for each mission.' },
-  { icon: 'rank', title: 'Rewards', description: 'Deliveries earn certifications, ranks and routes. A validated original design can earn the independent Mission Architect badge.' },
-  { icon: 'flag', title: 'Challenges', description: 'Solve six delivery challenges and try optional engineering problems designed by other players.' },
+  { icon: 'target', title: 'Goal', description: 'Apply STEM knowledge to deliver cargo, develop the islands and design original missions.' },
+  { icon: 'book', title: 'Rules', description: 'Follow cargo, balance, flight safety and mission-specific engineering requirements.' },
+  { icon: 'rank', title: 'Rewards', description: 'Earn Delivery Income, STEM Bonuses, island development, routes, career ranks, Airline Growth milestones and skill certifications.' },
+  { icon: 'flag', title: 'Challenges', description: 'Use scientific reasoning to meet engineering constraints, verify flights and build original missions.' },
 ] as const
 
 const framework = [
-  { title: 'Mechanics', description: 'Cargo placement, balance and flight controls, career rewards, mission design, reference loads, safety checks, test flights and shareable links.' },
-  { title: 'Dynamics', description: 'Experiment, plan, refine a solution using feedback, expand the route network or challenge a peer.' },
-  { title: 'Aesthetics', description: 'Discovery, challenge, achievement and the satisfaction of building a mission of your own.' },
+  { title: 'Mechanics', description: 'Cargo placement, physical simulation, scientific decisions, verification, income, island development and mission creation.' },
+  { title: 'Dynamics', description: 'Experiment, refine a solution using feedback, develop an island district or challenge a peer.' },
+  { title: 'Aesthetics', description: 'Discovery, accomplishment, creativity and the satisfaction of contributing to a growing island network.' },
 ]
 
 export function AboutButton({ onClick }: { onClick: () => void }) {
@@ -53,35 +53,12 @@ export function AboutGame({ dialogRef, onClose }: { dialogRef: Ref<HTMLDialogEle
           </section>
         </div>
 
-        <section className="about-section about-outcomes" aria-labelledby="about-outcomes-title">
-          <h3 id="about-outcomes-title"><Icon name="target" />Learning Outcomes (LOs)</h3>
-          <p className="outcome-subtitle">Structured using the ABCD Model</p>
-          <p>{learningOutcomeIntro}</p>
-          <ol className="outcome-list" role="list">
-            {learningOutcomes.map(outcome => (
-              <li className="outcome-card" key={outcome.id}>
-                <p className="outcome-category">{outcome.id} · {outcome.category}</p>
-                <h4>{outcome.title}</h4>
-                <p>{outcome.statement}</p>
-                {outcome.id === 'LO5' && <p className="outcome-category">Bloom’s Taxonomy · Create</p>}
-                <details className="outcome-breakdown">
-                  <summary aria-label={`View ABCD Breakdown for ${outcome.id}`}>View ABCD Breakdown</summary>
-                  <dl>
-                    <div><dt>A — Audience</dt><dd>{learningAudience}</dd></div>
-                    <div><dt>B — Behaviour</dt><dd>{outcome.behaviour}</dd></div>
-                    <div><dt>C — Condition</dt><dd>{outcome.condition}</dd></div>
-                    <div><dt>D — Degree</dt><dd>{outcome.degree}</dd></div>
-                  </dl>
-                </details>
-              </li>
-            ))}
-          </ol>
-        </section>
+        <LearningOutcomes />
 
         <section className="about-section">
           <h3><Icon name="plane" />Game Description</h3>
-          <p>Cargo Commander — The Balance Mission is an interactive STEM educational game in which players become trainee aircraft loadmasters responsible for delivering cargo across different islands. Players arrange cargo of different masses, monitor the aircraft's centre of gravity, and conduct simulated flight tests. Through experimentation, feedback, and increasingly challenging missions, players develop an understanding of physics and its application in aerospace engineering.</p>
-          <p className="about-diy-copy">The Windward Isles campaign has six official deliveries. In the independent DIY Mission Studio, you can create an original mission, build and validate a reference load, complete a test flight and share a challenge with another player.</p>
+          <p>Plan safe cargo deliveries across the six-mission Windward Isles campaign. Solve an engineering problem in each hold, check the centre of gravity and verify the load through a quick or manual simulated flight. Each first delivery supports a fictional building district. Optional STEM activities earn additional income.</p>
+          <p className="about-diy-copy">DIY Mission Studio is available from the Mission Centre. Create an original mission, build a reference load, verify it and share the challenge with a peer.</p>
         </section>
 
         <section className="about-section">
@@ -113,7 +90,7 @@ export function AboutGame({ dialogRef, onClose }: { dialogRef: Ref<HTMLDialogEle
         <section className="about-section">
           <h3><Icon name="book" />Learning Support</h3>
           <dl className="learning-support">
-            <div><dt>Training Centre</dt><dd>Replay complete beginner training or choose an individual module, including a temporary DIY Mission Studio exercise.</dd></div>
+            <div><dt>Training Centre</dt><dd>Try a short beginner delivery, replay Complete Training or open an individual module such as the temporary DIY exercise.</dd></div>
             <div><dt>Real-time Feedback</dt><dd>Watch the balance point move and get a short flying tip when you need it.</dd></div>
             <div><dt>Progressive Hints</dt><dd>Ask for a hint at any time. After some time experimenting, your instructor may suggest a next step.</dd></div>
             <div><dt>Step-by-step Solutions</dt><dd>See one valid load for each mission. You can open optional maths to see how the balance point was calculated.</dd></div>
@@ -129,12 +106,13 @@ export function AboutGame({ dialogRef, onClose }: { dialogRef: Ref<HTMLDialogEle
               <dt>5E Learning Model</dt>
               <dd>
                 <p className="inquiry-sequence">Engage → Explore → Explain → Elaborate → Evaluate</p>
-                <p>Island delivery briefs set the challenge. Players try cargo positions, explain changes using feedback, apply their ideas to new constraints and evaluate a flight before revising their design.</p>
+                <p>Island development goals set the challenge. Players explore cargo experiments, explain changes using feedback, apply ideas to new missions and evaluate results through loading checks, flights and optional STEM activities.</p>
               </dd>
             </div>
-            <div><dt>Scenario-Based Learning</dt><dd>At Mercy Cay, the loadmaster needs a powered slot for the clinic's medical case. DIY designers can pose a similar problem using the same powered fittings and their own cargo and constraints.</dd></div>
+            <div><dt>Scenario-Based Learning</dt><dd>At Mercy Cay, the medical case needs a powered slot and a safe balance. Successful delivery supports the island’s fictional medical campus.</dd></div>
             <div><dt>Constructive Alignment</dt><dd>For LO5, design a mission, submit a reference load, pass the loading and flight checks, then save the mission. The saved design shows task performance. Explaining the reasoning independently calls for separate evidence.</dd></div>
             <div><dt>Creative Learning · Bloom’s Create</dt><dd>Try ideas, refine an original challenge and share it for a peer to solve. The saved mission is an artefact of the design process. Comparing alternative solutions offers an opportunity for peer learning.</dd></div>
+            <div><dt>Bloom’s Taxonomy</dt><dd>Recall cargo readings, explain balance, apply loading checks, analyse flight data, evaluate strategies and create an original mission in DIY Mission Studio.</dd></div>
           </dl>
         </details>
 

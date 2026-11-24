@@ -24,11 +24,11 @@ export function ExperienceDialog({ onChoose, onClose }: { onChoose: (experience:
   return <LearningDialog id="welcome-title" title="Welcome aboard, Loadmaster!" label="FLIGHT SCHOOL" onClose={onClose} actions={<Close />}>
     <p className="welcome-question">Have you ever loaded and balanced an aircraft before?</p>
     <div className="experience-options">
-      <section><span className="panel-icon"><Icon name="book" /></span><h3>I'm New Here</h3>
-        <p>Learn how to load cargo, balance an aircraft, and control your flight with guided training.</p>
+      <section><span className="panel-icon"><Icon name="book" /></span><h3>I'm a Beginner</h3>
+        <p>Place a crate, check the balance and watch your first training delivery.</p>
         <button className="start-button" onClick={() => onChoose('beginner')}>Begin Training</button>
       </section>
-      <section><span className="panel-icon"><Icon name="plane" /></span><h3>I'm an Experienced Loadmaster</h3>
+      <section><span className="panel-icon"><Icon name="plane" /></span><h3>I'm Experienced</h3>
         <p>Skip basic training and start your delivery missions.</p>
         <button className="secondary-button" onClick={() => onChoose('experienced')}>Enter Mission Centre</button>
       </section>

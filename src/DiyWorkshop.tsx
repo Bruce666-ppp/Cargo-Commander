@@ -54,6 +54,7 @@ export function MissionEditor({ config, check, onChange, onContinue, onSaveDraft
   return <div className="diy-editor">
     <section className="panel diy-card">
       <h2>Create Your Mission</h2>
+      <p>Start with two crates. Change a mass, add cargo or block a slot to make the challenge your own.</p>
       <label>Mission name<input maxLength={diyNameLimit} placeholder="e.g. Harbour Resupply" value={config.name}
         onChange={event => onChange({ ...config, name: event.currentTarget.value })} /></label>
       <h3>Required Cargo</h3>
@@ -90,6 +91,8 @@ export function MissionEditor({ config, check, onChange, onContinue, onSaveDraft
           })}
         </div></div>
       </div>
+      <details className="diy-advanced">
+      <summary>Advanced settings · target CG and wind</summary>
       <div className="diy-range">
         <label>Lower CG (m)<select value={config.cg[0]} onChange={event => onChange({ ...config, cg: [Number(event.currentTarget.value), config.cg[1]] })}>
           {cgOptions.filter(value => value < config.cg[1]).map(value => <option key={value} value={value}>{metres(value)}</option>)}
@@ -102,6 +105,7 @@ export function MissionEditor({ config, check, onChange, onContinue, onSaveDraft
         {flightConditions.map((condition, index) => <option value={index} key={condition}>{condition}</option>)}
       </select></label>
       <p className="simulation-note">60 kg and 4.40–4.60 m are limits for this educational simulation. The wind settings model simple disturbances.</p>
+      </details>
     </section>
     <section className="panel diy-card diy-wide">
       <h2>Loading feasibility</h2><MissionFacts config={config} />

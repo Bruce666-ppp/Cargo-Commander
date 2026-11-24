@@ -40,6 +40,21 @@ const cues = {
   promotion: [[0, .19, 392, .11, 'triangle'], [.14, .2, 523, .118, 'triangle'], [.30, .43, 659, .125, 'triangle'], [.30, .36, 392, .051]],
   route: [[0, .095, 554, .086, 'sine', 647], [.09, .095, 740, .083, 'sine', 840], [.20, .23, 932, .079]],
   certification: [[0, .23, 659, .090], [.04, .08, 1497, .032], [.16, .34, 880, .101], [.16, .18, 1320, .045], [.17, .12, 1852, .021]],
+  fanfare: [
+    [0, .24, 86, .19, 'sine', 38], [0, .44, 196, .105, 'triangle'], [0, .20, 392, .052, 'sawtooth'],
+    [.15, .19, 494, .090, 'triangle'], [.31, .20, 587, .098, 'triangle'], [.47, .32, 784, .108, 'triangle'],
+    [.47, .30, 587, .062], [.47, .34, 392, .060, 'triangle'], [.47, .19, 90, .18, 'sine', 41],
+    [.74, .28, 988, .075, 'triangle'], [.86, .37, 784, .075], [.86, .35, 494, .063, 'triangle'],
+  ],
+  buildImpact: [[0, .18, 105, .15, 'sine', 41], [.012, .11, 275, .044, 'triangle', 105], [.034, .08, 590, .021, 'sine', 227]],
+  districtRise: [[0, .22, 392, .075], [.145, .22, 523, .09, 'triangle'], [.30, .49, 784, .108, 'triangle'], [.30, .44, 523, .07], [.30, .42, 330, .06, 'triangle'], [.30, .21, 94, .11, 'sine', 44]],
+  coins: [[0, .13, 1175, .048], [.075, .16, 1568, .049], [.16, .21, 1976, .052], [.16, .14, 988, .036]],
+  stemBonus: [[0, .14, 659, .079], [.09, .16, 880, .080, 'triangle'], [.20, .29, 1175, .081], [.23, .15, 1760, .03]],
+  finale: [
+    [0, .31, 88, .17, 'sine', 40], [0, .3, 523, .106, 'triangle'], [.17, .28, 659, .10, 'triangle'],
+    [.34, .35, 784, .11, 'triangle'], [.51, .36, 1047, .087, 'triangle'], [.51, .55, 523, .070, 'sawtooth'],
+    [.69, .76, 1047, .092, 'triangle'], [.69, .72, 784, .069], [.69, .76, 659, .072], [.69, .75, 262, .069, 'triangle'],
+  ],
 } satisfies Record<string, readonly Note[]>
 
 type Cue = keyof typeof cues
@@ -266,6 +281,19 @@ export class GameAudio {
       this.play('route', awardTiming.route, 'achievement')
       this.play('certification', awardTiming.certification, 'achievement')
     }
+  }
+
+  celebrateDistrict({ buildings, bonus, final, reduced }: { buildings: number; bonus: boolean; final: boolean; reduced: boolean }) {
+    this.stop('achievement')
+    if (!this.play(final ? 'finale' : 'fanfare', 0, 'achievement')) return
+    this.background?.duck(reduced ? 1.6 : 4.82)
+    if (!reduced) {
+      for (let index = 0; index < buildings; index++) this.play('buildImpact', .92 + index * .39, 'achievement')
+      this.play('districtRise', 3.08, 'achievement')
+    }
+    this.play('coins', reduced ? .66 : 3.61, 'achievement')
+    if (bonus) this.play('stemBonus', reduced ? .89 : 3.94, 'achievement')
+    this.play('certification', reduced ? 1.10 : 4.25, 'achievement')
   }
 
   setEngine(phase: 'takeoff' | 'cruise' | null, fade = .21) {

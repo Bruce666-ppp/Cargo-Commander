@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
-import type { Dispatch, PointerEvent, Ref, SetStateAction } from 'react'
+import type { Dispatch, PointerEvent, ReactNode, Ref, SetStateAction } from 'react'
 import { CargoAircraft, Icon } from './art'
 import { cargoSounds, gameAudio } from './audio'
 import { AircraftCg, BalanceKnowledge, InstructorFeedback, SafetyChecklist } from './LoadingInstruments'
@@ -15,6 +15,8 @@ type LoadingProps = {
   mission: Mission; loading: LoadingState; setLoading: Dispatch<SetStateAction<LoadingState>>
   headingRef: Ref<HTMLHeadingElement>; onBack: () => void; onBrief: () => void
   onFlight: (mode: FlightMode, configuration: FlightConfiguration) => void
+  onQuick?: (configuration: FlightConfiguration) => void
+  stem?: ReactNode
   hintClock: HintClock; blocked?: boolean
   custom?: { reference?: Hold; note?: string; onSaveReference?: (hold: Hold) => void }
   training?: { step: 2 | 3 | 4 | 5; move: SuggestedMove | null; beforeCg?: number; onSelect: (id: string | null) => void; onPlace: (before: Hold, after: Hold, id: string) => void }
@@ -27,7 +29,7 @@ function dropDestination(event: PointerEvent): Destination {
   return target.dataset.cargoSlot === undefined ? null : Number(target.dataset.cargoSlot)
 }
 
-export function CargoLoading({ mission, loading, setLoading, headingRef, onBack, onBrief, onFlight, hintClock, blocked, training, custom }: LoadingProps) {
+export function CargoLoading({ mission, loading, setLoading, headingRef, onBack, onBrief, onFlight, onQuick, stem, hintClock, blocked, training, custom }: LoadingProps) {
   const [selected, setSelected] = useState<string | null>(null)
   const [dragging, setDragging] = useState<{ id: string; x: number; y: number; destination: Destination } | null>(null)
   const dragStart = useRef<{ id: string; x: number; y: number; moved: boolean } | null>(null)
@@ -168,6 +170,7 @@ export function CargoLoading({ mission, loading, setLoading, headingRef, onBack,
         </div>
       </section>
 
+      {stem}
       {!training && <MechanicNote mission={mission} />}
       <div id="cargo-hints">
         {help.level !== 0 && <HintMessage level={help.level} mission={mission} hold={hold} warning={loading.notice?.warning ? loading.notice.text : undefined} suggestion={suggestion} />}
@@ -256,6 +259,10 @@ export function CargoLoading({ mission, loading, setLoading, headingRef, onBack,
         </section>
 
         <SafetyChecklist mission={mission} inspection={inspection} onTestFlight={training || authoring ? undefined : testFlight}
+          onQuickFlight={onQuick && !training && !authoring ? () => {
+            const configuration = prepareFlightConfiguration(mission, hold)
+            if (configuration) onQuick(configuration)
+          } : undefined}
           onPractice={!custom && (!training || training.step === 5) ? practiceFlight : undefined}
           onSaveReference={custom?.onSaveReference ? () => custom.onSaveReference?.(hold) : undefined}
           custom={Boolean(custom)} training={training?.step === 5} />

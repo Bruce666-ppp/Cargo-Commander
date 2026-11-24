@@ -112,6 +112,22 @@ test('first rewards play sequentially after the mission cue, while replay plays 
   assert.deepEqual(failure.sources.slice(0, 3).map(note => note.frequency.value), [440, 349, 294])
 })
 
+test('district impacts follow the building timing and skip or mute cancels scheduled notes', () => {
+  const { audio, sources } = audioHarness()
+  audio.unlock()
+  audio.celebrateDistrict({ buildings: 5, bonus: true, final: false, reduced: false })
+  const impacts = sources.filter(note => note.frequency.automation[0]?.[1] === 105 && note.frequency.automation[1]?.[1] === 41)
+  assert.equal(impacts.length, 5)
+  impacts.forEach((note, index) => assert.ok(Math.abs(note.startedAt - (.008 + .92 + .39 * index)) < 1e-9))
+  audio.stop('achievement')
+  assert.ok(sources.every(note => !note.connected))
+  const muted = audioHarness()
+  muted.audio.unlock()
+  muted.audio.setPreferences({ muted: true })
+  muted.audio.celebrateDistrict({ buildings: 5, bonus: true, final: true, reduced: false })
+  assert.equal(muted.sources.length, 0)
+})
+
 test('engine spools once, fades on pause, stops immediately on mute or tab hiding, and preferences persist', () => {
   const { audio, context, sources, gains, storage } = audioHarness()
   audio.unlock()

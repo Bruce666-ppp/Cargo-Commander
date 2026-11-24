@@ -1,0 +1,110 @@
+.home-outcomes { margin-block: 16px; padding: clamp(12px, 2vw, 24px); }
+.home-outcomes h2, .about-outcomes h3 { display: flex; align-items: center; gap: 8px; }
+.home-outcomes h2 svg { width: 23px; flex: none; }
+.home-outcomes .outcome-list, .about-outcomes .outcome-list {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px;
+  margin: 9px 0 0; padding: 0; list-style: none;
+}
+.home-outcomes .outcome-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.abcd-key { display: flex; gap: 6px; flex-wrap: wrap; list-style: none; margin: 8px 0; padding: 0; }
+.about-outcomes .abcd-key li, .abcd-key li { margin: 0; padding: 3px 7px; border-radius: 5px; font-size: .82rem; font-weight: 750; }
+.abcd-A { background: #f4dde3; color: #653446; }
+.abcd-B { background: #daebf6; color: #244d67; }
+.abcd-C { background: #f5e9bf; color: #5a491b; }
+.abcd-D { background: #e1efcf; color: #31543d; }
+.abcd-statement { line-height: 1.78; font-size: .92rem; overflow-wrap: anywhere; }
+.abcd-statement span { padding: 2px 3px; border-radius: 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.abcd-statement b { margin-right: 4px; padding: 1px 3px; border: 1px solid currentColor; border-radius: 3px; font-size: .67rem; line-height: 1; }
+.outcome-card h3, .outcome-card h4 { margin: 3px 0 5px; font-size: .99rem; }
+@media (min-width: 871px) { .education-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.growth-panel { display: grid; align-items: center; grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr) auto; gap: 18px; padding: 14px 17px; margin: 0 0 12px; }
+.growth-earnings { display: flex; align-items: center; gap: 10px; }
+.growth-earnings h2, .growth-meter h3 { font-size: 1rem; }
+.growth-earnings strong { color: #4f622b; font-size: clamp(1.4rem, 3vw, 2.1rem); font-weight: 850; line-height: 1.1; }
+.growth-meter progress { display: block; width: 100%; height: .64rem; margin: 4px 0; accent-color: #5f8d50; }
+.growth-meter p { color: var(--muted); font-size: .89rem; }
+.development-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.development-card { min-width: 0; overflow: hidden; }
+.development-card > div { padding: 12px; }
+.development-card h2 { margin: 2px 0 5px; font-size: 1.08rem; }
+.development-card p, .stem-challenge p { color: #3e5c6b; }
+.stem-challenge { margin-block: 0 12px; padding: 10px 14px; }
+.stem-challenge-heading { display: flex; align-items: center; gap: 9px; }
+.stem-challenge-heading h2 { font-size: 1rem; margin-bottom: 2px; }
+.stem-challenge-heading .panel-icon { flex: none; }
+.stem-bonus, .diy-advanced { margin-top: 8px; padding: 6px 9px; background: #ecf2ee; border-radius: 7px; }
+.stem-bonus summary, .diy-advanced summary { cursor: pointer; font-weight: 750; padding: 4px; color: #265663; }
+.stem-form, .stem-activity { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; align-items: end; }
+.stem-activity { display: grid; justify-items: start; }
+.stem-form label { display: grid; gap: 3px; font-size: .9rem; font-weight: 650; }
+.stem-form input, .stem-form select { min-height: 38px; max-width: 100%; padding: 6px; border: 1px solid #91adb3; border-radius: 6px; background: var(--paper); color: inherit; font: inherit; }
+.stem-form p { flex-basis: 100%; }
+.stem-measurements { margin: 3px 0; padding-left: 19px; }
+.stem-measurements li { margin-block: 4px; }
+.stem-trajectory { width: min(100%, 560px); }
+.stem-activity .secondary-button[aria-pressed="true"] { background: #cce8bc; border-color: #5e854f; }
+.quick-training .active-brief { position: static; }
+.training-complete-entry, .mission-reward .secondary-button { color: #153149; }
+.quick-verification { overflow: hidden; padding-bottom: 6px; }
+.quick-verification .panel-heading { padding: 12px 17px; }
+.quick-verification h1 { font-size: clamp(1.45rem, 3.5vw, 2.5rem); }
+.quick-verification .quick-metrics { margin: 8px 14px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.quick-verification .flight-landscape { display: block; max-height: 340px; width: 100%; background: #b3deeb; }
+.quick-explanation { margin: 8px 15px; }
+.quick-verification .flight-page-actions { margin: 10px 14px; }
+.diy-advanced[open] summary { margin-bottom: 8px; }
+
+.mission-reward {
+  border-radius: 18px; border: 1px solid #46728e; color: #fff8dc;
+  background: radial-gradient(ellipse at 87% 28%, #25678a, transparent 58%), linear-gradient(150deg,#153755,#11283e 67%);
+  padding: clamp(12px, 2.8vw, 28px); box-shadow: 0 6px 0 #1d42523a;
+}
+.mission-reward-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 9px; margin-bottom: 12px; }
+.mission-reward-top h1 { font-size: clamp(1.8rem, 5vw, 3.6rem); line-height: .98; color: #ffe49a; text-shadow: 0 3px 0 #8d5c2a, 0 7px 18px #091a2a; margin-block: 5px 8px; }
+.reward-kicker { text-transform: uppercase; letter-spacing: .075em; font-size: .76rem; font-weight: 800; color: #bce0e8; }
+.reward-grid { display: grid; grid-template-columns: minmax(175px, .85fr) minmax(0, 2.25fr); gap: 12px; }
+.reward-grid > div { min-width: 0; padding: 11px 13px; border: 1px solid #6b8c9d; border-radius: 13px; background: #0c2037a6; }
+.reward-cash { display: grid; align-content: start; }
+.reward-medal { width: 40px; height: 40px; display: grid; place-items: center; background: #e8bd69; color: #263951; border: 2px solid #fff2aa; border-radius: 50%; box-shadow: 0 1px 12px #fed58170; }
+.reward-medal svg { width: 25px; }
+.reward-cash dl { display: grid; gap: 4px; margin: 7px 0; }
+.reward-cash dl div { display: flex; justify-content: space-between; gap: 6px; font-size: .89rem; }
+.reward-cash dd { font-weight: 800; margin: 0; }
+.reward-amount { font-size: clamp(2.15rem, 5.5vw, 4rem); color: #ffde85; font-variant-numeric: tabular-nums; line-height: 1.06; }
+.reward-milestone { color: #d5edb8; font-weight: 750; display: flex; gap: 5px; align-items: center; margin-top: 5px; }
+.reward-milestone svg, .reward-takeaway svg { width: 18px; flex: none; }
+.reward-district h2, .reward-takeaway h2 { font-size: 1.05rem; margin-bottom: 4px; }
+.reward-district p, .reward-training-note { margin-top: 5px; font-size: .9rem; }
+.district-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 5px; }
+.district-comparison figure { margin: 0; overflow: hidden; border-radius: 7px; background: #2b5368; }
+.district-comparison figure:last-child { border: 1px solid #cfaa5d; }
+.district-comparison figcaption { padding: 3px 6px; text-align: center; font-size: .8rem; font-weight: 800; }
+.district-scene { display: block; width: 100%; }
+.reward-takeaway { display: flex; gap: 8px; padding: 9px 11px; margin-top: 12px; background: #285574; border-radius: 8px; }
+.district-building-sequence .district-facility { transform-box: fill-box; transform-origin: bottom; animation: district-build .46s var(--build-delay) both cubic-bezier(.22,.66,.30,1.2); }
+.district-building-sequence .district-services { animation: district-survey .55s .61s both; }
+.district-survey { animation: district-survey 1s .35s both; }
+.district-glow, .district-sparks { animation: district-light 1.32s 3.08s both; }
+@keyframes district-build { from { opacity: 0; transform: translateY(-20px) scale(.7); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes district-survey { from { opacity: 0; } 40% { opacity: .85; } to { opacity: 1; } }
+@keyframes district-light { 0%, 100% { opacity: 0; } 38% { opacity: 1; } }
+
+@media (max-width: 740px) {
+  .growth-panel { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 8px; }
+  .growth-panel > button { grid-column: 1 / -1; }
+  .development-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .reward-grid { grid-template-columns: minmax(0, 1fr); }
+  .reward-cash { grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 8px; }
+  .reward-cash .reward-medal, .reward-cash > p:not(.reward-kicker) { grid-column: 1 / -1; }
+  .reward-cash dl { grid-column: 1 / -1; }
+  .quick-verification .quick-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 550px) {
+  .home-outcomes .outcome-list, .about-outcomes .outcome-list, .development-gallery { grid-template-columns: minmax(0, 1fr); }
+  .mission-reward-top { flex-wrap: wrap; }
+  .stem-form label, .stem-form input { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .district-facility, .district-services, .district-glow, .district-sparks { animation: none !important; }
+}

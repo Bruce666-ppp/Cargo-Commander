@@ -4,6 +4,7 @@ import { CargoAircraft, Icon } from './art'
 import { Insignia } from './CareerProfile'
 import { formatCg, formatCgRange } from './mission'
 import type { FlightConfiguration, Mission } from './mission'
+import { stemChallenge } from './stem'
 
 type DialogProps = {
   dialogRef?: Ref<HTMLDialogElement>
@@ -46,6 +47,7 @@ export function MissionBrief({ mission, dialogRef, onAccept, onClose, training }
       <p>{training ? 'Pinehaven needs supplies. Bring all three crates aboard and find a place for each one so the aircraft is balanced.' : mission.narrative}</p>
       <section className="brief-objective">
         <h3>Mission Objective</h3><p>{mission.objective}</p><p className="learning-focus">{mission.learningFocus}</p>
+        {!training && <p className="mission-mechanic"><strong>STEM Challenge · {stemChallenge(mission).title}</strong><br />{stemChallenge(mission).prompt}</p>}
         {mission.mechanic && <p className="mission-mechanic">{mission.mechanic}</p>}
       </section>
       <section className="brief-manifest">

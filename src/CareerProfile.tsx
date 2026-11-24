@@ -75,7 +75,7 @@ export function CareerProfile({ progress, architect, dialogRef, onClose, onReset
     <dialog ref={confirmation} className="about-dialog reset-progress-dialog" role="alertdialog" aria-labelledby="reset-progress-title" aria-describedby="reset-progress-description">
       <header className="about-header"><h2 id="reset-progress-title">Reset your campaign progress?</h2></header>
       <div className="about-body">
-        <p id="reset-progress-description">This will reset official deliveries, mission records, career ranks, route unlocks and the six campaign badges. Your DIY drafts, created and received missions, Mission Architect badge and audio settings will be kept. Complete Mission 03 again to create a new DIY mission.</p>
+        <p id="reset-progress-description">This resets official deliveries, mission records, career ranks, routes, the six campaign badges, island development and campaign earnings, including STEM Bonuses. Your DIY drafts, created and received missions, Mission Architect badge, creative reward and audio preferences are kept.</p>
         {resetFailed && <p className="practice-warning" role="alert">Progress could not be reset. Check that your browser allows local storage and try again.</p>}
       </div>
       <footer className="about-footer">

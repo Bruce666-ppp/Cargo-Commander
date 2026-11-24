@@ -34,8 +34,8 @@ export function AircraftCg({ mission, inspection, before }: { mission: Mission; 
   )
 }
 
-export function SafetyChecklist({ mission, inspection, onTestFlight, onPractice, onSaveReference, custom, training, id = 'safety-heading' }: {
-  mission: Mission; inspection: Inspection; onTestFlight?: () => void; onPractice?: () => void; onSaveReference?: () => void; custom?: boolean; training?: boolean; id?: string
+export function SafetyChecklist({ mission, inspection, onTestFlight, onQuickFlight, onPractice, onSaveReference, custom, training, id = 'safety-heading' }: {
+  mission: Mission; inspection: Inspection; onTestFlight?: () => void; onQuickFlight?: () => void; onPractice?: () => void; onSaveReference?: () => void; custom?: boolean; training?: boolean; id?: string
 }) {
   const { requiredCargoOk, requiredLoaded, requiredTotal, payloadOk, cargoMass, cg, balance, positionsOk, ready } = inspection
   const checks = [
@@ -65,12 +65,13 @@ export function SafetyChecklist({ mission, inspection, onTestFlight, onPractice,
           <div><strong>{check.title}</strong><span className="sr-only">{check.state === 'passed' ? 'Passed' : check.state === 'pending' ? 'Incomplete' : 'Requires adjustment'}</span><p>{check.detail}</p></div>
         </li>)}
       </ol>
-      {(onTestFlight || onPractice || onSaveReference) && <div className="flight-actions">
+      {(onTestFlight || onQuickFlight || onPractice || onSaveReference) && <div className="flight-actions">
         <div role="status">
           {ready ? <div className="ready flight-status-ready"><span><Icon name="check" /></span><strong>Mission Ready</strong></div> : <p id="flight-outstanding">{outstanding}</p>}
         </div>
-        {onTestFlight && <button type="button" className="start-button test-flight-button" data-audio-custom="" aria-describedby={ready ? undefined : 'flight-outstanding'} disabled={!ready} onClick={onTestFlight}><Icon name="plane" />Test Flight</button>}
-        {onTestFlight && <p className="flight-mode-explanation">{custom ? 'Test Flight checks whether you can complete this custom challenge with the current load.' : 'Test Flight leads to the official delivery. Practice Flight lets you compare how loads respond, including CG outside the official range.'}</p>}
+        {onQuickFlight && <button type="button" className="start-button test-flight-button" disabled={!ready} onClick={onQuickFlight}><Icon name="plane" />Quick Flight Verification</button>}
+        {onTestFlight && <button type="button" className={onQuickFlight ? 'secondary-button practice-launch' : 'start-button test-flight-button'} data-audio-custom="" aria-describedby={ready ? undefined : 'flight-outstanding'} disabled={!ready} onClick={onTestFlight}><Icon name="plane" />{onQuickFlight ? 'Manual Flight' : 'Test Flight'}</button>}
+        {onTestFlight && <p className="flight-mode-explanation">{onQuickFlight ? 'Quick verification is recommended. Both paths use your actual load and the same safety requirements.' : custom ? 'Test Flight uses your current load.' : 'Practice Flight lets you explore how loads respond.'}</p>}
         {onSaveReference && <button type="button" className="start-button test-flight-button" data-tutorial="save-reference" disabled={!ready} onClick={onSaveReference}><Icon name="check" />Save Reference Solution</button>}
         {onPractice && <button type="button" data-tutorial="practice-flight" className={training ? 'start-button test-flight-button' : 'secondary-button practice-launch'} disabled={training ? !ready : !inspection.practiceReady} onClick={onPractice}>Practice Flight</button>}
         {onPractice && !training && !inspection.practiceReady && <p className="practice-requires">Practice requires all supplies, a valid payload and permitted slots.</p>}

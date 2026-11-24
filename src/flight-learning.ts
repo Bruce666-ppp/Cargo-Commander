@@ -1,7 +1,7 @@
 import { advanceFlight, aircraftResponse, flightReport, flightStep, newFlight } from './flight.ts'
 import type { FlightReport, FlightRun, FlightSpeed } from './flight.ts'
-import { prepareFlightConfiguration } from './mission.ts'
-import type { FlightConfiguration, Mission } from './mission.ts'
+import { flightConfigurationAllowed, prepareFlightConfiguration } from './mission.ts'
+import type { FlightConfiguration, FlightMode, Mission } from './mission.ts'
 import { verifiedSolution } from './learning.ts'
 
 const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value))
@@ -35,7 +35,8 @@ export function retryFlightTip(report: FlightReport, mission: Mission, attempts:
   return `When the altitude starts drifting ${below ? 'down' : 'up'}, try a short Pitch ${below ? 'Up' : 'Down'} press before you reach the edge of the green zone. Then release and watch the altitude.`
 }
 
-function simulateLesson(mission: Mission, config: FlightConfiguration) {
+export function simulateFlight(mission: Mission, config: FlightConfiguration, mode: FlightMode, policy: 'assisted' | ((seconds: number) => number) = 'assisted') {
+  if (!flightConfigurationAllowed(mission, config, mode)) return null
   const settings = mission.flight
   const run = newFlight(settings)
   const response = aircraftResponse(settings, config)
@@ -46,28 +47,28 @@ function simulateLesson(mission: Mission, config: FlightConfiguration) {
   while (!run.end) {
     // Use short presses of the same three inputs available to the player.
     const sample = run.ticks % 12 === 0
-    if (sample) {
+    if (sample && policy === 'assisted') {
       const desiredPitch = clamp((middle - run.altitude) * .22 - run.verticalSpeed * .78, -6, 6)
       const correction = (desiredPitch - run.pitch) * .24 - run.pitchRate * .11 - response.trim / response.up
       input = correction > .27 ? 1 : correction < -.27 ? -1 : 0
     }
-    advanceFlight(run, response, settings, flightStep, input)
+    advanceFlight(run, response, settings, flightStep, policy === 'assisted' ? input : policy(run.ticks * flightStep))
     if (sample || run.end) frames.push(snapshot())
   }
-  return { report: flightReport(run, config, 'practice', settings), frames, configuration: config }
+  return { report: flightReport(run, config, mode, settings), frames, configuration: config }
 }
 
 export function flightLesson(mission: Mission, requested: FlightConfiguration) {
   if (requested.safety.ready) {
-    const lesson = simulateLesson(mission, requested)
-    if (lesson.report.passed) return { ...lesson, reason: '' }
+    const lesson = simulateFlight(mission, requested, 'practice')
+    if (lesson?.report.passed) return { ...lesson, reason: '' }
   }
   const example = verifiedSolution(mission)
   const configuration = example && prepareFlightConfiguration(mission, example, 'practice')
   if (!configuration) return null
-  const lesson = simulateLesson(mission, configuration)
+  const lesson = simulateFlight(mission, configuration, 'practice')
   const reason = requested.safety.ready
     ? 'This lesson uses a checked example load so you can see a complete flight. Your own cargo stays where you left it.'
     : 'Your current balance point is outside the green zone. This lesson uses a checked example load. Your own cargo stays where you left it.'
-  return lesson.report.passed ? { ...lesson, reason } : null
+  return lesson?.report.passed ? { ...lesson, reason } : null
 }

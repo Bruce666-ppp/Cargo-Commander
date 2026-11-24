@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
-import type { CSSProperties, Ref } from 'react'
+import type { Ref } from 'react'
 import { FlightMap, Icon } from './art'
-import { awardTiming, gameAudio } from './audio'
+import { gameAudio } from './audio'
 import { Insignia } from './CareerProfile'
 import { certifications, networkSummary, ranks } from './career'
 import type { CareerProgress, MapDiscovery } from './career'
@@ -11,6 +11,8 @@ import { flightCoaching, flightSpeeds, instructorAssessment } from './flight'
 import type { FlightReport } from './flight'
 import { formatCg } from './mission'
 import type { Mission } from './mission'
+import { MissionReward } from './MissionRewards'
+import type { DeliveryAward } from './MissionRewards'
 
 type Heading = { headingRef: Ref<HTMLHeadingElement> }
 const percent = (report: FlightReport) => `${(report.corridorFraction * 100).toFixed(1)}%`
@@ -82,7 +84,7 @@ export function FlightReview({ mission, report, previous, headingRef, onRetry, o
           {previous && <section className="comparison" aria-label="Flight comparison">
             <p><strong>Previous flight</strong> · CG {formatCg(mission, previous.configuration.cg)} m · {previous.elapsed.toFixed(1)} s total · {flightModes(previous)} · {percent(previous)} in the corridor.</p>
             <p><strong>This flight</strong> · CG {formatCg(mission, configuration.cg)} m · {report.elapsed.toFixed(1)} s total · {flightModes(report)} · {percent(report)} in the corridor.</p>
-            <p>Flight mode and pitch inputs also affect performance. Use the same mode and similar inputs to compare how balance affects the aircraft.</p>
+            <p>These are records of two attempts. For a controlled comparison, fly the same route with the same wind, mode and pitch inputs.</p>
           </section>}
           {!report.passed && <div className="retry-guidance"><strong>{failedAttempts > 1 ? 'What to try on your next flight' : 'One thing to try'}</strong><p>{retryFlightTip(report, mission, failedAttempts)}</p>
             {failedAttempts >= 3 && onDemonstration && <p>Watch the instructor fly this route, then try it yourself.</p>}
@@ -91,7 +93,7 @@ export function FlightReview({ mission, report, previous, headingRef, onRetry, o
         </section>
       </div>
       <div className="flight-page-actions">
-        {onBackToCompletion ? <button className="start-button flight-primary" onClick={onBackToCompletion}>{campaignComplete ? 'Back to Campaign Completion' : 'Back to Mission Accomplished'}</button> : <>
+        {onBackToCompletion ? <button className="start-button flight-primary" onClick={onBackToCompletion}>{campaignComplete ? 'Back to Campaign Completion' : 'Back to Mission Complete'}</button> : <>
           <button className="start-button flight-primary" onClick={onRetry}>{practice ? 'Retry Practice Flight' : 'Retry Flight'}</button>
           <button className="secondary-button" onClick={onReturn}>{custom ? 'Return to Mission' : 'Return to Cargo Loading'}</button>
           {!practice && onPractice && <button className="secondary-button" onClick={onPractice}>Practice Flight</button>}
@@ -144,31 +146,26 @@ export function Arrival({ mission, headingRef, blocked, onFinish }: Heading & { 
 
 type CompletionProps = Heading & {
   mission: Mission; report: FlightReport; progress: CareerProgress; firstDelivery: boolean; animateAwards: boolean; discovery: MapDiscovery | null
-  onNext: () => void; onContinue: () => void; onReport: () => void; onReplay: () => void
+  award: DeliveryAward; onNext?: () => void; onContinue: () => void; onReport: () => void; onReplay: () => void; onCampaign: () => void
 }
 
 export function DiscoveryNotice({ discovery }: { discovery: MapDiscovery }) {
   return <div className="discovery-notice" role="status"><span className="panel-icon"><Icon name="pin" /></span><div><strong>{discovery.title}</strong><p>{discovery.detail}</p></div></div>
 }
 
-export function MissionAccomplished({ mission, report, progress, firstDelivery, animateAwards, discovery, headingRef, onNext, onContinue, onReport, onReplay }: CompletionProps) {
+export function MissionAccomplished({ mission, report, progress, firstDelivery, animateAwards, discovery, award, headingRef, onNext, onContinue, onReport, onReplay, onCampaign }: CompletionProps) {
   const { configuration } = report
   const delivered = configuration.cargoArrangement.flatMap(slot => slot.cargo ? [slot.cargo] : [])
   const rank = ranks[mission.career.rankMilestone]
   const certificate = certifications.find(cert => cert.id === mission.career.certificationId)!
   return (
     <>
-      <section className="accomplished-banner">
-        <Insignia icon="check" className="achievement-emblem" />
-        <p>{mission.title} · {mission.origin} → {mission.destination}</p>
-        <h1 ref={headingRef} tabIndex={-1}>MISSION ACCOMPLISHED!</h1>
-        <p>Your cargo has safely arrived at {mission.destination}.</p>
-      </section>
-      <div className="flight-page-actions campaign-actions"><button className="start-button flight-primary" aria-haspopup="dialog" onClick={onNext}>Next Mission</button><button className="secondary-button" onClick={onContinue}>Return to Mission Centre</button><button className="secondary-button" onClick={onReport}>View Flight Report</button><button className="secondary-button" aria-haspopup="dialog" onClick={onReplay}>Replay Mission</button></div>
-      {discovery && <section className="panel completion-discovery" aria-label="Map discovery"><DiscoveryNotice discovery={discovery} /><FlightMap progress={progress} discovery={animateAwards ? discovery : null} /></section>}
-      <div className={`completion-awards${firstDelivery && animateAwards ? ' first-awards' : ''}`} style={{
-        '--promotion-delay': `${awardTiming.promotion}s`, '--route-delay': `${awardTiming.route}s`, '--certification-delay': `${awardTiming.certification}s`,
-      } as CSSProperties}>
+      <MissionReward mission={mission} award={award} first={firstDelivery && animateAwards} final={!onNext} headingRef={headingRef} />
+      <div className="flight-page-actions campaign-actions">{onNext
+        ? <button className="start-button flight-primary" aria-haspopup="dialog" onClick={onNext}>Next Mission</button>
+        : <button className="start-button flight-primary" onClick={onCampaign}>View Completed Network</button>}
+        <button className="secondary-button" onClick={onContinue}>Return to Mission Centre</button><button className="secondary-button" onClick={onReport}>View Flight Report</button><button className="secondary-button" aria-haspopup="dialog" onClick={onReplay}>Replay Mission</button></div>
+      <div className="completion-awards">
         <article className="panel promotion-card"><Insignia /><div><h2>{firstDelivery ? 'Rank Promotion' : 'Career Rank'}</h2><strong>{firstDelivery ? `${ranks[mission.career.rankMilestone - 1]} → ${rank}` : ranks[progress.rankMilestone]}</strong><p>{firstDelivery ? `This delivery earned your promotion to ${rank}.` : 'Your existing promotion is recorded in the Achievement Wall.'}</p></div></article>
         <article className="panel certification-award certified" data-badge={certificate.id}><Insignia icon={certificate.icon} /><div><h2>{certificate.title}</h2><strong>{firstDelivery ? 'STEM certification earned' : 'STEM certification held'}</strong><p>{certificate.competency}</p></div></article>
         <article className="panel route-award"><Insignia icon="pin" /><div><h2>Established Route</h2><strong>{mission.origin} → {mission.destination}</strong><p>{firstDelivery ? 'This route is now part of your aviation network.' : 'This delivery used an established route.'}</p></div></article>
@@ -181,11 +178,7 @@ export function MissionAccomplished({ mission, report, progress, firstDelivery, 
           <div><dt>Flight performance</dt><dd>{percent(report)} in the corridor · {report.elapsed.toFixed(1)} s flown</dd></div>
           <div><dt>Safety status</dt><dd>All safety checks passed</dd></div>
         </dl></section>
-        <section className="panel review-instructor"><h2>What You Learned</h2><ul>
-          <li>{mission.learningFocus}</li>
-          <li>Cargo mass and position determine how the aircraft balances. Your load brought the CG to {formatCg(mission, configuration.cg)} m.</li>
-          <li>A suitable CG supports stable, controllable flight in this simplified model. Your aircraft spent {percent(report)} of the flight in the target corridor.</li>
-        </ul></section>
+        {discovery && <section className="panel completion-discovery" aria-label="Map discovery"><DiscoveryNotice discovery={discovery} /><FlightMap progress={progress} discovery={animateAwards ? discovery : null} /></section>}
       </div>
     </>
   )

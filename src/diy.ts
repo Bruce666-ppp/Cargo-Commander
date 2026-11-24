@@ -28,7 +28,7 @@ export type SavedDiy = DiyDraft & { id: string; source: 'created' | 'received' }
 export type DiyStore = { version: 1; architect: boolean; missions: SavedDiy[] }
 
 export const defaultDiyConfig = (): DiyConfig => ({
-  name: '', cargo: cargoTypes.slice(0, 3).map(({ mass }, type) => ({ type, mass })),
+  name: '', cargo: cargoTypes.slice(0, 2).map(({ mass }, type) => ({ type, mass })),
   blocked: [], cg: [...diyCgLimits], wind: 0,
 })
 
