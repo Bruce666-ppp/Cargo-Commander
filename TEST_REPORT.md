@@ -55,9 +55,9 @@ The narrow loading buttons were 44 CSS pixels high in the tested phone layouts, 
 
 ## Production deployment verification
 
-The Vite build emits JavaScript and CSS URLs under `/IDAT7220FinalGame/assets/` and writes the static site to `dist/`. Local production preview verified the home screen, new-player flow, in-game About, a live CG update and refresh.
+The Vite build emits JavaScript and CSS URLs under the project Pages subpath and writes the static site to `dist/`. Local production preview verified the home screen, new-player flow, in-game About, a live CG update and refresh.
 
-On 23 November 2026, the [GitHub Actions build and deploy jobs](https://github.com/Bruce666-ppp/IDAT7220FinalGame/actions/runs/45089725305) succeeded for commit `5f25bab`, including dependency installation, automated tests and the build. The public [Cargo Commander site](https://bruce666-ppp.github.io/IDAT7220FinalGame/) returned HTTP 200 without authentication. Its bundled JavaScript and CSS both returned HTTP 200 under the repository subpath with their expected media types.
+On 23 November 2026, the [GitHub Actions build and deploy jobs](https://github.com/Bruce666-ppp/Cargo-Commander/actions/runs/45089725305) succeeded for commit `5f25bab`, including dependency installation, automated tests and the build. The then-current public game URL returned HTTP 200 without authentication. Its bundled JavaScript and CSS both returned HTTP 200 under the repository subpath with their expected media types.
 
 - The README's PLAY CARGO COMMANDER link opened the correct public URL. Direct refresh reopened the game. A fresh visit displayed both onboarding paths.
 - In an isolated Chromium view of the published game, About Game showed the four learning objectives. Mission 01 cleared inspection and completed in Cruise with 100% corridor time over 30.0 s. The delivery awarded Junior Loadmaster, Balance Basics and the Harbor Base–Pinehaven route.
@@ -82,7 +82,7 @@ The 23 November 2026 candidate passed **39 automated tests** and the Vite produc
 
 ### Public deployment verification for Phase 7.1–7.2
 
-On 23 November 2026, the [GitHub Actions build and deploy jobs](https://github.com/Bruce666-ppp/IDAT7220FinalGame/actions/runs/45126697092) succeeded for commit [`e8c5e94`](https://github.com/Bruce666-ppp/IDAT7220FinalGame/commit/e8c5e942c92a0329624ba7f3b560fa7fd6560740). The [game URL](https://bruce666-ppp.github.io/IDAT7220FinalGame/), its JavaScript and CSS returned HTTP 200 without authentication. The asset paths matched the local production build.
+On 23 November 2026, the [GitHub Actions build and deploy jobs](https://github.com/Bruce666-ppp/Cargo-Commander/actions/runs/45126697092) succeeded for commit [`e8c5e94`](https://github.com/Bruce666-ppp/Cargo-Commander/commit/e8c5e942c92a0329624ba7f3b560fa7fd6560740). The then-current public game URL, its JavaScript and CSS returned HTTP 200 without authentication. The asset paths matched the local production build.
 
 - Opened the game using the URL in the published README and verified a direct refresh. The Home card listed all four summaries. About Game displayed all four complete statements with the detailed ABCD and Pedagogical Frameworks sections closed by default. Each ABCD disclosure toggled successfully. The three frameworks and the five 5E stages appeared on expansion. No game console errors were observed in those checks.
 - The same public URL had no horizontal overflow in the game page or About dialog at 320×568 and 390×844. At 390×844, opening About during Coastal Resupply and closing it returned to Cargo Loading with the 12 kg Air Filters still in slot 3.
@@ -105,7 +105,7 @@ The local release candidate passed **49 automated tests** and the Vite productio
 
 ### Public deployment and cross-session challenge
 
-On 23 November 2026, GitHub Actions successfully ran the tests, production build and deployment for [`56ba3ba`](https://github.com/Bruce666-ppp/IDAT7220FinalGame/commit/56ba3baa52d492374e0d9782c66c3a1c6e2c126d). The [public game](https://bruce666-ppp.github.io/IDAT7220FinalGame/) and its versioned JavaScript and CSS returned HTTP 200 without authentication. The published repository matched the reviewed release and the README displayed all 12 inline screenshots. [View the Actions run.](https://github.com/Bruce666-ppp/IDAT7220FinalGame/actions/runs/45134039148)
+On 23 November 2026, GitHub Actions successfully ran the tests, production build and deployment for [`56ba3ba`](https://github.com/Bruce666-ppp/Cargo-Commander/commit/56ba3baa52d492374e0d9782c66c3a1c6e2c126d). The then-current public game URL and its versioned JavaScript and CSS returned HTTP 200 without authentication. The published repository matched the reviewed release and the README displayed all 12 inline screenshots. [View the Actions run.](https://github.com/Bruce666-ppp/Cargo-Commander/actions/runs/45134039148)
 
 An isolated browser session with three completed official deliveries created and balanced Harbour Peer Delivery. The creator's manual Cruise test finished in 30.0 s with 100% corridor time. Saving earned Mission Architect and copying produced a 241-character public link.
 
@@ -130,7 +130,7 @@ See the [gameplay gallery](README.md#gameplay-gallery) for the captured interfac
 
 ### Phase 7.4 public deployment verification
 
-On 24 November 2026, the [GitHub Actions build and deploy jobs](https://github.com/Bruce666-ppp/IDAT7220FinalGame/actions/runs/45330800586) succeeded for release commit [`b409639`](https://github.com/Bruce666-ppp/IDAT7220FinalGame/commit/b409639ea1d93d6e7ca4ecc3f8d83377c4610011). The [public game](https://bruce666-ppp.github.io/IDAT7220FinalGame/), JavaScript and CSS each returned HTTP 200 without authentication. Both asset names matched the local production artefact.
+On 24 November 2026, the [GitHub Actions build and deploy jobs](https://github.com/Bruce666-ppp/Cargo-Commander/actions/runs/45330800586) succeeded for release commit [`b409639`](https://github.com/Bruce666-ppp/Cargo-Commander/commit/b409639ea1d93d6e7ca4ecc3f8d83377c4610011). The then-current public game URL, JavaScript and CSS each returned HTTP 200 without authentication. Both asset names matched the local production artefact.
 
 - The public Home page and in-game About Game displayed all five outcomes. An isolated browser profile with zero official earnings completed the public beginner training and skipped its reward animation. The final sample reward remained visible and the campaign earned $0.
 - The same profile read the 4.56 m CG, earned the optional bonus and completed the first delivery through Quick Flight Verification. The reward showed $400 income and $100 STEM Bonus. After a reload, the Mission Centre still showed $500 and one developed district.
@@ -154,7 +154,7 @@ The [screenshot gallery](README.md#gameplay-gallery) shows real game states. The
 
 ### Phase 7.5 public deployment verification
 
-On 24 November 2026, the [GitHub Actions build and deployment](https://github.com/Bruce666-ppp/IDAT7220FinalGame/actions/runs/45343859183) succeeded for [`b897e9e`](https://github.com/Bruce666-ppp/IDAT7220FinalGame/commit/b897e9e505d878281124fa90a90edb1fe6a617b7). The [public game](https://bruce666-ppp.github.io/IDAT7220FinalGame/), versioned JavaScript, CSS and 59,604-byte MP3 all returned HTTP 200 without authentication. The canonical game URL opened with the new JavaScript and the five ABCD outcomes. No error-level console messages were captured in that check.
+On 24 November 2026, the [GitHub Actions build and deployment](https://github.com/Bruce666-ppp/Cargo-Commander/actions/runs/45343859183) succeeded for [`b897e9e`](https://github.com/Bruce666-ppp/Cargo-Commander/commit/b897e9e505d878281124fa90a90edb1fe6a617b7). The then-current public game URL, versioned JavaScript, CSS and 59,604-byte MP3 all returned HTTP 200 without authentication. The canonical game URL opened with the new JavaScript and the five ABCD outcomes. No error-level console messages were captured in that check.
 
 - A clean, isolated Chromium session started at $0 with seven sites and seven Harbor Base buildings. It completed the actual Mission 01 load through Auto Delivery and reached the reward screen without a manual flight. After a reload the Mission Centre still showed $500 and one developed destination. The sound switch stayed off after a reload and could be enabled again.
 - A separate 390-pixel public session reopened a Phase 7.4 save with four deliveries and Mission Architect. It displayed the new Coral Point development, four established routes and the original $5,900 total without replaying Mission 03.
@@ -173,4 +173,4 @@ See the [updated gallery](README.md#gameplay-gallery) for browser captures from 
 
 ### Public deployment
 
-On 24 November 2026, the [Pages workflow](https://github.com/Bruce666-ppp/IDAT7220FinalGame/actions/runs/45353455879) succeeded for [`50891e9`](https://github.com/Bruce666-ppp/IDAT7220FinalGame/commit/50891e97def091a40cd4b06fd3289091d3413716). The [public game](https://bruce666-ppp.github.io/IDAT7220FinalGame/) and its JavaScript, CSS and audio assets returned HTTP 200 without authentication. All three asset SHA-256 hashes matched the local production build. In Chromium, Start Game opened the seven-island map with the revised Harbor Base water tower and one available route to Pinehaven. That check captured no error-level console messages.
+On 24 November 2026, the [Pages workflow](https://github.com/Bruce666-ppp/Cargo-Commander/actions/runs/45353455879) succeeded for [`50891e9`](https://github.com/Bruce666-ppp/Cargo-Commander/commit/50891e97def091a40cd4b06fd3289091d3413716). The then-current public game URL and its JavaScript, CSS and audio assets returned HTTP 200 without authentication. All three asset SHA-256 hashes matched the local production build. In Chromium, Start Game opened the seven-island map with the revised Harbor Base water tower and one available route to Pinehaven. That check captured no error-level console messages.

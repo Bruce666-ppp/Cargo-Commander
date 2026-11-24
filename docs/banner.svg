@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 320" role="img" aria-labelledby="title description">
   <title id="title">Cargo Commander — The Balance Mission</title>
-  <desc id="description">An aircraft above the Windward Isles. HKU IDAT7220 individual STEM educational game.</desc>
+  <desc id="description">A cargo aircraft above the Windward Isles.</desc>
   <defs>
     <linearGradient id="ocean"><stop stop-color="#172f48"/><stop offset="1" stop-color="#22536b"/></linearGradient>
     <linearGradient id="airframe" x2="0" y2="1"><stop stop-color="#fffdf4"/><stop offset="1" stop-color="#b9d4db"/></linearGradient>
@@ -30,12 +30,10 @@
     <path d="M107 181q16-7 43-7h393q37 0 80 16m-516 45q16 7 43 7h393q37 0 80-16" fill="none" stroke="#71a5b6"/>
     <path d="M97 191q13-9 24-10l-5 16-14 7Zm0 34q13 9 24 10l-5-16-14-7Zm7-18 12-5v12l-12-5Z" fill="#244d6b" stroke="none"/>
   </g>
-  <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="52" y="37" width="142" height="31" rx="8" fill="#d7efac"/>
-    <text x="123" y="58" text-anchor="middle" fill="#172f48" font-size="15" font-weight="750">HKU · IDAT7220</text>
+  <g font-family="Segoe UI, Arial, sans-serif" transform="translate(0 -22)">
     <text x="49" y="134" fill="#fffef8" font-size="67" font-weight="800" letter-spacing="-3">Cargo</text>
     <text x="49" y="202" fill="#fffef8" font-size="67" font-weight="800" letter-spacing="-3">Commander</text>
     <text x="53" y="245" fill="#c1e6ec" font-size="29" font-weight="700">The Balance Mission</text>
-    <text x="54" y="281" fill="#e0eee9" font-size="18">Individual STEM Educational Game</text>
+    <text x="54" y="281" fill="#e0eee9" font-size="18">STEM Educational Game</text>
   </g>
 </svg>

@@ -1,11 +1,11 @@
 # CARGO COMMANDER — THE BALANCE MISSION
 
-## [▶ PLAY CARGO COMMANDER](https://bruce666-ppp.github.io/IDAT7220FinalGame/)
+## [▶ PLAY CARGO COMMANDER](https://bruce666-ppp.github.io/Cargo-Commander/)
 
 Play directly in your browser — no installation required.  
 Playable on desktop and mobile browsers. Compatibility checks are recorded in the [test report](TEST_REPORT.md).
 
-![Cargo Commander — The Balance Mission. Individual STEM Educational Game, HKU IDAT7220.](docs/banner.svg)
+![Cargo Commander — The Balance Mission.](docs/banner.svg)
 
 Cargo Commander is an interactive STEM aviation game for learners new to physics and flight control. As a trainee loadmaster in the fictional Windward Isles, you position cargo, check the aircraft's balance, fly deliveries and connect island communities.
 
@@ -24,7 +24,7 @@ Cargo Commander is an interactive STEM aviation game for learners new to physics
 4. **LO4 · Problem-Solving Knowledge — Select an Effective Delivery Strategy.** By the end of the game, beginner STEM learners aged 10–14 will be able to select an appropriate cargo-loading and flight strategy given mission-specific constraints and flight feedback, with all mission requirements satisfied and a successful delivery.
 5. **LO5 · Creative Application — Design Your Own Cargo Mission.** By the end of the game, beginner STEM learners aged 10–14 will be able to design an original cargo delivery mission using DIY Mission Studio, with a valid reference solution, satisfaction of all selected constraints and a successful test flight.
 
-The Home Page and About Game both show each complete sentence and its colour-coded **A · Audience**, **B · Behaviour**, **C · Condition** and **D · Degree**. [See the course alignment and assessment evidence.](GAME_DESIGN.md#constructive-alignment)
+The Home Page and About Game both show each complete sentence and its colour-coded **A · Audience**, **B · Behaviour**, **C · Condition** and **D · Degree**. [See the learning alignment and assessment evidence.](GAME_DESIGN.md#constructive-alignment)
 
 ## From manifest to delivery
 
@@ -113,8 +113,8 @@ The [educational design notes](GAME_DESIGN.md#educational-frameworks) map the de
 The project uses React, TypeScript, Vite, CSS, SVG, Web Audio API and browser-local storage. Use Node.js 24 and pnpm 11.
 
 ```sh
-git clone https://github.com/Bruce666-ppp/IDAT7220FinalGame.git
-cd IDAT7220FinalGame
+git clone https://github.com/Bruce666-ppp/Cargo-Commander.git
+cd Cargo-Commander
 pnpm install --frozen-lockfile
 pnpm dev
 pnpm test
@@ -122,12 +122,10 @@ pnpm build
 pnpm exec vite preview
 ```
 
-The development server normally opens at `http://localhost:5173/`. The production build is written to `dist/` and the preview normally serves it from `http://localhost:4173/IDAT7220FinalGame/`. The [GitHub Actions workflow](.github/workflows/deploy.yml) tests and builds `main` and deploys the artefact to GitHub Pages. The [test report](TEST_REPORT.md) records deployment verification.
+The development server normally opens at `http://localhost:5173/`. The production build is written to `dist/` and the preview normally serves it from `http://localhost:4173/Cargo-Commander/`. The [GitHub Actions workflow](.github/workflows/deploy.yml) tests and builds `main` and deploys the artefact to GitHub Pages. The [test report](TEST_REPORT.md) records deployment verification.
 
 ## Educational simulation
 
 Cargo Commander uses simplified educational models to demonstrate centre of gravity and aircraft stability. It is not intended for real-world aircraft loading, engineering certification or aviation flight training.
 
-**Boyang Wan** · Individual STEM educational game  
-**IDAT7220** · MSc(Eng) in Innovative Design and Technology  
-**The University of Hong Kong**
+**Boyang Wan** · STEM educational game

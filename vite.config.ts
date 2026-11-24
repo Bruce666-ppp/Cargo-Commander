@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig(({ command, isPreview }) => ({
-  base: command === 'build' || isPreview ? '/IDAT7220FinalGame/' : '/',
+  base: command === 'build' || isPreview ? '/Cargo-Commander/' : '/',
 }))

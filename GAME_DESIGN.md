@@ -6,7 +6,7 @@ Cargo Commander is a browser-based STEM game for beginner learners. A trainee lo
 
 ## Learning Outcomes and ABCD Model
 
-The visible ABCD labels and sentences follow the instructor’s IDAT7220 ABCD Model teaching material. Audience identifies the learner, Behaviour states one principal observable action, Condition describes the circumstances or tools and Degree specifies acceptable performance. Home and About Game share the same content definition.
+The visible learning outcomes use the ABCD model. Audience identifies the learner, Behaviour states one principal observable action, Condition describes the circumstances or tools and Degree specifies acceptable performance. Home and About Game share the same content definition.
 
 | Learning Outcome | Learning category | A · Audience | B · Behaviour | C · Condition | D · Degree |
 | --- | --- | --- | --- | --- | --- |
